@@ -2045,7 +2045,7 @@
           "patients",
           "demo"
         ],
-        "global_req": ["enable_patient_vitals_screen","enable_rpm"]
+        "global_req": ["enable_patient_vitals_screen"]
       },
       {
         "label": "Dicom Viewer",

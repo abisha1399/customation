@@ -133,30 +133,29 @@ if(isset($_GET['get_all_global']))
       <nav class="nav-sidebar bg-light mt-3 mt-md-5 pt-5 pt-md-3">
         <div class="sidebar-content">
           <ul class="nav flex-column">
-           <li class="nav-item">
-              <a class="nav-link text-body" id="rpm_setting">RPM</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-body" id="patient_setting">Patient</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-body" id="encounter_setting">Encounter</a>
-            </li>
-            
-            <li class="nav-item">
-              <a class="nav-link text-body" id="forms_setting">Forms</a>
-            </li>
             <li class="nav-item">
               <a class="nav-link text-body" id="login_setting">Login</a>
-            </li>
+            </li>     
             <li class="nav-item">
-              <a class="nav-link text-body" id="third_party_setting">Third parties Api</a>
+              <a class="nav-link text-body" id="encounter_setting">Encounter</a>
+            </li> 
+            <li class="nav-item">
+              <a class="nav-link text-body" id="rpm_setting">RPM</a>
+            </li>           
+            <li class="nav-item">
+              <a class="nav-link text-body" id="forms_setting">Forms</a>
             </li>
             <li class="nav-item">
               <a class="nav-link text-body" id="billing_setting">Billing</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-body">Prescription</a>
+              <a class="nav-link text-body" id="prescription_setting">Prescription</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-body" id="third_party_setting">Third parties Api</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-body" id="calendar_setting">Calendar</a>
             </li>
           </ul>
         </div>
@@ -164,8 +163,93 @@ if(isset($_GET['get_all_global']))
       <main class="main-full">
         <div class="pl-3 pt-5 pt-md-3">
             <div class="tabContainer">
-              <!---RPM tab---->
-              <div class="tab current" id="tab_rpm_setting">                   
+                <!---Login tab---->
+                <div class="tab current" id="tab_login_setting">                    
+                    
+                    <div class=''>
+                        <div class='col-sm-12 oe-global-tab-heading'>
+                                <div class='oe-pull-toward' style='font-size: 1.4rem'>Login &nbsp;</div>
+                                <div style='margin-top: 5px'></div>
+                        </div>
+                        <div class='clearfix'></div>                        
+                        <div class='row form-group'>
+                            <div class='col-sm-6'>Enable New Login page</div>
+                            <div class='col-sm-6 oe-input' title='Enable New Login page'>
+                                <label class="switch">
+                                    <input type="checkbox" class="custom_setting_event" data-id='enable_newloginpage'>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class='row form-group'>
+                            <div class='col-sm-6'>Enable Forget password</div>
+                            <div class='col-sm-6 oe-input' title='Enable Forget password'>
+                                <label class="switch">
+                                    <input type="checkbox" class="custom_setting_event" data-id='enable_forgetpassword'>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class='row form-group'>
+                            <div class='col-sm-6'>Enable Keeps me sign</div>
+                            <div class='col-sm-6 oe-input' title='Enable Keeps me sign'>
+                                <label class="switch">
+                                    <input type="checkbox" class="custom_setting_event" data-id='enable_keepmesign'>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class='row form-group'>
+                            <div class='col-sm-6'>Enable location based login</div>
+                            <div class='col-sm-6 oe-input' title='Enable location based login'>
+                                <label class="switch">
+                                    <input type="checkbox" class="custom_setting_event" data-id='enable_location_login'>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!---encounter tab---->
+                <div class="tab " id="tab_encounter_setting">
+                    <div class=''>
+                        <div class='col-sm-12 oe-global-tab-heading'>
+                                <div class='oe-pull-toward' style='font-size: 1.4rem'>Encounter &nbsp;</div>
+                                <div style='margin-top: 5px'></div>
+                        </div>
+                        <div class='clearfix'></div>
+                        <div class='row form-group'>
+                            <div class='col-sm-6'>Enable level of care</div>
+                            <div class='col-sm-6 oe-input' title='Rx Enable DEA #'>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class='row form-group'>
+                            <div class='col-sm-6'>Enable Clone Encounter</div>
+                            <div class='col-sm-6 oe-input' title='Rx Enable DEA #'>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class='row form-group'>
+                            <div class='col-sm-6'>Enable lifetime tracker</div>
+                            <div class='col-sm-6 oe-input' title='Rx Enable DEA #'>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <!---RPM tab---->
+                <div class="tab" id="tab_rpm_setting">                   
                     
                     <div class=''>
                         <div class='col-sm-12 oe-global-tab-heading'>
@@ -291,34 +375,7 @@ if(isset($_GET['get_all_global']))
                                     <span class="slider round"></span>
                                 </label>
                             </div>
-                        </div>
-                        <!-- <div class='row form-group'>
-                            <div class='col-sm-6'>Enable Billing code 99543</div>
-                            <div class='col-sm-6 oe-input' title='Enable Billing code 99543'>
-                                <label class="switch">
-                                    <input type="checkbox" class="custom_setting_event" data-id='enable_99543_code'>
-                                    <span class="slider round"></span>
-                                </label>
-                            </div>
-                        </div>
-                        <div class='row form-group'>
-                            <div class='col-sm-6'>Enable Billing code 99544</div>
-                            <div class='col-sm-6 oe-input' title='Enable Billing code 99544'>
-                                <label class="switch">
-                                    <input type="checkbox" class="custom_setting_event" data-id='enable_99544_code'>
-                                    <span class="slider round"></span>
-                                </label>
-                            </div>
-                        </div>
-                        <div class='row form-group'>
-                            <div class='col-sm-6'>Enable Billing code 99547</div>
-                            <div class='col-sm-6 oe-input' title='Enable Billing code 99547'>
-                                <label class="switch">
-                                    <input type="checkbox" class="custom_setting_event" data-id='enable_99547_code'>
-                                    <span class="slider round"></span>
-                                </label>
-                            </div>
-                        </div> -->
+                        </div>                        
                         <div class='row form-group'>
                             <div class='col-sm-6'>Enable RPM code </div>
                             <div class='col-sm-6 oe-input' title='Enable RPM code'>
@@ -339,25 +396,16 @@ if(isset($_GET['get_all_global']))
                         </div>
                     </div>
                 </div>
-                <!---patient tab---->
-                <div class="tab" id="tab_patient_setting">
+                <!---forms tab---->
+                <div class="tab" id="tab_forms_setting">
                     
                     
                     <div class=''>
                         <div class='col-sm-12 oe-global-tab-heading'>
-                                <div class='oe-pull-toward' style='font-size: 1.4rem'>Patient &nbsp;</div>
+                                <div class='oe-pull-toward' style='font-size: 1.4rem'>Forms &nbsp;</div>
                                 <div style='margin-top: 5px'></div>
                         </div>
-                        <div class='clearfix'></div>
-                        <div class='row form-group'>
-                            <div class='col-sm-6'>Enable Patient Finder vitals screen</div>
-                            <div class='col-sm-6 oe-input' title='Rx Enable DEA #'>
-                                <label class="switch">
-                                    <input type="checkbox" checked>
-                                    <span class="slider round"></span>
-                                </label>
-                            </div>
-                        </div>
+                        <div class='clearfix'></div>                        
                         <div class='row form-group'>
                             <div class='col-sm-6'>Enable Patient consent form</div>
                             <div class='col-sm-6 oe-input' title='Rx Enable DEA #'>
@@ -368,7 +416,7 @@ if(isset($_GET['get_all_global']))
                             </div>
                         </div>
                         <div class='row form-group'>
-                            <div class='col-sm-6'>Enable Create New patient</div>
+                            <div class='col-sm-6'>Enable Create New patient form</div>
                             <div class='col-sm-6 oe-input' title='Rx Enable DEA #'>
                                 <label class="switch">
                                     <input type="checkbox" checked>
@@ -376,55 +424,190 @@ if(isset($_GET['get_all_global']))
                                 </label>
                             </div>
                         </div>
+                        <div class='row form-group'>
+                            <div class='col-sm-6'>Enable auto save forms</div>
+                            <div class='col-sm-6 oe-input' title='Rx Enable DEA #'>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class='row form-group'>
+                            <div class='col-sm-6'>Enable auto save forms</div>
+                            <div class='col-sm-6 oe-input' title='Rx Enable DEA #'>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class='row form-group'>
+                            <div class='col-sm-6'>Enable Macro Button</div>
+                            <div class='col-sm-6 oe-input' title='Rx Enable DEA #'>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class='row form-group'>
+                            <div class='col-sm-6'>Enable Form Builder</div>
+                            <div class='col-sm-6 oe-input' title='Rx Enable DEA #'>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!---Billing tab---->
+                <div class="tab" id="tab_billing_setting">                    
+                    
+                    <div class=''>
+                        <div class='col-sm-12 oe-global-tab-heading'>
+                                <div class='oe-pull-toward' style='font-size: 1.4rem'>Billing &nbsp;</div>
+                                <div style='margin-top: 5px'></div>
+                        </div>
+                        <div class='clearfix'></div>                        
+                        <div class='row form-group'>
+                            <div class='col-sm-6'>Enable New Billing Mangaer</div>
+                            <div class='col-sm-6 oe-input' title='Rx Enable DEA #'>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class='row form-group'>
+                            <div class='col-sm-6'>Enable Calim Dashboard</div>
+                            <div class='col-sm-6 oe-input' title='Rx Enable DEA #'>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!---Prescription tab---->
+                <div class="tab" id="tab_prescription_setting">                    
+                    
+                    <div class=''>
+                        <div class='col-sm-12 oe-global-tab-heading'>
+                                <div class='oe-pull-toward' style='font-size: 1.4rem'>Prescription &nbsp;</div>
+                                <div style='margin-top: 5px'></div>
+                        </div>
+                        <div class='clearfix'></div>                        
+                        <div class='row form-group'>
+                            <div class='col-sm-6'>Enable scanned prescription</div>
+                            <div class='col-sm-6 oe-input' title='Rx Enable DEA #'>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>                        
+                    </div>
+                </div>
+                <!---Third Party tab---->
+                <div class="tab" id="tab_third_party_setting">                    
+                    
+                    <div class=''>
+                        <div class='col-sm-12 oe-global-tab-heading'>
+                                <div class='oe-pull-toward' style='font-size: 1.4rem'>Third Party Setting &nbsp;</div>
+                                <div style='margin-top: 5px'></div>
+                        </div>
+                        <div class='clearfix'></div>                        
+                        <div class='row form-group'>
+                            <div class='col-sm-6'>Enable Ringcentral</div>
+                            <div class='col-sm-6 oe-input' title='Rx Enable DEA #'>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div> 
+                        <div class='row form-group'>
+                            <div class='col-sm-6'>Enable Availability</div>
+                            <div class='col-sm-6 oe-input' title='Rx Enable DEA #'>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div> 
+                        <div class='row form-group'>
+                            <div class='col-sm-6'>Enable Avialability</div>
+                            <div class='col-sm-6 oe-input' title='Rx Enable DEA #'>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>  
+                        <div class='row form-group'>
+                            <div class='col-sm-6'>Enable Newcrop Erx</div>
+                            <div class='col-sm-6 oe-input' title='Rx Enable DEA #'>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div> 
+                        <div class='row form-group'>
+                            <div class='col-sm-6'>Enable 1uphealth integration</div>
+                            <div class='col-sm-6 oe-input' title='Rx Enable DEA #'>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>                       
+                    </div>
+                </div>
+                <!---Prescription tab---->
+                <div class="tab" id="tab_calendar_setting">                    
+                    
+                    <div class=''>
+                        <div class='col-sm-12 oe-global-tab-heading'>
+                                <div class='oe-pull-toward' style='font-size: 1.4rem'>Calendar Setting &nbsp;</div>
+                                <div style='margin-top: 5px'></div>
+                        </div>
+                        <div class='clearfix'></div>                        
+                        <div class='row form-group'>
+                            <div class='col-sm-6'>Enable calendar grid</div>
+                            <div class='col-sm-6 oe-input' title='Rx Enable DEA #'>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div> 
+                        <div class='row form-group'>
+                            <div class='col-sm-6'>Enable Provider Available Check</div>
+                            <div class='col-sm-6 oe-input' title='Rx Enable DEA #'>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div> 
+                        <div class='row form-group'>
+                            <div class='col-sm-6'>Enable billing profile in calender</div>
+                            <div class='col-sm-6 oe-input' title='Rx Enable DEA #'>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>                        
                     </div>
                 </div>
 
-                <!---encounter tab---->
-                <div class="tab " id="tab_encounter_setting">
-                <div class=''>
-                        <div class='col-sm-12 oe-global-tab-heading'>
-                                <div class='oe-pull-toward' style='font-size: 1.4rem'>Encounter &nbsp;</div>
-                                <div style='margin-top: 5px'></div>
-                        </div>
-                        <div class='clearfix'></div>
-                        <div class='row form-group'>
-                            <div class='col-sm-6'>Enable RPM Encounter</div>
-                            <div class='col-sm-6 oe-input' title='Rx Enable DEA #'>
-                                <label class="switch">
-                                    <input type="checkbox" checked>
-                                    <span class="slider round"></span>
-                                </label>
-                            </div>
-                        </div>
-                        <div class='row form-group'>
-                            <div class='col-sm-6'>Enable Patient consent form</div>
-                            <div class='col-sm-6 oe-input' title='Rx Enable DEA #'>
-                                <label class="switch">
-                                    <input type="checkbox" checked>
-                                    <span class="slider round"></span>
-                                </label>
-                            </div>
-                        </div>
-                        <div class='row form-group'>
-                            <div class='col-sm-6'>Enable level of care</div>
-                            <div class='col-sm-6 oe-input' title='Rx Enable DEA #'>
-                                <label class="switch">
-                                    <input type="checkbox" checked>
-                                    <span class="slider round"></span>
-                                </label>
-                            </div>
-                        </div>
-                        <div class='row form-group'>
-                            <div class='col-sm-6'>Enable Clone Encounter</div>
-                            <div class='col-sm-6 oe-input' title='Rx Enable DEA #'>
-                                <label class="switch">
-                                    <input type="checkbox" checked>
-                                    <span class="slider round"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
+                
             </div>
         </div>
       </main>
