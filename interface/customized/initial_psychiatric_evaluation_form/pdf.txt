@@ -1,0 +1,1011 @@
+<p style="text-decoration: underline;">PRESENTING ISSUES</p>
+        <br>
+        <table style="width:100%;">
+          <tr>
+          <td style="width:40%;">Substance Abuse:<input type="text" style="width: 20%;" name="cname" value=""></td>               
+          </tr>
+          <tr>
+          <td style="width:40%;">Mental Health:<input type="text" style="width: 20%;" name="cname" value=""></td>               
+          </tr>
+        </table>
+        <br>
+        <table>
+          <tr>
+          <td style="width:40%;">Reason for seeking treatment at this point:<input type="text" style="width: 20%;" name="cname" value=""></td>               
+          </tr>
+        </table>
+        <table style="width:100%;">
+          <tr>
+          <td style="width:40%;">Are you seeking treatment because of pressure from: <input  type="radio" name="date_eval" value=""> Family <input type="radio" name="date_eval" value=""> Work <input type="radio" name="date_eval" value=""> Legal <input type="radio" name="date_eval" value=""> self</td>               
+          </tr>
+        </table>
+        <br>
+        <p ><span style="text-decoration: underline;">PRESENTING ISSUES</span> (Presenting issues)</p>
+        <table style="width:100%;">
+          <tr>
+          <td style="width:40%;">Do you have any chronic medical issues that interfere with your life? <input  type="radio" name="date_eval" value=""> Yes <input type="radio" name="date_eval" value=""> No</td>               
+          </tr>
+        </table>
+        <br>
+        <table  style="width:100%;">
+          <tr>
+            <td style="width: 40%;">Allergies: (Medication/Food)</td>
+            <td style="width: 60%;"><input type="checkbox" name="date_eval" value="">NKDA</td>
+          </tr>
+        </table>
+
+        <table style="width:100%;">
+          <tr>
+            <td style="width: 20%;"><input type="checkbox" name="date_eval" value="">None</td>
+            <td style="width: 20%;"><input type="checkbox" name="date_eval" value="">Heart Disease</td>
+            <td style="width: 20%;"><input type="checkbox" name="date_eval" value="">Liver problems</td>
+            <td style="width: 20%;"><input type="checkbox" name="date_eval" value="">Asthma</td>
+            <td style="width: 20%;"><input type="checkbox" name="date_eval" value="">STD</td>
+          </tr>
+          <tr>
+            <td style="width: 20%;"><input type="checkbox" name="date_eval" value="">High Cholesterol</td>
+            <td style="width: 20%;"><input type="checkbox" name="date_eval" value="">Head Trauma</td>
+            <td style="width: 20%;"><input type="checkbox" name="date_eval" value="">Lung problems</td>
+            <td style="width: 20%;" rowspan="2"><input type="checkbox" name="date_eval" value="">HIV/AIDS</td>
+          </tr>
+        </table>
+
+        <table style="width:100%;">
+          <tr>
+            <td style="width: 20%;"><input type="checkbox" name="date_eval" value="">Diabetes: type I or II</td>
+            <td style="width: 20%;"><input type="checkbox" name="date_eval" value="">Hypertension</td>
+            <td style="width: 20%;"><input type="checkbox" name="date_eval" value="">Kidney problems</td>
+            <td style="width: 20%;"><input type="checkbox" name="date_eval" value="">Hepatitis</td>
+            <td><input type="checkbox" name="date_eval" value="">A<input type="checkbox" name="date_eval" value="">B<input type="checkbox" name="date_eval" value="">C</td>
+          </tr>
+          <tr>
+            <td><input type="checkbox" name="date_eval" value="">Other:</td>
+          </tr>
+        </table>
+        <br>
+        <table style="width:100%;">
+          <tr>
+            <td>Hospitalizations in lifetime (physical) <input type="radio" name="date_eval" value=""> Yes <input type="radio" name="date_eval" value=""> No</td>
+          </tr>
+          <tr>
+            <td>If yes, explain: <input type="text" name="" value=""></td>
+          </tr>
+          <tr>
+            <td>Last hospitalization: <input type="text" name="" value=""></td>
+          </tr>
+        </table>
+        <br>
+        <table style="width:100%;">
+          <tr>
+            <td>Current Medications (including for substance abuse): <input type="text" name="" value=""></td>
+          </tr>
+          <tr>
+            <td>Are you following your doctor’s instructions closely on prescription medication use? <input type="radio" name="date_eval" value=""> Yes <input type="radio" name="date_eval" value=""> No</td>
+          </tr>
+          <tr>
+            <td>Are you taking any prescribed medication on regular basis for a physical problem? <input type="radio" name="date_eval" value=""> Yes <input type="radio" name="date_eval" value=""> No</td>
+          </tr>
+          <tr>
+            <td>Do you comply with your medication? <input type="radio" name="date_eval" value=""> Yes <input type="radio" name="date_eval" value=""> No</td>
+            <td>Do you receive pension for disability? <input type="radio" name="date_eval" value=""> Yes <input type="radio" name="date_eval" value=""> No</td>
+          </tr>
+        </table>
+        <br>
+        <table styel="width:100%">
+          <tr>
+            <td>How bothered are you by your medical condition? Not at all</td>
+          </tr>
+          <tr>
+            <td>How important is treatment to you for your medical condition? Not at all</td>
+          </tr>
+        </table>
+        <br>
+        <p style="text-align: center; text-decoration: underline;">SUBSTANCE USE HISTORY</p>
+        <table style="width: 100%;">
+          <tr>
+            <td style="border: 1px solid black;">Substances</td>
+            <td style="border: 1px solid black;">Route of admin</td>
+            <td style="border: 1px solid black;">First Use (age)</td>
+            <td style="border: 1px solid black;">Last Use</td>
+            <td style="border: 1px solid black;">Comments</td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid black; height: 100px;">Tobacco</td>
+            <td style="border: 1px solid black;"><input style="border:none" type="text" name="" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none" type="text" name="" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none" type="text" name="" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none" type="text" name="" value=""></td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid black; height: 100px;">Alcohol</td>
+            <td style="border: 1px solid black;"><input style="border:none" type="text" name="" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none" type="text" name="" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none" type="text" name="" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none" type="text" name="" value=""></td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid black; height: 100px;">Cannabis</td>
+            <td style="border: 1px solid black;"><input style="border:none" type="text" name="" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none" type="text" name="" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none" type="text" name="" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none" type="text" name="" value=""></td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid black; height: 100px;">Cocaine</td>
+            <td style="border: 1px solid black;"><input style="border:none" type="text" name="" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none" type="text" name="" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none" type="text" name="" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none" type="text" name="" value=""></td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid black; height: 100px;">Heroin</td>
+            <td style="border: 1px solid black;"><input style="border:none" type="text" name="" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none" type="text" name="" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none" type="text" name="" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none" type="text" name="" value=""></td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid black; height: 100px;">Other opiates:</td>
+            <td style="border: 1px solid black;"><input style="border:none" type="text" name="" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none" type="text" name="" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none" type="text" name="" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none" type="text" name="" value=""></td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid black; height: 100px;">Methadone</td>
+            <td style="border: 1px solid black;"><input style="border:none" type="text" name="" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none" type="text" name="" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none" type="text" name="" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none" type="text" name="" value=""></td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid black; height: 100px;">Amphetamines</td>
+            <td style="border: 1px solid black;"><input style="border:none" type="text" name="" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none" type="text" name="" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none" type="text" name="" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none" type="text" name="" value=""></td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid black; height: 100px;">Benzodiazepines</td>
+            <td style="border: 1px solid black;"><input style="border:none" type="text" name="" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none" type="text" name="" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none" type="text" name="" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none" type="text" name="" value=""></td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid black; height: 100px;">LSD/Psilocybin/K/PCP</td>
+            <td style="border: 1px solid black;"><input style="border:none" type="text" name="" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none" type="text" name="" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none" type="text" name="" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none" type="text" name="" value=""></td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid black; height: 100px;">Inhalants</td>
+            <td style="border: 1px solid black;"><input style="border:none" type="text" name="" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none" type="text" name="" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none" type="text" name="" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none" type="text" name="" value=""></td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid black; height: 100px;">Others</td>
+            <td style="border: 1px solid black;"><input style="border:none" type="text" name="" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none" type="text" name="" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none" type="text" name="" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none" type="text" name="" value=""></td>
+          </tr>
+          <tr>
+            <td>Additional Notes: <input type="text" name="" value=""></td>
+          </tr>
+        </table>
+        <br>
+        <table>
+          <tr>
+            <td> OD’s/DT’s in lifetime: <input type="text" name="" value=""></td>
+          </tr>
+          <tr>
+            <td> ODrug use in the last 30 days: <input type="text" name="" value=""></td>
+          </tr>
+          <tr>
+            <td> Money spent in the past 30 days on: Alcohol: <input type="text" name="" value=""> Drugs: <input type="text" name="" value=""></td>
+          </tr>
+        </table>
+        <br>
+        <p><span style="text-decoration: underline;">SUBSTANCE ABUSE RELATED WITHDRAWAL SYMPTOMS</span> (check all that apply)</p>
+        <table style="width:100%;">
+          <tr>
+            <td style="width: 20%;"><input type="checkbox" name="date_eval" value="">Denies</td>
+            <td style="width: 20%;"><input type="checkbox" name="date_eval" value="">Vomiting</td>
+            <td style="width: 20%;"><input type="checkbox" name="date_eval" value="">Constipation</td>
+            <td style="width: 20%;"><input type="checkbox" name="date_eval" value="">Irritability</td>
+            <td style="width: 20%;"><input type="checkbox" name="date_eval" value="">Problems sleeping</td>
+          </tr>
+          <tr>
+            <td style="width: 20%;"><input type="checkbox" name="date_eval" value="">Cravings</td>
+            <td style="width: 20%;"><input type="checkbox" name="date_eval" value="">Change in appetite</td>
+            <td style="width: 20%;"><input type="checkbox" name="date_eval" value="">Stomach cramps</td>
+            <td style="width: 20%;"><input type="checkbox" name="date_eval" value="">Feeling sad</td>
+            <td style="width: 20%;"><input type="checkbox" name="date_eval" value="">Fatigue</td>
+          </tr>
+          <tr>
+            <td style="width: 20%;"><input type="checkbox" name="date_eval" value="">Nausea</td>
+            <td style="width: 20%;"><input type="checkbox" name="date_eval" value="">Diarrhea</td>
+            <td style="width: 20%;"><input type="checkbox" name="date_eval" value="">Anxiety(hx)</td>
+            <td style="width: 20%;"><input type="checkbox" name="date_eval" value="">Fearful</td>
+            <td style="width: 20%;"><input type="checkbox" name="date_eval" value="">Difficulty concentrating</td>
+          </tr>
+          <tr>
+            <td style="width: 20%;"><input type="checkbox" name="date_eval" value="">Restless leg</td>
+            <td style="width: 20%;"><input type="checkbox" name="date_eval" value="">Restlessness</td>
+            <td style="width: 20%;"><input type="checkbox" name="date_eval" value="">Tremors</td>
+            <td style="width: 20%;"><input type="checkbox" name="date_eval" value="">Dizziness</td>
+            <td style="width: 20%;"><input type="checkbox" name="date_eval" value="">Headaches</td>
+          </tr>
+          <tr>
+            <td style="width: 20%;"><input type="checkbox" name="date_eval" value="">Muscle aches</td>
+            <td style="width: 20%;"><input type="checkbox" name="date_eval" value="">Muscle stiffness</td>
+            <td style="width: 20%;"><input type="checkbox" name="date_eval" value="">Weakness</td>
+            <td style="width: 20%;"><input type="checkbox" name="date_eval" value="">Numbness</td>
+            <td style="width: 20%;"><input type="checkbox" name="date_eval" value="">Hot/cold temperate changes</td>
+          </tr>
+          <tr>
+            <td style="width: 20%;"><input type="checkbox" name="date_eval" value="">Sweats</td>
+            <td style="width: 20%;"><input type="checkbox" name="date_eval" value="">Heart pounding</td>
+            <td style="width: 20%;" rowspan="2"><input type="checkbox" name="date_eval" value="">Auditory/Visual/Tactile Hallucinations</td>
+            <td style="width: 20%;"><input type="checkbox" name="date_eval" value="">Insomnia</td>
+          </tr>
+          <tr>
+          <td style="width: 20%;"><input type="checkbox" name="date_eval" value="">Other:</td>
+          </tr>
+        </table>
+        <br>
+        <table style="width:100%;">
+          <tr>
+            <td>Any history of drug/alcohol related seizures? <input type="radio" name="date_eval" value=""> Yes <input type="radio" name="date_eval" value=""> No</td>
+          </tr>
+          <tr>
+            <td>If yes, when: <input type="text" name="date_eval" value=""></td>
+          </tr>
+        </table>
+        <br>
+        <table style="width:100%;">
+          <tr>
+            <td>Sleep changes:&emsp;&emsp; <input type="radio" name="date_eval" value=""> No change &emsp;&emsp;<input type="radio" name="date_eval" value=""> Interrupted &emsp;&emsp;<input type="radio" name="date_eval" value=""> Increased &emsp;&emsp;<input type="radio" name="date_eval" value=""> Decreased</td>
+          </tr>
+          <tr>
+            <td>Expalin: <input type="text" name="date_eval" value=""></td>
+          </tr>          
+        </table>
+
+        <br>
+        <table style="width:100%;">
+          <tr>
+            <td>Appetite changes:&emsp;&emsp; <input type="radio" name="date_eval" value=""> Increased &emsp;&emsp;<input type="radio" name="date_eval" value=""> Decreased &emsp;&emsp;<input type="radio" name="date_eval" value=""> No change &emsp;&emsp;<input type="radio" name="date_eval" value=""> Weight loss &emsp;&emsp;<input type="radio" name="date_eval" value=""> Weight gain</td>
+          </tr>
+          <tr>
+            <td>Expalin: <input type="text" name="date_eval" value=""></td>
+          </tr>          
+        </table>
+        <br>
+        <table style="width:100%;">
+          <tr>
+            <td>Cravings:&emsp;&emsp; <input type="radio" name="date_eval" value=""> Absent &emsp;&emsp;<input type="radio" name="date_eval" value=""> Present:<input type="radio" name="date_eval" value="">Mild,<input type="radio" name="date_eval" value=""> Moderate, <input type="radio" name="date_eval" value=""> Severe</td>
+          </tr>
+          <tr>
+            <td>Urges: <input type="radio" name="date_eval" value="">None &emsp;&emsp; <input type="radio" name="date_eval" value="">Present,how often:</td>
+          </tr>          
+        </table>
+        <br>
+        <table style="width:100%;">
+          <tr>
+            <td>Substance Abuse Related Symptoms and Observations</td>
+          </tr>
+          <tr>
+            <td style="font-style: italic;">Evidence of increased tolerance to substance use:</td>
+          </tr>
+          <tr>
+            <td><input type="radio" name="date_eval" value=""> Need to increase quantity to get desired effect</td>
+            <td><input type="radio" name="date_eval" value=""> Increased number of use episodes</td>
+          </tr>
+          <tr>
+            <td><input type="radio" name="date_eval" value="">Repeated efforts to reduce usage</td>
+            <td><input type="radio" name="date_eval" value="">Continuous use of at least 2 day duration</td>
+          </tr>
+          <tr>
+            <td><input type="radio" name="date_eval" value="">Blackouts</td>
+          </tr>
+        </table>
+        <br>
+        <table style="width:100%;">
+          <tr>
+            <td><span style="text-decoration: underline;">Reason for Substance Use</span> (check off relevant ones):</td>
+          </tr>
+          <tr>
+            <td><input type="radio" name="date_eval" value="">Euphoria &emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Fear &emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Anger &emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Insomnia &emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Stress &emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Social Discomfort &emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Peer Pressure</td>
+          </tr>
+          <tr>
+            <td><input type="radio" name="date_eval" value=""> Other: </td>
+          </tr>
+          <tr>
+            <td>Substance Use/Abuse Circumstances: <input type="text" name="date_eval" value=""></td>
+          </tr>
+        </table>
+        <br>
+        <table style="width:100%;">
+          <tr>
+            <td>Behavior While Using Substances</td>
+          </tr>
+          <tr>
+            <td><input type="radio" name="date_eval" value="">Extroverted &emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Isolated &emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Aggressive &emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Promiscuous</td>
+          </tr>
+          <tr>
+            <td>Explain: <input type="text" name="date_eval" value=""></td>
+          </tr>
+        </table>
+        <br>
+        <table style="width:100%;">
+          <tr>
+            <td style="text-decoration:underline;">Personality/Behavioral Changes Related to Substance Use:</td>
+          </tr>
+          <tr>
+            <td style="width:50%; text-decoration:underline;">Personality</td>
+            <td style="width:50%; text-decoration:underline;">Behavioral</td>
+          </tr>
+          <tr>
+            <td><input type="checkbox" name="date_eval" value="">Increased moodiness</td>
+            <td><input type="checkbox" name="date_eval" value="">Increased moodiness</td>
+          </tr>
+          <tr>
+            <td><input type="checkbox" name="date_eval" value="">Jumpy, nervous</td>
+            <td><input type="checkbox" name="date_eval" value="">Secretive use</td>
+          </tr>
+          <tr>
+            <td><input type="checkbox" name="date_eval" value="">Irritable</td>
+            <td><input type="checkbox" name="date_eval" value="">Use at unusual times</td>
+          </tr>
+          <tr>
+            <td><input type="checkbox" name="date_eval" value="">Paranoid</td>
+            <td><input type="checkbox" name="date_eval" value="">Urgent use</td>
+          </tr>
+          <tr>
+            <td><input type="checkbox" name="date_eval" value="">Low self-confidence</td>
+            <td><input type="checkbox" name="date_eval" value="">Loss of interest in social/recreational activates</td>
+          </tr>
+          <tr>
+            <td><input type="checkbox" name="date_eval" value="">Depressed</td>
+            <td><input type="checkbox" name="date_eval" value="">Homicidal/suicidal urges while using</td>
+          </tr>
+          <tr>
+            <td><input type="checkbox" name="date_eval" value="">Withdrawn</td>
+          </tr>
+          <tr>
+            <td><input type="checkbox" name="date_eval" value="">Loss of energy</td>
+          </tr>
+          <tr>
+            <td><input type="checkbox" name="date_eval" value="">Anger</td>
+          </tr>
+        </table>
+        <br>
+        <table>
+          <tr>
+            <td>Has substance abuse resulted in: <input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td>Poor judgement: &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Yes,explain:<input type="text" name="date_eval" value="">&emsp;&emsp;<input type="radio" name="date_eval" value="">No</td>
+          </tr>
+          <tr>
+            <td>Cognitive impairments: &emsp;<input type="radio" name="date_eval" value="">Denies</td>
+          </tr>
+          <tr>
+            <td> &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Loss of memory recent or remote</td>
+            <td> <input type="radio" name="date_eval" value="">Vision changes (double vision, drooping eyelids)</td>
+          </tr>
+          <tr>
+            <td> &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Loss of muscle control</td>
+            <td> <input type="radio" name="date_eval" value="">Nystagmus (involuntary eye movements)</td>
+          </tr>
+          <tr>
+            <td> &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Inability to concentrate</td>
+          </tr>
+        </table>
+        <br>
+        <table>
+          <tr>
+            <td>History of previous treatment (Substance Abuse)</td>
+          </tr>
+          <tr>
+            <td>Substance abuse (most recent first), reason for treatment, facility, when, treatment length, outcome:</td>
+          </tr>
+          <tr>
+            <td><input type="radio" name="date_eval" value="">Client denies previous history of treatment</td>
+          </tr>
+        </table>
+        <table style="width:100%;">
+          <tr>
+            <td style="border: 1px solid black; text-align: center;">Facility Name</td>
+            <td style="border: 1px solid black; text-align: center;">When</td>
+            <td style="border: 1px solid black; text-align: center;">Length of treatment</td>
+            <td style="border: 1px solid black; text-align: center;">Completed?Y/N</td>
+            <td style="border: 1px solid black; text-align: center;">Outcome:</td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid black;"><input style="border:none;" type="text" name="date_eval" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none;" type="text" name="date_eval" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none;" type="text" name="date_eval" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none;" type="text" name="date_eval" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none;" type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid black;"><input style="border:none;" type="text" name="date_eval" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none;" type="text" name="date_eval" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none;" type="text" name="date_eval" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none;" type="text" name="date_eval" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none;" type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid black;"><input style="border:none;" type="text" name="date_eval" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none;" type="text" name="date_eval" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none;" type="text" name="date_eval" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none;" type="text" name="date_eval" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none;" type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid black;"><input style="border:none;" type="text" name="date_eval" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none;" type="text" name="date_eval" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none;" type="text" name="date_eval" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none;" type="text" name="date_eval" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none;" type="text" name="date_eval" value=""></td>
+          </tr>     
+          <tr>
+            <td>How many were detoxes only: <input type="text" name="date_eval" value=""></td>
+          </tr>                     
+        </table>
+          <p> Longest period of voluntary abstinence (when and how it was achieved): <input type="text" name="date_eval" value=""></p>
+        <br>
+        <table>
+          <tr>
+            <td>Last period of abstinence: <input type="text" name="date_eval" value="">&emsp;&emsp;</td>
+            <td>When last period of abstinence ended: <input type="text" name="date_eval" value=""></td>            
+          </tr>
+          <tr>
+            <td><br>Self-help groups attended: <input type="text" name="date_eval" value="">&emsp;&emsp;</td>
+            <td><br>Since: <input type="text" name="date_eval" value=""></td>
+            <td><br>Times/week: <input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td>Do/did you have a sponsor? <input type="text" name="date_eval" value="">&emsp;&emsp;</td>
+            <td>Attendance in last 30 days: <input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td>What do you think of self-help groups? <input type="text" name="date_eval" value=""></td>
+          </tr>
+        </table>
+        <table>
+          <tr>
+            <td>How bothered are you by your substance use? Not at all <input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td>How important to you is treatment for your substance use? Not at all <input type="text" name="date_eval" value=""></td>
+          </tr>
+        </table>
+        <br>
+        <table>
+          <tr>
+            <td style="text-decoration: underline;">Co-Occurring Mental Illness</td>
+          </tr>
+          <tr>
+            <td><input type="radio" name="date_eval" value="">Denies &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Present</td>
+          </tr>
+          <tr>
+            <td>If yes, specify diagnosis: <input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td>When were you first diagnosed? <input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td><br>Mental health treatment &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type="checkbox" name="date_eval" value="">Denies</td>
+          </tr>
+        </table>
+        <table style="width:100%;">
+          <tr>
+            <td style="border: 1px solid black; text-align: center;">Most recent treatmentfacility</td>
+            <td style="border: 1px solid black; text-align: center;">Year</td>
+            <td style="border: 1px solid black; text-align: center;">Reason fortreatment</td>
+            <td style="border: 1px solid black; text-align: center;">Type offacility</td>
+            <td style="border: 1px solid black; text-align: center;">Treatmentlength</td>
+            <td style="border: 1px solid black; text-align: center;">Outcome:</td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid black;"><input style="border:none;" type="text" name="date_eval" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none;" type="text" name="date_eval" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none;" type="text" name="date_eval" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none;" type="text" name="date_eval" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none;" type="text" name="date_eval" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none;" type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid black;"><input style="border:none;" type="text" name="date_eval" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none;" type="text" name="date_eval" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none;" type="text" name="date_eval" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none;" type="text" name="date_eval" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none;" type="text" name="date_eval" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none;" type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid black;"><input style="border:none;" type="text" name="date_eval" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none;" type="text" name="date_eval" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none;" type="text" name="date_eval" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none;" type="text" name="date_eval" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none;" type="text" name="date_eval" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none;" type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid black;"><input style="border:none;" type="text" name="date_eval" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none;" type="text" name="date_eval" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none;" type="text" name="date_eval" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none;" type="text" name="date_eval" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none;" type="text" name="date_eval" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none;" type="text" name="date_eval" value=""></td>
+          </tr>     
+          <tr>
+            <td><br><input type="checkbox" name="date_eval" value="">Bullied by others</td>
+          </tr> 
+        </table>
+        <table>         
+          <tr>
+            <td><input type="checkbox" name="date_eval" value="">Have you ever practiced the behavior of bullying or been accused of bullying by others? Explain:<input type="text" name="date_eval" value=""></td>
+          </tr>           
+        </table>     
+        <br>
+        <table>
+          <tr>
+            <td>Eating Disorders: Past diagnosis: &emsp;&emsp;&emsp;&emsp;<input type="checkbox" name="date_eval" value="">Denies &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type="checkbox" name="date_eval" value="">Present: <input type="checkbox" name="date_eval" value="">Purging <input type="checkbox" name="date_eval" value="">Binge Eating <input type="checkbox" name="date_eval" value="">Anorexia <input type="checkbox" name="date_eval" value="">Bulimia</td>
+          </tr>
+          <tr>
+            <td>Frequency: <input type="text" name="date_eval" value="">Age of onset: <input type="text" name="date_eval" value="">Lasted until: <input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td>Limiting food intake: <input type="text" name="date_eval" value="">Age of onset: <input type="text" name="date_eval" value="">Lasted until: <input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td><br>Self-Mutilation/Cutting Behaviors: &emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Yes &emsp;&emsp;<input type="radio" name="date_eval" value="">No</td>
+          </tr>
+          <tr>
+            <td>If yes, <input type="checkbox" name="date_eval" value="">Cutting <input type="checkbox" name="date_eval" value="">Burning <input type="checkbox" name="date_eval" value="">Hair pulling <input type="checkbox" name="date_eval" value="">Piercings <input type="checkbox" name="date_eval" value="">Tattoos</td>
+          </tr>
+          <tr>
+            <td>Age of onset: <input type="text" name="date_eval" value="">Frequency: <input type="text" name="date_eval" value="">Area on the body: <input type="text" name="date_eval" value="">Lasted until: <input type="text" name="date_eval" value=""></td>
+          </tr>  
+
+          <tr>
+            <td><br>Gambling behaviors:</td>
+          </tr>
+          <tr>
+            <td>Did/do you gamble (online/in person)? <input type="radio" name="date_eval" value="">No <input type="radio" name="date_eval" value="">Yes, how often?</td>
+          </tr>
+          <tr>
+            <td>Explain: <input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td>Have you spent a lot of time thinking about past gambling experience or planning future gambling ventures or bets? <input type="radio" name="date_eval" value="">Yes <input type="radio" name="date_eval" value="">No</td>
+          </tr>
+          <tr>
+            <td>Have you ever lied to family members, friends or others about how often you gamble or how much money you lost gambling? <input type="radio" name="date_eval" value="">Yes <input type="radio" name="date_eval" value="">No</td>
+          </tr>
+          <tr>
+            <td>After losing do you try to return as quickly as possible to win back your losses? <input type="radio" name="date_eval" value="">Yes <input type="radio" name="date_eval" value="">No</td>
+          </tr>
+
+          <tr>
+            <td style="text-decoration: underline;"><br>LETHAILITY ASSESSMENT</td>
+          </tr>
+          <tr>
+            <td>Do you have access to any firearms? <input type="radio" name="date_eval" value="">No <input type="radio" name="date_eval" value="">Yes</td>
+          </tr>
+          <tr>
+            <td>Do you own guns or other weapons? <input type="radio" name="date_eval" value="">No <input type="radio" name="date_eval" value="">Yes &emsp;&emsp;&emsp;&emsp;&emsp; If yes, what kind? <input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td>If you own a gun, do you have a gun permit? <input type="radio" name="date_eval" value="">N/A <input type="radio" name="date_eval" value="">No <input type="radio" name="date_eval" value="">Yes &emsp;&emsp;&emsp;&emsp;&emsp;  Do you have ammunition? <input type="radio" name="date_eval" value="">Yes <input type="radio" name="date_eval" value="">No</td>
+          </tr>
+          <tr>
+            <td>If you own a gun, do you have a gun permit? <input type="radio" name="date_eval" value="">N/A <input type="radio" name="date_eval" value="">No <input type="radio" name="date_eval" value="">Yes &emsp;&emsp;&emsp;&emsp;&emsp;  Where? <input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td>What actions have been taken to address client access to firearms: <input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td>Education offered to client and Collateral Risk &amp; Harm/Advisements Made? <input type="radio" name="date_eval" value="">Yes <input type="radio" name="date_eval" value="">No <input type="radio" name="date_eval" value="">N/A </td>
+          </tr>
+          <tr>
+            <td>Firearms/Weapons Safety Agreement Signed? &amp; Harm/Advisements Made? <input type="radio" name="date_eval" value="">Yes <input type="radio" name="date_eval" value="">No <input type="radio" name="date_eval" value="">N/A </td>
+          </tr>
+
+          <tr>
+            <td><br>Suicide:</td>
+          </tr>
+          <tr>
+            <td><input type="radio" name="date_eval" value="">Denies present or past ideations &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; <input type="radio" name="date_eval" value="">Denies present or past attempts</td>
+          </tr>
+          <tr>
+            <td><span style="text-decoration: underline;">Ideation:</span> Age 1 st experienced: <input type="text" name="date_eval" value=""> &emsp;Other times experienced: <input type="text" name="date_eval" value=""> &emsp; Associated stressors: <input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td><span style="text-decoration: underline;">Plan:</span> Age 1 st experienced: <input type="text" name="date_eval" value=""> &emsp;&emsp; Other times experienced: <input type="text" name="date_eval" value=""> &emsp;&emsp; Associated stressors: <input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td>History – Presenting attempts: <input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td>Means – What weapons do you own/possess? <input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td>Recent events (past 2 months): <input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td>Past events (prior to 2 months): <input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td>Immediate events before attempt:<input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td>Have any family members attempted or completed suicide? <input type="radio" name="date_eval" value="">No <input type="radio" name="date_eval" value="">Yes, explain: <input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td>Currently, what are your motivations to live? <input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td>Risk factors:<input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td>Protective factors: <input type="text" name="date_eval" value=""></td>
+          </tr>
+
+          <tr>
+            <td><br>Homicide: <input type="checkbox" name="date_eval" value="">Denies</td>
+          </tr>
+          <tr>
+            <td><span style="text-decoration: underline;">Ideation:</span> Age 1 st experienced: <input type="text" name="date_eval" value=""> &emsp;Other times experienced: <input type="text" name="date_eval" value=""> &emsp; Associated stressors: <input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td><span style="text-decoration: underline;">Plan:</span> Age 1 st experienced: <input type="text" name="date_eval" value=""> &emsp;&emsp; Other times experienced: <input type="text" name="date_eval" value=""> &emsp;&emsp; Associated stressors: <input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td><span style="text-decoration: underline;">History:</span> Age 1 st experienced: <input type="text" name="date_eval" value=""> &emsp;Other times experienced: <input type="text" name="date_eval" value=""> &emsp; Associated stressors: <input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td> Age at additional attempts: <input type="text" name="date_eval" value=""> &emsp;Associated stressors? <input type="text" name="date_eval" value=""> </td>
+          </tr>
+          <tr>
+            <td>Has a family member attempted or completed homicidal actions? <input type="radio" name="date_eval" value="">No <input type="radio" name="date_eval" value="">Yes</td>
+          </tr>
+          <tr>
+            <td> If yes, please explain: <input type="text" name="date_eval" value=""> </td>
+          </tr>
+          <tr>
+            <td><br> How bothered are you by your mental health? Not at all <input type="text" name="date_eval" value=""> </td>
+          </tr>
+          <tr>
+            <td> How important to you is treatment for your mental health? Not at all <input type="text" name="date_eval" value=""> </td>
+          </tr>
+
+          <tr>
+            <td style="text-decoration: underline;">OCCUPATION/SCHOOL</td>
+          </tr>
+          <tr>
+            <td>Highest level of education: <input type="text" name="date_eval" value=""> &emsp;&emsp; Are you currently in school? <input type="radio" name="date_eval" value="">Yes <input type="radio" name="date_eval" value="">No</td>
+          </tr>
+          <tr>
+            <td>Are you presenting working? &emsp; <input type="radio" name="date_eval" value="">Yes <input type="radio" name="date_eval" value="">No <input type="radio" name="date_eval" value="">Full-time <input type="radio" name="date_eval" value="">Part-time &emsp;&emsp;&emsp;&emsp; Where? <input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td>Longest full time job? <input type="text" name="date_eval" value=""> &emsp;&emsp; Where? <input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td> Has your substance use ever affect your performance at work/school? <input type="radio" name="date_eval" value="">Yes <input type="radio" name="date_eval" value="">No</td>
+          </tr>
+          <tr>
+            <td> If yes, impact on performance: <input type="radio" name="date_eval" value="">Mild <input type="radio" name="date_eval" value="">Moderate <input type="radio" name="date_eval" value="">Severe</td>
+          </tr>
+          <tr>
+            <td>Explain: <input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td>Other financial supports: <input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td>Financial dependents: <input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td>Number of days worked in the last 30 days: <input type="text" name="date_eval" value=""></td>
+          </tr>
+
+          <tr>
+            <td><br><br>Developmental History</td>
+          </tr>
+          <tr>
+            <td><input type="radio" name="date_eval" value="">Special Education <input type="radio" name="date_eval" value="">IEP in school <input type="radio" name="date_eval" value="">Did you attend an alternate high school/out of district placement?</td>
+          </tr>
+          <tr>
+            <td><input type="radio" name="date_eval" value="">Intellectual/Learning Disability <input type="radio" name="date_eval" value="">Cognitive Deficits <input type="radio" name="date_eval" value="">FASD <input type="radio" name="date_eval" value="">ADHD/ADD <input type="radio" name="date_eval" value="">Documents provided <input type="radio" name="date_eval" value="">Client denies</td>
+          </tr>
+          <tr>
+            <td>Physician/Psychologist name: <input type="text" name="date_eval" value=""> &emsp;&emsp;Age formally tested: <input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td>Additional notes: <input type="text" name="date_eval" value=""></td>
+          </tr>
+          
+          <tr>
+            <td style="text-decoration: underline;"><br>FAMILY</td>
+          </tr>
+          <tr>
+            <td>Describe your upbringing (biological, adopted, siblings, etc.): <input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td>Describe your current family: <input type="text" name="date_eval" value=""></td>
+          </tr>
+          
+          <tr>
+            <td><br>Who in your family/household has substance abuse/mental health issues?</td>
+          </tr>
+          <tr>
+            <td>Relationship: <input type="text" name="date_eval" value="">&emsp;&emsp;&emsp; Issue:<input type="text" name="date_eval" value="">&emsp;&emsp;&emsp;Living with you? <input type="radio" name="date_eval" value="">Yes <input type="radio" name="date_eval" value="">No</td>
+          </tr>
+          <tr>
+            <td>Relationship: <input type="text" name="date_eval" value="">&emsp;&emsp;&emsp; Issue: <input type="text" name="date_eval" value="">&emsp;&emsp;&emsp;Living with you? <input type="radio" name="date_eval" value="">Yes <input type="radio" name="date_eval" value="">No</td>
+          </tr>
+          <tr>
+            <td>Relationship: <input type="text" name="date_eval" value="">&emsp;&emsp;&emsp; Issue: <input type="text" name="date_eval" value="">&emsp;&emsp;&emsp;Living with you? <input type="radio" name="date_eval" value="">Yes <input type="radio" name="date_eval" value="">No</td>
+          </tr>
+
+          <tr>
+            <td><br>In the past 30 days have you had significant periods in which you have experienced serious problems getting along with:</td>
+          </tr>
+          <tr>
+            <td><input type="checkbox" name="date_eval" value="">Mother <input type="checkbox" name="date_eval" value="">Father <input type="checkbox" name="date_eval" value="">Brothers <input type="checkbox" name="date_eval" value="">Sisters <input type="checkbox" name="date_eval" value="">Sexual partner/spouse <input type="checkbox" name="date_eval" value="">Children <input type="checkbox" name="date_eval" value="">Other significant family <input type="checkbox" name="date_eval" value="">Close friends</td>
+          </tr>
+          <tr>
+            <td><input type="checkbox" name="date_eval" value="">Neighbors <input type="checkbox" name="date_eval" value="">Co-workers <input type="checkbox" name="date_eval" value="">Client denies</td>
+          </tr>
+          
+          <tr>
+            <td><br>In your lifetime have you had significant periods in which you have experienced serious problems getting along with:</td>
+          </tr>
+          <tr>
+            <td><input type="checkbox" name="date_eval" value="">Mother <input type="checkbox" name="date_eval" value="">Father <input type="checkbox" name="date_eval" value="">Brothers <input type="checkbox" name="date_eval" value="">Sisters <input type="checkbox" name="date_eval" value="">Sexual partner/spouse <input type="checkbox" name="date_eval" value="">Children <input type="checkbox" name="date_eval" value="">Other significant family <input type="checkbox" name="date_eval" value="">Close friends</td>
+          </tr>
+          <tr>
+            <td><input type="checkbox" name="date_eval" value="">Neighbors <input type="checkbox" name="date_eval" value="">Co-workers <input type="checkbox" name="date_eval" value="">Client denies</td>
+          </tr>
+          <tr>
+            <td>Is your relationship with your family/household members negatively impacted? <input type="radio" name="date_eval" value="">Yes <input type="radio" name="date_eval" value="">No</td>
+          </tr>
+          <tr>
+            <td>If yes, how? <input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td>What does your family/household members think about your substance use? Are they supportive? <input type="text" name="date_eval" value=""></td>
+          </tr>          
+
+          <tr>
+            <td style="text-decoration: underline;"><br>SOCIAL</td>
+          </tr>
+          <tr>
+            <td>How many close friends do you have? Do any of them use? <input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td>Are your social relationships negatively impacted? <input type="radio" name="date_eval" value="">Yes <input type="radio" name="date_eval" value="">No</td>            
+          </tr>
+          <tr>
+            <td>Explain: <input type="text" name="date_eval" value=""></td>
+          </tr>
+
+          <tr>
+            <td><br>Do you spend most of your free time with: <input type="radio" name="date_eval" value="">Friends <input type="radio" name="date_eval" value="">Family <input type="radio" name="date_eval" value="">Alone</td>
+          </tr>
+          <tr>
+            <td>Who do you turn to when you are troubled? <input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td>Who will be your collateral contact(s) during your time in treatment? <input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td>Release signed? <input type="checkbox" name="date_eval" value="">Yes /td>
+          </tr>
+
+          <tr>
+            <td><br>How bothered are you by your family issues? Not at all <input type="text" name="date_eval" value=""> Social issues? Not at all <input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td>How important is treatment for your family issues? Not at all <input type="text" name="date_eval" value=""> Social issues? Not at all <input type="text" name="date_eval" value=""></td>
+          </tr>
+
+          <tr>
+            <td style="text-decoration: underline;"><br>ABUSE HISTORY</td>
+          </tr>
+          <tr>
+            <td>Emotional: <input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td>Physical: <input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td>Sexual: <input type="text" name="date_eval" value=""></td>
+          </tr>
+
+          <tr>
+            <td style="text-decoration: underline;">DOMESTIC VIOLENCE</td>
+          </tr>
+          <tr>
+            <td>Have you ever received a temporary or final restraining order against you? <input type="radio" name="date_eval" value="">Yes <input type="radio" name="date_eval" value="">No</td>
+          </tr>
+          <tr>
+            <td>Have you ever filed a restraining or final restraining order against anyone? <input type="radio" name="date_eval" value="">Yes <input type="radio" name="date_eval" value="">No</td>
+          </tr>
+          <tr>
+            <td>Explain: <input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td>Additional notes: <input type="text" name="date_eval" value=""></td>
+          </tr>
+
+          <tr>
+            <td style="text-decoration: underline;"><br>PAIN ASSESSMENT</td>
+          </tr>
+          <tr>
+            <td>Previous treatment for chronic pain: <input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td>Providers Name: <input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td>Previous treatment for chronic pain: <input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td>Rate of pain (1-10 scale): <input type="radio" name="date_eval" value="">1 <input type="radio" name="date_eval" value="">2 <input type="radio" name="date_eval" value="">3 <input type="radio" name="date_eval" value="">4 <input type="radio" name="date_eval" value="">5 <input type="radio" name="date_eval" value="">6 <input type="radio" name="date_eval" value="">7 <input type="radio" name="date_eval" value="">8 <input type="radio" name="date_eval" value="">9 <input type="radio" name="date_eval" value="">10</td>
+          </tr>
+
+          <tr>
+            <td><br>Current care (reason): <input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td>Primary Care/Other: <input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td>Psychiatrist: <input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td>Therapist: <input type="text" name="date_eval" value=""></td>
+          </tr>
+
+          <tr>
+            <td style="text-decoration: underline;"><br>LEGAL HISTORY</td>
+          </tr>
+          <tr>
+            <td><input type="radio" name="date_eval" value="">DUI’s &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Arrests &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Incarcerations &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Convictions &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Probation</td>
+          </tr>
+          <tr>
+            <td>Explain: <input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td>How many times have you been charged with a crime? <input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td>Do you feel your legal problems are due to substance use? <input type="text" name="date_eval" value=""></td>
+          </tr>
+
+          <tr>
+            <td><br>How bothered are you by your legal issues? Not at all <input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td>How important to you is treatment for your legal issues? Not at all <input type="text" name="date_eval" value=""></td>
+          </tr>
+
+          <tr>
+            <td><br>SNAP ASSESSMENT</td>
+          </tr>
+          <tr>
+            <td>Client’s Strengths: <input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td>Client’s Needs: <input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td>Client’s Abilities: <input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td>Client’s Preferences: <input type="text" name="date_eval" value=""></td>
+          </tr>
+
+          <tr>
+            <td><br>Mental Status Examination (check as appropriate)</td>
+          </tr>
+          <tr>
+            <td style="font-size:12px; font-style: italic;">Please be prepared to write out and give support for your assessment, i.e., Client appears well groomed, bizarre, and inappropriate. Client was</td>
+          </tr>
+          <tr>
+            <td style="font-size:12px; font-style: italic;">dressed for summer weather, wearing shorts and open shoes despite the cold temperature/winter season.</td>
+          </tr>
+
+          <tr>
+            <td style="padding-bottom: 8px;"><br>Appearance: &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Well-groomed &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Disheveled &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Bizarre &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Inappropriate: <input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td style="padding-bottom: 8px;">Attention: &emsp;&emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Normal &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Easily distracted</td>
+          </tr>
+          <tr>
+            <td style="padding-bottom: 8px;">Concentration: &emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Good &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Trouble concentrating</td>
+          </tr>
+          <tr>
+            <td style="padding-bottom: 8px;">Hallucinations: &emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">None &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Auditory &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Visual &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Olfactory &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Command: <input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td style="padding-bottom: 8px;">Delusions: &emsp;&emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">None &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Paranoid &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Grandeur &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Reference &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Other: <input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td style="padding-bottom: 8px;">Memory: &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Intact <input type="radio" name="date_eval" value="">Impaired (check appropriate) &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Immediate &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Recent &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Remote</td>
+          </tr>
+          <tr>
+            <td style="padding-bottom: 8px;">Intelligence: &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Appears normal &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Low intelligence:<input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td style="padding-bottom: 8px;">Orientation: &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">All spheres &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Impaired (check appropriate) &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Person &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Place &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Time</td>
+          </tr>
+          <tr>
+            <td style="padding-bottom: 8px;">Social judgement: &emsp;&emsp;<input type="radio" name="date_eval" value="">Appropriate &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Impaired &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Harmful &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Unacceptable &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Unknown</td>
+          </tr>
+          <tr>
+            <td style="padding-bottom: 8px;">Insight: &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Good &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Fair &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Poor &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Denial &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Blames others</td>
+          </tr>
+          <tr>
+            <td style="padding-bottom: 8px;">Impulse control: &emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Intact &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Poor &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Unknown</td>
+          </tr>
+          <tr>
+            <td style="padding-bottom: 8px;">Thought content: ;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Appropriate &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Suicide &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Homicide &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Illness &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Obsessions &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Fears</td>
+          </tr>
+          <tr>
+            <td style="padding-bottom: 8px;">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Compulsions &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Somatic complaints &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Other: <input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td style="padding-bottom: 8px;">Affect: &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Appropriate &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Flat &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Tearful &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Labile &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Inappropriate: <input type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td style="padding-bottom: 8px;">Mood: &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Euthymic &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Depressed &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Manic &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Euphoric <input type="radio" name="date_eval" value="">Irritable &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Annoyed</td>
+          </tr>
+          <tr>
+            <td style="padding-bottom: 8px;">Speech: &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Normal &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Slurred &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Slow &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Pressured &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Loud</td>
+          </tr>
+          <tr>
+            <td style="padding-bottom: 8px;">Behavior: &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Appropriate &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Anxious &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Agitated &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Guarded &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Hostile &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Uncooperative</td>
+          </tr>
+          <tr>
+            <td style="padding-bottom: 8px;">Thought Disorder: &emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Normal &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Narcissistic &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Paranoia &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Ideas of reference &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Tangential &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Confusion</td>
+          </tr>
+          <tr>
+            <td style="padding-bottom: 8px;">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Loose associations &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Thought blocking &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Obsessions &emsp;&emsp;&emsp;&emsp;<input type="radio" name="date_eval" value="">Flight of ideas</td>
+          </tr>
+
+          <tr>
+            <td><br>Other clinician observations: <input type="text" name="date_eval" value=""></td>
+          </tr>          
+        </table>
+
+        <table style="width:100%;">
+          <tr>
+            <td style="width:40%; border: 1px solid black; text-align: center;">Please print Name</td>
+            <td style="width:20%; border: 1px solid black; text-align: center;">Date</td>
+            <td style="width:40%; border: 1px solid black; text-align: center;">Signature</td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid black; height:50px;">Clinician 
+              Daniel O’Connell, MSW, LSW, LCADC Intern</td>
+            <td style="border: 1px solid black;"><input style="border:none;" type="date" name="date_eval" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none;" type="text" name="date_eval" value=""></td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid black; height:50px;">Clinical Supervisor 
+              Eddie Mann, MSW, LCSW, LCADC, CCS</td>
+            <td style="border: 1px solid black;"><input style="border:none;" type="date" name="date_eval" value=""></td>
+            <td style="border: 1px solid black;"><input style="border:none;" type="text" name="date_eval" value=""></td>
+          </tr>
+        </table>

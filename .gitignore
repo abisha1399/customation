@@ -1,0 +1,24 @@
+# logs
+/logs
+
+# environment vars
+.env
+
+# vendor and assets
+node_modules
+
+
+# ccda service build
+ccdaservice/node_modules
+
+# dev editor configs
+/.idea/*
+/.vscode/*
+/nbproject/*
+.DS_Store
+.buildpath
+.project
+
+
+# testing
+.phpunit.result.cache

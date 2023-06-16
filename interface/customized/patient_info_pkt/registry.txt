@@ -1,0 +1,1 @@
+INSERT INTO `registry` (`name`, `state`, `directory`, `id`, `sql_run`, `unpackaged`, `date`, `priority`, `category`, `nickname`, `patient_encounter`, `therapy_group_encounter`, `aco_spec`) VALUES ('Patient Orientation Manual', '1', 'patient_orientation_manual', NULL, '1', '1', '2022-09-19 06:54:51', '0', 'Patient Demographics Admission', NULL, '1', '0', 'encounters|notes')
