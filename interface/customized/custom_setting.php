@@ -245,6 +245,15 @@ if(isset($_GET['get_all_global']))
                                 </label>
                             </div>
                         </div>
+                        <div class='row form-group'>
+                            <div class='col-sm-6'>Enable Send Email new encounter create</div>
+                            <div class='col-sm-6 oe-input' title='Rx Enable DEA #'>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
                         
                     </div>
                 </div>
@@ -316,7 +325,7 @@ if(isset($_GET['get_all_global']))
                             <div class='col-sm-6'>Enable Smart Meter Api</div>
                             <div class='col-sm-6 oe-input' title='Enable Smart Meter Api'>
                                 <label class="switch">
-                                    <input type="checkbox" class="custom_setting_event" data-id='enable_omron_api'>
+                                    <input type="checkbox" class="custom_setting_event" data-id='enable_smartmeter_api'>
                                     <span class="slider round"></span>
                                 </label>
                             </div>
@@ -397,65 +406,55 @@ if(isset($_GET['get_all_global']))
                     </div>
                 </div>
                 <!---forms tab---->
-                <div class="tab" id="tab_forms_setting">
-                    
+                <div class="tab" id="tab_forms_setting">                   
                     
                     <div class=''>
                         <div class='col-sm-12 oe-global-tab-heading'>
-                                <div class='oe-pull-toward' style='font-size: 1.4rem'>Forms &nbsp;</div>
+                                <div class='oe-pull-toward' style='font-size: 1.4rem'>Forms Setting &nbsp;</div>
                                 <div style='margin-top: 5px'></div>
                         </div>
                         <div class='clearfix'></div>                        
                         <div class='row form-group'>
                             <div class='col-sm-6'>Enable Patient consent form</div>
-                            <div class='col-sm-6 oe-input' title='Rx Enable DEA #'>
+                            <div class='col-sm-6 oe-input'>
                                 <label class="switch">
-                                    <input type="checkbox" checked>
+                                    <input type="checkbox" class="custom_setting_event" data-id='enable_patient_consentfom'>
                                     <span class="slider round"></span>
                                 </label>
                             </div>
                         </div>
                         <div class='row form-group'>
                             <div class='col-sm-6'>Enable Create New patient form</div>
-                            <div class='col-sm-6 oe-input' title='Rx Enable DEA #'>
+                            <div class='col-sm-6 oe-input'>
                                 <label class="switch">
-                                    <input type="checkbox" checked>
+                                    <input type="checkbox" class="custom_setting_event" data-id='enable_patient_newform'>
                                     <span class="slider round"></span>
                                 </label>
                             </div>
-                        </div>
+                        </div>                        
                         <div class='row form-group'>
                             <div class='col-sm-6'>Enable auto save forms</div>
-                            <div class='col-sm-6 oe-input' title='Rx Enable DEA #'>
+                            <div class='col-sm-6 oe-input'>
                                 <label class="switch">
-                                    <input type="checkbox" checked>
-                                    <span class="slider round"></span>
-                                </label>
-                            </div>
-                        </div>
-                        <div class='row form-group'>
-                            <div class='col-sm-6'>Enable auto save forms</div>
-                            <div class='col-sm-6 oe-input' title='Rx Enable DEA #'>
-                                <label class="switch">
-                                    <input type="checkbox" checked>
+                                    <input type="checkbox" class="custom_setting_event" data-id='enable_auto_save'>
                                     <span class="slider round"></span>
                                 </label>
                             </div>
                         </div>
                         <div class='row form-group'>
                             <div class='col-sm-6'>Enable Macro Button</div>
-                            <div class='col-sm-6 oe-input' title='Rx Enable DEA #'>
+                            <div class='col-sm-6 oe-input'>
                                 <label class="switch">
-                                    <input type="checkbox" checked>
+                                    <input type="checkbox" class="custom_setting_event" data-id='enable_macrobutton'>
                                     <span class="slider round"></span>
                                 </label>
                             </div>
                         </div>
                         <div class='row form-group'>
                             <div class='col-sm-6'>Enable Form Builder</div>
-                            <div class='col-sm-6 oe-input' title='Rx Enable DEA #'>
+                            <div class='col-sm-6 oe-input'>
                                 <label class="switch">
-                                    <input type="checkbox" checked>
+                                    <input type="checkbox" class="custom_setting_event" data-id='enable_formbuilder'>
                                     <span class="slider round"></span>
                                 </label>
                             </div>

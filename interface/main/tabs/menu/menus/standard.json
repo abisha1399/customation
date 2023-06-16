@@ -89,7 +89,23 @@
           "write",
           "addonly"
         ],
-        "global_req": "full_new_patient_form"
+        "global_req": ["!enable_patient_newform"]
+      },
+      {
+        "label": "New/Search",
+        "menu_id": "new0",
+        "target": "pat",
+        "url": "/interface/customized/new1/new.php",
+        "children": [],
+        "requirement": 0,
+        "acl_req": [
+          "patients",
+          "demo",
+          "write",
+          "addonly"
+        ],
+        "global_req": ["enable_patient_newform"]
+        
       },
       {
         "label": "New",

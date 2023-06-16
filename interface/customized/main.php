@@ -1,20 +1,4 @@
 
-
-<!-- <form method="POST" id="login_form" autocomplete="off" class="portal-form-align" action="../main/main_screen.php?auth=login&site=<?php echo $_SESSION['site_id']; ?>" target="_top" name="login_form">
-<input type="hidden" class="form-control input-custom input-placeholder" id="authUser" class="form-control" name="authUser" value="<?php echo $_COOKIE['authUser']; ?>">
-<input type="hidden" class="form-control input-custom input-placeholder" id="clearPass" name="clearPass"  value="<?php echo $_COOKIE['password'] ?>">
-<input type="hidden" id="login">
-</form>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-    <script>
-    $(window).on('load',function(){
-        var cookie='<?php echo  $_COOKIE['rememberme']?>';
-        if(cookie=='on'){
-            jQuery('#login').click();
-        }
-    });
-</script>     -->
-
 <?php
 
 /**
@@ -162,46 +146,7 @@ if ($GLOBALS['login_page_layout'] == 'left') {
                 return false;
             });
         });
-        $(function() {
-
-            init();
-
-            var productRegistrationController = new ProductRegistrationController();
-            productRegistrationController.getProductRegistrationStatus(function(err, data) {
-                if (err) {
-                    return;
-                }
-
-                if (data.statusAsString === 'UNREGISTERED') {
-                    productRegistrationController.showProductRegistrationModal();
-                }
-            });
-        });
-        $(function() {
-            <?php if (isset($_GET['success'])) { ?>
-                var unique_id = $.gritter.add({
-                    title: '<span class="green">' + <?php echo xlj('Success!'); ?> + '</span>',
-                    text: <?php echo xlj('Password changed successfully..'); ?>,
-                    sticky: false,
-                    time: '5000',
-                    class_name: 'my-nonsticky-class'
-                });
-            <?php } ?>
-            <?php if (isset($_GET['failure'])) { ?>
-                var unique_id = $.gritter.add({
-                    title: '<span class="red">' + <?php echo xlj('Oops!'); ?> + '</span>',
-                    text: <?php echo xlj('Something went wrong. Please try again.'); ?>,
-                    sticky: false,
-                    time: '5000',
-                    class_name: 'my-nonsticky-class'
-                });
-            <?php } ?>
-        });
-
-        function init() {
-            $("#authUser").focus();
-
-        }
+       
 
         function transmit_form() {
             <?php if (!empty($GLOBALS['restore_sessions'])) { ?>
@@ -285,6 +230,7 @@ if ($GLOBALS['login_page_layout'] == 'left') {
                          echo "<input type='hidden' name='languageChoice' value='1' />\n";
                          ?>
 
+<input type="hidden" class="form-control input-custom input-placeholder" id="facility_location" class="form-control" name="facility_location" placeholder=""  value="<?php echo $_COOKIE['facility_location']; ?>">
 <input type="hidden" class="form-control input-custom input-placeholder" id="authUser" class="form-control" name="authUser" placeholder="<?php echo xla('Enter your email'); ?>"  value="<?php echo $_COOKIE['authUser']; ?>">
 <input type="hidden" class="form-control input-custom input-placeholder" id="clearPass" name="clearPass" placeholder="<?php echo xla('Enter your password'); ?>" value="<?php echo $_COOKIE['password'] ?>">
 <input type="hidden" onClick="transmit_form()" value="Login" id="login" class="btn btn-md btn-block btn-primary login-btn-custom" style="margin-top: 35px;" name="sub">

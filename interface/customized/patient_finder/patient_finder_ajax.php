@@ -436,7 +436,9 @@ if(isset($_GET['sms_message']))
         $date = date('m/d/Y h:i:s ');
         $message=$email_notification['message'];
         $message= str_replace("***NAME***","".$patient_name."",$message);
-        $message= str_replace("***CONSENT URL***","".$url."",$message);
+        if(isset($GLOBALS['enable_patient_consentfom'])&&$GLOBALS['enable_patient_consentfom']==true){
+            $message= str_replace("***CONSENT URL***","".$url."",$message);
+        }        
         $message= str_replace("***PROVIDER***","".$provider_name."",$message);
         $message= str_replace("***DATE***","".$date."",$message);
     echo $message;   
@@ -571,7 +573,9 @@ if(isset($_GET['message']))
            
             $message=$email_notification['message'];
             $message= str_replace("***NAME***","".$patient_name."",$message);
-            $message= str_replace("***CONSENT URL***","".$url."",$message);
+            if(isset($GLOBALS['enable_patient_consentfom'])&&$GLOBALS['enable_patient_consentfom']==true){
+                $message= str_replace("***CONSENT URL***","".$url."",$message);
+            }
             $message= str_replace("***DATE***","".$date."",$message);
             $message= str_replace("***PROVIDER***","".$provider_name."",$message);
            

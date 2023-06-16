@@ -368,6 +368,7 @@ if (isset($_POST["mode"])) {
             "', default_warehouse = '" . add_escape_custom(trim((isset($_POST['default_warehouse']) ? $_POST['default_warehouse'] : ''))) .
             "', irnpool = '"       . add_escape_custom(trim((isset($_POST['irnpool']) ? $_POST['irnpool'] : ''))) .
             "', calendar = '"      . add_escape_custom($calvar) .
+            "', email = '"     . add_escape_custom(trim((isset($_POST['email']) ? $_POST['email'] : ''))) .
             "', portal_user = '"   . add_escape_custom($portalvar) .
             "', supervisor_id = '" . add_escape_custom((isset($_POST['supervisor_id']) ? (int)$_POST['supervisor_id'] : 0)) .
             "'";

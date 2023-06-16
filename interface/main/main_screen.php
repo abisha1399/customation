@@ -30,7 +30,7 @@ use u2flib_server\U2F;
 ///////////////////////////////////////////////////////////////////////
 // Functions to support MFA.
 ///////////////////////////////////////////////////////////////////////
-
+$clearpass_val=$_POST['clearPass'];
 function posted_to_hidden($name)
 {
     if (isset($_POST[$name])) {
@@ -389,6 +389,18 @@ SessionTracker::setupSessionDatabaseTracker();
 
 $_SESSION["encounter"] = '';
 
+if(isset($GLOBALS['enable_location_login'])&&$GLOBALS['enable_location_login']==true)
+{
+    $location=$_POST['facility_location'];
+    $query=sqlQuery("select facility_id from users where id=$_SESSION[authUserID]");
+    if($location != $query['facility_id'])
+    {
+        header('location:../../interface/login/login.php?loginfailure');
+        return ;
+    }
+
+}
+
 if ($GLOBALS['login_into_facility']) {
     $facility_id = $_POST['facility'];
     if ($facility_id === 'user_default') {
@@ -514,6 +526,14 @@ if ((isset($_POST['appChoice'])) && ($_POST['appChoice'] !== '*OpenEMR')) {
     $_SESSION['app1'] = $_POST['appChoice'];
 }
 
+//customazation
+if($_POST['rememberme']&&isset($GLOBALS['enable_keepmesign'])&&$GLOBALS['enable_keepmesign']==true){
+    
+    setcookie ("authUser",$_SESSION['authUser'], time()+3600*24*365*10, '/');    
+    setcookie ("password",$clearpass_val, time()+3600*24*365*10, '/');
+    setcookie ("rememberme",$_POST['rememberme'], time()+3600*24*365*10, '/');
+    setcookie ("facility_location",$_POST['facility_location'], time()+3600*24*365*10, '/');
+}
 // Pass a unique token, so main.php script can not be run on its own
 $_SESSION['token_main_php'] = RandomGenUtils::createUniqueToken();
 header('Location: ' . $web_root . "/interface/main/tabs/main.php?token_main=" . urlencode($_SESSION['token_main_php']));

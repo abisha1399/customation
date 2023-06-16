@@ -321,3 +321,17 @@ echo $twig->render('portal/home.html.twig', [
         'scriptsRenderPre' => RenderEvent::EVENT_SCRIPTS_RENDER_PRE
     ]
 ]);
+//customized
+$pid        = isset($_SESSION['pid'])?$_SESSION['pid']:'';
+$site        = isset($_SESSION['site_id'])?$_SESSION['site_id']:'';
+$constant_form_detail=sqlQuery("SELECT * FROM constant_form WHERE pid=?",array($pid));
+if(empty($constant_form_detail)&&isset($GLOBALS['enable_patient_consentfom'])&&$GLOBALS['enable_patient_consentfom']==true)
+{
+    ?>
+    <script>
+        var pid='<?php echo $pid;?>';
+        var site='<?php echo $site;?>';
+        dlgopen('../interface/customized/constant_form.php?pid=' + encodeURIComponent(pid),'_blank', 1000, 600);
+    </script>
+    <?php
+}
