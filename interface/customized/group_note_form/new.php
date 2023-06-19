@@ -42,7 +42,7 @@ $check_res = $formid ? $check_res : array();
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
-    <link rel="stylesheet" href=" ../../forms/admission_orders/assets/css/jquery.signature.css">
+    <link rel="stylesheet" href=" ../../customized/admission_orders/assets/css/jquery.signature.css">
     <style>
       td{
           font-size: 15px;
@@ -98,7 +98,7 @@ $check_res = $formid ? $check_res : array();
     <div class="row">
       <div class="container-fluid">
         <br><br>
-      <form method="post" name="my_form" action="<?php echo $rootdir; ?>/forms/group_note_form/save.php?id=<?php echo attr_url($formid); ?>">
+      <form method="post" name="my_form" action="<?php echo $rootdir; ?>/customized/group_note_form/save.php?id=<?php echo attr_url($formid); ?>">
         <div class="col-12 center">
           <h6 style="font-style:italic">Center for Network Therapy</h6>
         </div>
@@ -282,7 +282,7 @@ $check_res = $formid ? $check_res : array();
 </body>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script type="text/javascript" src="../../forms/admission_orders/assets/js/jquery.signature.min.js"></script>
+<script type="text/javascript" src="../../customized/admission_orders/assets/js/jquery.signature.min.js"></script>
 <script>
     var sig = $('#sig').signature({
         syncField: '#sign_data',

@@ -43,14 +43,14 @@ $check_res = $formid ? $check_res : array();
     <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script> -->
     <title>First Dose Medication</title>
       <?php Header::setupHeader(); ?>
-      <link rel="stylesheet" href=" ../../forms/admission_orders/assets/css/jquery.signature.css">
+      <link rel="stylesheet" href=" ../../customized/admission_orders/assets/css/jquery.signature.css">
 
 </head>
 <body>
 <div class="container mt-3">
     <div class="row">
         <div class="container-fluid">
-        <form method="post" name="my_form" action="<?php echo $rootdir; ?>/forms/first_dose_medication_form/save.php?id=<?php echo attr_url($formid); ?>">
+        <form method="post" name="my_form" action="<?php echo $rootdir; ?>/customized/first_dose_medication_form/save.php?id=<?php echo attr_url($formid); ?>">
           <b>Patient Name:</b>
           <input type="text" style="border:none; border-bottom:1px solid black;" name="pname" value="<?php echo text($check_res['pname']);?>"> <br>
           <b>DOB:</b>
@@ -498,7 +498,7 @@ $check_res = $formid ? $check_res : array();
     <!-- modal close --> 
 </body>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script type="text/javascript" src="../../forms/admission_orders/assets/js/jquery.signature.min.js"></script>
+<script type="text/javascript" src="../../customized/admission_orders/assets/js/jquery.signature.min.js"></script>
 <script>
     var sig = $('#sig').signature({
         syncField: '#sign_data',

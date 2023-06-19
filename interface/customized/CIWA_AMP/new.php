@@ -221,7 +221,7 @@ $check_res = $formid ? $check_res : array();
     <div class="container mt-3">
       <div class="row">
         <div class="container-fluid">
-        <form method="post" name="my_form" action="<?php echo $rootdir; ?>/forms/CIWA_AMP/save.php?id=<?php echo attr_url($formid); ?>">
+        <form method="post" name="my_form" action="<?php echo $rootdir; ?>/customized/CIWA_AMP/save.php?id=<?php echo attr_url($formid); ?>">
           <div style="display:inline-flex;padding-top: 50px;">
             <span>
               <p class="heading">Amphetamine Use Withdrawal Scale</p>

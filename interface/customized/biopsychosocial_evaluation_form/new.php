@@ -41,7 +41,7 @@ $check_res = $formid ? $check_res : array();
         <title><?php echo xlt("Biopsychosocial"); ?></title>
         <?php Header::setupHeader(); ?>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
-        <link rel="stylesheet" href=" ../../forms/admission_orders/assets/css/jquery.signature.css">
+        <link rel="stylesheet" href=" ../../customized/admission_orders/assets/css/jquery.signature.css">
     
     <style type="text/css">
       td{
@@ -100,7 +100,7 @@ $check_res = $formid ? $check_res : array();
     <div class="row" style="border:1px solid black;" ;>
       <div class="container-fluid">
         <br><br>
-        <form method="post" name="my_form" action="<?php echo $rootdir; ?>/forms/biopsychosocial_evaluation_form/save.php?id=<?php echo attr_url($formid); ?>">
+        <form method="post" name="my_form" action="<?php echo $rootdir; ?>/customized/biopsychosocial_evaluation_form/save.php?id=<?php echo attr_url($formid); ?>">
         <table style="width:100%;">
          <tr>
           <td><h4 style="width:100%; text-align:center;">Biopsychosocial Evaluation</h4></td>
@@ -2399,7 +2399,7 @@ $check_res = $formid ? $check_res : array();
 </body>
  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script type="text/javascript" src="../../forms/admission_orders/assets/js/jquery.signature.min.js"></script>
+<script type="text/javascript" src="../../customized/admission_orders/assets/js/jquery.signature.min.js"></script>
 <script>
     $('input.yes_no').on('click', function() {
       $(this).parent().parent().find('.yes_no').prop('checked', false);

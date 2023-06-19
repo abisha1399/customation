@@ -45,7 +45,7 @@ $check_res = $formid ? $check_res : array();
 <div class="container mt-3">
     <div class="row">
         <div class="container-fluid">
-        <form method="post" name="my_form" action="<?php echo $rootdir; ?>/forms/chemical_use_his_form/save.php?id=<?php echo attr_url($formid); ?>">
+        <form method="post" name="my_form" action="<?php echo $rootdir; ?>/customized/chemical_use_his_form/save.php?id=<?php echo attr_url($formid); ?>">
 
      <table  style="border:1px solid black;width:100%" class="table table-bordered">
       <tr>

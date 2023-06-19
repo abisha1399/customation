@@ -43,7 +43,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <title>Ntherapy</title>
       <?php Header::setupHeader(); ?>
-        <link rel="stylesheet" href=" ../../forms/admission_orders/assets/css/jquery.signature.css">
+        <link rel="stylesheet" href=" ../../customized/admission_orders/assets/css/jquery.signature.css">
       <!-- Latest compiled and minified CSS -->
       <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
@@ -845,7 +845,7 @@ q4pm max 4/24 hr abdominal cramps.
     <!-- modal close -->
 </body>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script type="text/javascript" src="../../forms/admission_orders/assets/js/jquery.signature.min.js"></script>
+<script type="text/javascript" src="../../customized/admission_orders/assets/js/jquery.signature.min.js"></script>
 <script>
     var sig = $('#sig').signature({
         syncField: '#sign_data',

@@ -42,7 +42,7 @@ $check_res = $formid ? $check_res : array();
     <body>
         <div class="container mt-3">
             <div class="row" style="border:1px solid black;"> 
-                <form method="post" name="my_form" action="<?php echo $rootdir; ?>/forms/current_withdrawal_signs_symptoms/save.php?id=<?php echo attr_url($formid); ?>">
+                <form method="post" name="my_form" action="<?php echo $rootdir; ?>/customized/current_withdrawal_signs_symptoms/save.php?id=<?php echo attr_url($formid); ?>">
                     <input type="hidden" name="csrf_token_form" value="<?php echo attr(CsrfUtils::collectCsrfToken()); ?>" />   
                     <div class="col-12 mt-3">    
                         <table style="width:100%;"> 

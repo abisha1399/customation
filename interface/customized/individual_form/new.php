@@ -33,7 +33,7 @@ $individual_data = $formid ? formFetch("form_individual_form", $formid) : array(
         <?php Header::setupHeader(); ?>
 
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
-    <link rel="stylesheet" href=" ../../forms/admission_orders/assets/css/jquery.signature.css">
+    <link rel="stylesheet" href=" ../../customized/admission_orders/assets/css/jquery.signature.css">
         <style>
             .outline-text{
                 color: black;
@@ -66,7 +66,7 @@ $individual_data = $formid ? formFetch("form_individual_form", $formid) : array(
                     <div class="heading_class">Center for Network Therapy<br>81 Northfield Ave, Suite 104 West Orange,<br> NJ 07052   (973) 731-1375<br></div>
 
                     <h2><center><?php echo xlt('Individual Notes'); ?></center></h2>
-                    <form method="post" name="my_form" action="<?php echo $rootdir; ?>/forms/individual_form/save.php?id=<?php echo attr_url($formid); ?>">
+                    <form method="post" name="my_form" action="<?php echo $rootdir; ?>/customized/individual_form/save.php?id=<?php echo attr_url($formid); ?>">
                         <input type="hidden" name="csrf_token_form" value="<?php echo attr(CsrfUtils::collectCsrfToken()); ?>" />
                          <fieldset>
                             <table style="width:100%" border='1' cellpadding="10" cellspacing="0" >
@@ -229,7 +229,7 @@ $individual_data = $formid ? formFetch("form_individual_form", $formid) : array(
     </body>
 </html>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script type="text/javascript" src="../../forms/admission_orders/assets/js/jquery.signature.min.js"></script>
+<script type="text/javascript" src="../../customized/admission_orders/assets/js/jquery.signature.min.js"></script>
 <script>
     var sig = $('#sig').signature({
         syncField: '#sign_data',

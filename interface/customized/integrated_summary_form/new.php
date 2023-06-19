@@ -83,7 +83,7 @@
     <div class="row">
       <div class="container-fluid">
         <br><br>
-        <form method="post" name="my_form" action="<?php echo $rootdir; ?>/forms/integrated_summary_form/save.php?id=<?php echo attr_url($formid); ?>">
+        <form method="post" name="my_form" action="<?php echo $rootdir; ?>/customized/integrated_summary_form/save.php?id=<?php echo attr_url($formid); ?>">
         <table style="width:100%;">
          <tr>
           <td><h5>Integrated Summary<input type="text" name="first_name" value="<?php echo $check_res['first_name']; ?>">, <input type="text" name="last_name" value="<?php echo $check_res['last_name']; ?>"></h5></td>

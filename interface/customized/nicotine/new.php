@@ -54,7 +54,7 @@ $nicotine_data = $formid ? formFetch("form_nicotine", $formid) : array();
                     
 
                     
-                    <form method="post" name="my_form" action="<?php echo $rootdir; ?>/forms/nicotine/save.php?id=<?php echo attr_url($formid); ?>">
+                    <form method="post" name="my_form" action="<?php echo $rootdir; ?>/customized/nicotine/save.php?id=<?php echo attr_url($formid); ?>">
                         <input type="hidden" name="csrf_token_form" value="<?php echo attr(CsrfUtils::collectCsrfToken()); ?>" />
                          <table style="width:100%" cellpadding="10" cellspacing="0">
                             <tr>

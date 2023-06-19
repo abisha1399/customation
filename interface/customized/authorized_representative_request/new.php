@@ -47,7 +47,7 @@ $check_res = $formid ? $check_res : array();
                 <div class="col-9">
                 <h2><?php echo xlt('Authorized Representative Request'); ?></h2>
                 </div>
-                <form method="post" name="my_form" action="<?php echo $rootdir; ?>/forms/authorized_representative_request/save.php?id=<?php echo attr_url($formid); ?>">
+                <form method="post" name="my_form" action="<?php echo $rootdir; ?>/customized/authorized_representative_request/save.php?id=<?php echo attr_url($formid); ?>">
                     <input type="hidden" name="csrf_token_form" value="<?php echo attr(CsrfUtils::collectCsrfToken()); ?>" />    
                     <div class="col-12 row" style="margin-left:765px;">   
                          <label style="font-size: 17px;"><?php echo xlt('FAX Number:'); ?></label>

@@ -54,7 +54,7 @@ $life_event_data = $formid ? formFetch("form_life_events", $formid) : array();
                     
 
                     
-                    <form method="post" name="my_form" action="<?php echo $rootdir; ?>/forms/life_events/save.php?id=<?php echo attr_url($formid); ?>">
+                    <form method="post" name="my_form" action="<?php echo $rootdir; ?>/customized/life_events/save.php?id=<?php echo attr_url($formid); ?>">
                         <input type="hidden" name="csrf_token_form" value="<?php echo attr(CsrfUtils::collectCsrfToken()); ?>" />
                          
                          <h2><center><?php echo xlt('Life Events Checklist'); ?></center></h2>

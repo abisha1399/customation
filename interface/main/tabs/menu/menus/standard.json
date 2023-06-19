@@ -984,6 +984,19 @@
             ]
           },
           {
+            "label": "Form Builder",
+            "menu_id": "form1",
+            "target": "form1",
+            "url": "/interface/customized/layoutform1/index.php",
+            "children": [],
+            "requirement": 0,
+            "acl_req": [
+              "patients",
+              "demo"
+            ],
+            "global_req": ["enable_formbuilder"]
+          },
+          {
             "label": "Layouts",
             "menu_id": "adm0",
             "target": "adm",

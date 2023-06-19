@@ -38,7 +38,7 @@ $check_res = $formid ? $check_res : array();
  <head>
         <title><?php echo xlt("Master Treatment Plan"); ?></title>
         <?php Header::setupHeader(); ?>
-        <link rel="stylesheet" href=" ../../forms/admission_orders/assets/css/jquery.signature.css">
+        <link rel="stylesheet" href=" ../../customized/admission_orders/assets/css/jquery.signature.css">
   <style type="text/css">
               td{
                 font-size: 15px;
@@ -85,7 +85,7 @@ $check_res = $formid ? $check_res : array();
  <body>
         <div class="container mt-3">
             <div class="row" style="border:1px solid black;">
-                <form method="post" name="my_form" action="<?php echo $rootdir; ?>/forms/partial_care/save.php?id=<?php echo attr_url($formid); ?>">
+                <form method="post" name="my_form" action="<?php echo $rootdir; ?>/customized/partial_care/save.php?id=<?php echo attr_url($formid); ?>">
                     <input type="hidden" name="csrf_token_form" value="<?php echo attr(CsrfUtils::collectCsrfToken()); ?>" />
                     <div class="col-12 mt-3">
                     <table style="width:100%;">
@@ -1231,7 +1231,7 @@ Mental instability</p>
     </body>
 </html>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script type="text/javascript" src="../../forms/admission_orders/assets/js/jquery.signature.min.js"></script>
+<script type="text/javascript" src="../../customized/admission_orders/assets/js/jquery.signature.min.js"></script>
 <script>
     var sig = $('#sig').signature({
         syncField: '#sign_data',

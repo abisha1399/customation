@@ -35,7 +35,7 @@ $patint_name= $result['fname'].$result['lname'];
         <title><?php echo xlt("Med Drop Box Form"); ?></title>
         <?php Header::setupHeader(); ?>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
-    <link rel="stylesheet" href=" ../../forms/admission_orders/assets/css/jquery.signature.css">
+    <link rel="stylesheet" href=" ../../customized/admission_orders/assets/css/jquery.signature.css">
     <style>
         .pen_icon {
             cursor: pointer;

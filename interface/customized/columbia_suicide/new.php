@@ -49,7 +49,7 @@ $suicide_data = $formid ? formFetch("form_columbia_suicide", $formid) : array();
             <div class="row">
                 <div class="col-12">
                     <center><h2><?php echo xlt('COLUMBIA-SUICIDE SEVERITY RATING SCALE (C-SSRS)'); ?></h2></center>
-                    <form method="post" name="my_form" action="<?php echo $rootdir; ?>/forms/columbia_suicide/save.php?id=<?php echo attr_url($formid); ?>">
+                    <form method="post" name="my_form" action="<?php echo $rootdir; ?>/customized/columbia_suicide/save.php?id=<?php echo attr_url($formid); ?>">
                         <input type="hidden" name="csrf_token_form" value="<?php echo attr(CsrfUtils::collectCsrfToken()); ?>" />
                           
                         <table border='1' style="width:100%;">

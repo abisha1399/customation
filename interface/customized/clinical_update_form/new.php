@@ -76,7 +76,7 @@
     <div class="row" style="border:1px solid black;" ;>
       <div class="container-fluid">
         <br><br>
-        <form method="post" name="my_form" action="<?php echo $rootdir; ?>/forms/clinical_update_form/save.php?id=<?php echo attr_url($formid); ?>">
+        <form method="post" name="my_form" action="<?php echo $rootdir; ?>/customized/clinical_update_form/save.php?id=<?php echo attr_url($formid); ?>">
         <table style="width:100%;">
          <tr>
           <td><h4 style="width:100%; text-align:center;">Clinical Upadte</h4></td>

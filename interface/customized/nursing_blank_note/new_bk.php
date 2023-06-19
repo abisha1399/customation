@@ -40,7 +40,7 @@ $check_res = $formid ? $check_res : array();
     <title><?php echo xlt("Consent Form"); ?></title>
     <?php Header::setupHeader(); ?>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
-    <link rel="stylesheet" href=" ../../forms/admission_orders/assets/css/jquery.signature.css">
+    <link rel="stylesheet" href=" ../../customized/admission_orders/assets/css/jquery.signature.css">
     <style>
         .pen_icon {
             cursor: pointer;
@@ -69,7 +69,7 @@ $check_res = $formid ? $check_res : array();
 <body>
     <div class="container mt-3">
         <div class="row">
-            <form method="post" name="my_form" action="<?php echo $rootdir; ?>/forms/admission_orders/save.php?id=<?php echo attr_url($formid); ?>">
+            <form method="post" name="my_form" action="<?php echo $rootdir; ?>/customized/admission_orders/save.php?id=<?php echo attr_url($formid); ?>">
                 <input type="hidden" name="csrf_token_form" value="<?php echo attr(CsrfUtils::collectCsrfToken()); ?>" />
                 <div class="col-md-12">
                     <h3 class="text-center admissionord">Admission Orders</h3>
@@ -900,7 +900,7 @@ $check_res = $formid ? $check_res : array();
 </body>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script type="text/javascript" src="../../forms/admission_orders/assets/js/jquery.signature.min.js"></script>
+<script type="text/javascript" src="../../customized/admission_orders/assets/js/jquery.signature.min.js"></script>
 <script>
     var sig = $('#sig').signature({
         syncField: '#sign_data',

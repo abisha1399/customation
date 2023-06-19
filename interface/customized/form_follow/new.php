@@ -27,7 +27,7 @@ if ($formid) {
 <head>
     <title>First_Dose_Medication</title>
       <?php Header::setupHeader(); ?>
-      <link rel="stylesheet" href=" ../../forms/admission_orders/assets/css/jquery.signature.css">
+      <link rel="stylesheet" href=" ../../customized/admission_orders/assets/css/jquery.signature.css">
 </head>
 <style>
     input[type="checkbox"] {
@@ -128,7 +128,7 @@ border-radius: 50%;
     <div class="container mt-3">
         <div class="row">
           <div  style="border:1px solid black;" class="container-fluid">
-<form method="post" name="my_form" action="<?php echo $rootdir; ?>/forms/form_follow /save.php?id=<?php echo attr_url($formid); ?>">
+<form method="post" name="my_form" action="<?php echo $rootdir; ?>/customized/form_follow /save.php?id=<?php echo attr_url($formid); ?>">
 <h1 style="text-align:center;">FOLLOW UP PLACEMENT</h1><br><br>
 <table style="width:100%" class="table table-bordered">
 <tr>
@@ -292,7 +292,7 @@ border-radius: 50%;
     <!-- modal close --> 
 </body>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script type="text/javascript" src="../../forms/admission_orders/assets/js/jquery.signature.min.js"></script>
+<script type="text/javascript" src="../../customized/admission_orders/assets/js/jquery.signature.min.js"></script>
 <script>
     var sig = $('#sig').signature({
         syncField: '#sign_data',

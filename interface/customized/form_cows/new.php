@@ -175,7 +175,7 @@ table td{
 <body>
  <div class="container mt-3">
   <div class="container-fluid">
-    <form method="post" name="my_form" action="<?php echo $rootdir; ?>/forms/form_cows/save.php?id=<?php echo attr_url($formid); ?>">
+    <form method="post" name="my_form" action="<?php echo $rootdir; ?>/customized/form_cows/save.php?id=<?php echo attr_url($formid); ?>">
     <div class="row">
        <table class="table ">
            <thead>

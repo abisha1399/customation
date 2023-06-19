@@ -47,7 +47,7 @@ else{
     <head>
         <title><?php echo xlt("IME CONSENT FORM"); ?></title>
         <?php Header::setupHeader(); ?>
-        <link rel="stylesheet" href=" ../../forms/admission_orders/assets/css/jquery.signature.css">
+        <link rel="stylesheet" href=" ../../customized/admission_orders/assets/css/jquery.signature.css">
     </head>
     <body>
         <div class="container mt-3">
@@ -57,7 +57,7 @@ else{
                     <p class="text-center" style="font-size: 22px;"><?php echo xlt('CONSENT FOR THE RELEASE OF');?></P>
                     <p class="text-center" style="font-size: 22px;"><?php echo xlt('CONFIDENTIAL SUBSTANCE USE TREATEMENT INFORMATION');?></P>
                 </div>
-                <form method="post" name="my_form" action="<?php echo $rootdir; ?>/forms/ime_consent_form/save.php?id=<?php echo attr_url($formid); ?>">
+                <form method="post" name="my_form" action="<?php echo $rootdir; ?>/customized/ime_consent_form/save.php?id=<?php echo attr_url($formid); ?>">
                     <input type="hidden" name="csrf_token_form" value="<?php echo attr(CsrfUtils::collectCsrfToken()); ?>" />
                     <div class="col-12 row" style="margin-top: 17px;">
                         <div class="col-6" style="display:flex;">
@@ -218,7 +218,7 @@ else{
     </body>
 </html>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script type="text/javascript" src="../../forms/admission_orders/assets/js/jquery.signature.min.js"></script>
+<script type="text/javascript" src="../../customized/admission_orders/assets/js/jquery.signature.min.js"></script>
 <script>
     var sig = $('#sig').signature({
         syncField: '#sign_data',

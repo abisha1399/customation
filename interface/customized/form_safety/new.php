@@ -27,7 +27,7 @@ if ($formid) {
 <head>
 <?php Header::setupHeader(); ?>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
-    <link rel="stylesheet" href=" ../../forms/admission_orders/assets/css/jquery.signature.css">
+    <link rel="stylesheet" href=" ../../customized/admission_orders/assets/css/jquery.signature.css">
 
 
 </head>
@@ -130,7 +130,7 @@ border-radius: 50%;
     <div class="container mt-3">
         <div class="row">
           <div class="container-fluid">
-<form method="post" name="my_form" action="<?php echo $rootdir; ?>/forms/form_safety/save.php?id=<?php echo attr_url($formid); ?>">
+<form method="post" name="my_form" action="<?php echo $rootdir; ?>/customized/form_safety/save.php?id=<?php echo attr_url($formid); ?>">
 
 <h2 style="text-align:center;">Safety Plan Consent</h2><br><br>
 <span style="font-size:18px;color:black;font-family:sans-serif;">I</span><input style="border:none;border-bottom:2px solid black;width:300px;" type="text" name="input" value="<?php echo text($check_res['input']);?>"/><span style="font-size:18px;color:black;font-family:sans-serif;">(print name)consent that I do not have access to prescription medication for use other than prescribed or access to weapons,lethal medications and/or other means of self harm.</span><br><br><br><br>
@@ -199,7 +199,7 @@ border-radius: 50%;
 </body>
 </html>   
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script type="text/javascript" src="../../forms/admission_orders/assets/js/jquery.signature.min.js"></script>
+<script type="text/javascript" src="../../customized/admission_orders/assets/js/jquery.signature.min.js"></script>
 <script>
     var sig = $('#sig').signature({
         syncField: '#sign_data',

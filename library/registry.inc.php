@@ -175,6 +175,21 @@ function getFormsByCategory($state = '1', $lbfonly = false)
         $rrow['LBF']       = true; // Flag this form as LBF
         $all[] = $rrow;
     }
+    //custom
+    $frmb = sqlStatement("SELECT * FROM form_builder WHERE status = '0'");
+        while ($lcol = sqlFetchArray($frmb)) {
+            $frow=array();
+            $form_id = $lcol['id'];
+            $frmname = $lcol['form_name'];
+            $frow['category'] = "Layout Based";
+            $frow['name']      = $lcol['form_name'];
+            $frow['nickname']  =  $lcol['form_name'];
+            $frow['directory'] = 'new_custom_form-'.$form_id.''; // should start with LBF
+            $frow['priority']  = 0;
+            $frow['aco_spec']  = '';
+            $frow['LBF']       = true;
+            $all[] =$frow;
+        }
 
     // Sort by category, priority, is lbf, name.
     usort($all, function ($a, $b) {

@@ -48,7 +48,7 @@ $check_res = $formid ? $check_res : array();
    
 </head>
 <body style="padding:100px;">
-<form method="post" id="my_pat_form" name="my_form" action="<?php echo $rootdir; ?>/forms/form_member/save.php?id=<?php echo attr_url($formid); ?>">
+<form method="post" id="my_pat_form" name="my_form" action="<?php echo $rootdir; ?>/customized/form_member/save.php?id=<?php echo attr_url($formid); ?>">
 
     <h2>Designation of Representative /Authorization Form    </h2>
     <p>This form is to be filled out by a member if there is a request to release the member’s health information to another person or company or a request to appoint an Authorized Representative. Please include as much information as you can.

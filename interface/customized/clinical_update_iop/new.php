@@ -42,7 +42,7 @@ $check_res = $formid ? $check_res : array();
     <body>
         <div class="container mt-3">
             <div class="row">
-                <form method="post" name="my_form" action="<?php echo $rootdir; ?>/forms/clinical_update_iop/save.php?id=<?php echo attr_url($formid); ?>">
+                <form method="post" name="my_form" action="<?php echo $rootdir; ?>/customized/clinical_update_iop/save.php?id=<?php echo attr_url($formid); ?>">
                     <input type="hidden" name="csrf_token_form" value="<?php echo attr(CsrfUtils::collectCsrfToken()); ?>" />
 
 

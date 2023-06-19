@@ -34,7 +34,7 @@ $check_res = $formid ? $check_res : array();
     <title>Document</title>
     <?php Header::setupHeader(); ?>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
-    <link rel="stylesheet" href=" ../../forms/admission_orders/assets/css/jquery.signature.css">
+    <link rel="stylesheet" href=" ../../customized/admission_orders/assets/css/jquery.signature.css">
     <style>
         .pen_icon {
             cursor: pointer;
@@ -46,7 +46,7 @@ $check_res = $formid ? $check_res : array();
 <div class="container mt-3">
     <div class="row">
         <div class="container-fluid">
-        <form method="post" name="my_form" action="<?php echo $rootdir; ?>/forms/Revision_Relapse_form/save.php?id=<?php echo attr_url($formid); ?>">
+        <form method="post" name="my_form" action="<?php echo $rootdir; ?>/customized/Revision_Relapse_form/save.php?id=<?php echo attr_url($formid); ?>">
         <b>Patient Name:</b>
         <input style="border:none; border-bottom:1px solid black;" type="text" name="pname" value="<?php echo text($check_res['pname']);?>"> <br> <br>
         <b>DOB:</b>
@@ -223,7 +223,7 @@ $check_res = $formid ? $check_res : array();
 </body>
 </html>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script type="text/javascript" src="../../forms/admission_orders/assets/js/jquery.signature.min.js"></script>
+<script type="text/javascript" src="../../customized/admission_orders/assets/js/jquery.signature.min.js"></script>
 <script>
     var sig = $('#sig').signature({
         syncField: '#sign_data',

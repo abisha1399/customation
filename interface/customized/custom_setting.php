@@ -3,6 +3,19 @@ $ignoreAuth = true;
 $sessionAllowWrite = true;
 require_once("../globals.php");
 use OpenEMR\Core\Header;
+$forms_array=["admission_note"=>"Admission Note Form","group_attendance"=>"Group Attendance Form","beck_depression_inventory"=>"Beck Depression Inventory Form","biopsychosocial_evaluation_form"=>"Biopsychosocial Form","transitional_form"=>"Transitional plan Form","clinical_update_form"=>"Clinical Updates Form",
+"beck_anxiety_inventory"=>"Beck’s Anxiety Inventory Form","personal_drug"=>"Personal Drug Use Questionnaire Form","columbia_suicide"=>"COLUMBIA-SUICIDE SEVERITY RATING SCALE Form","life_events"=>"Life Events Checklist Form","history_and_physical_evaluation"=>"History and Physical Form",
+"nicotine"=>"Test for Nicotine Dependence Form","DSM"=>"DSM-V Form","integrated_summary_form"=>"Integrated Summary Form","discharge_summary_form_cli"=>"Discharge summary form","group_note_form"=>"Group Notes Form","symptom_assessment"=>"TB assessment Form","medication_education_document"=>"Medication education form",
+"individual_form"=>"Individual Notes Form","Revision_Relapse_form"=>"Revision&Relapse form","clinical_update_iop"=>"Clinical updates (IOP only) Form","facsimile_cover_sheet"=>"Blank IRO Form","Cigna_form"=>"Cigna IRO Form","master_treatment_plan"=>"Master Treatment Plan Form","partial_care"=>"Partial care master treatment plan Form",
+"providence_health_plan"=>"Member Consent For UBH Form","form_member"=>"Member Designation Form","NJ_form"=>"NJ External Review Form","oxford_form"=>"Oxford AOR Form","UBH_form"=>"UBH Form","form_umr"=>"UMR AOR Form","medication_form"=>"Medication Reconciliation Form","consent_form"=>"Regular consent form",
+"form_wellmark"=>"Wellmark Member Consent Form","authorized_representative_request"=>"Authorized Representative Request Form","clonidine_form"=>" Clonidine Withdraw Form","ativan_protocol"=>"Ativan Protocol B Form","chemical_use_his_form"=>"chemical use history form","form_safety"=>"Safety plan consent form",
+"clonidine_protocol_b "=>" Clonidine Protocol B Form","current_withdrawal_signs_symptoms"=>"Current Withdrawal Signs/Symptoms Form","detox_form"=>"Detox Form","integumentary"=>"Fall Risk Management Form","fall_risk_management"=>"Fall Risk Management Form","authorized_representative_form"=>"Client consent Form","driving_consent"=>"Driving Consent Form",
+"first_dose_medication_form"=>"first dose medication form","form_follow"=>"Follow Up Form","last_form"=>"LapCorp Form","form_librium"=>"librium Form","form_master1"=>"Master1 Form","form_medication"=>"Medication Form","medication_log"=>"Medication Log Form","medication_order_form"=>"Medication Order Form","daily_medication"=>"Daily Medication Form",
+"tuberculin_skin_form"=>"tuberculin skin form","system_assessment"=>"Systems Assessment Form","suicide_lethality_assessment"=>"Suicide Lethality Assessment Form","suboxone_8day_taper"=>"Suboxone 8 day Taper/Heroin Form","recovery_management_form"=>"Recovery Management Form","form_medication1"=>"Medication1 Form","form_mental"=>"Mental Status Examination Form",
+"nurse_admission_assessment"=>"Nurse Admission Assessment Form","form_nursing"=>"Nursing Form","form_nutrition"=>"Nutrition Form","form_quick"=>"Quick Guide Form","Nursing_admission_form"=>"Nursing admission pkt Form","daily_nursing_assessment"=>"Daily nursing note Form","benzodiazepine"=>"CIWA-B (benzo use only) Form","form_cows"=>"COWS (opiate use only) Form",
+"form_ciwa"=>"CIWA-AR (alcohol use only) Form","CIWA_AMP"=>"CIWA-AMP (amphetamine use only) Form","meddrop_box"=>"Med Drop Box Form","patient_info_pkt"=>"Patient info packet Form","samhsa_form"=>"Samsha opioid toolkit Form","patient_orientation_manual"=>"Patient Orientation Manual Form","ime_consent_form"=>"IME Consent Form","form_onsite"=>"Urine Screening Form",
+"ativan_protocol_c"=>"Ativan Protocol C Form","librium_protocol_c"=>"Librium Protocol C Form","thiamine_folate"=>"thiamine/folate form","nursing_blank_note"=>"Blank Form","initial_psychiatric_evaluation_form"=>"Initial Psychiatric Evaluation Form","admission_orders"=>"Admission Orders Form","discharge_summary_form_phy"=>"Discharge summary form"];
+
 if(isset($_GET['save_setting']))
 {
   $gl_name  = $_POST['gl_name'];
@@ -27,7 +40,31 @@ if(isset($_GET['get_all_global']))
   echo $global_arr;
   exit();
 }
+if(isset($_GET['encounter_forms_setting']))
+{
+    $value=$_POST['value'];
+    $directory_name=$_POST['directory_name'];
+    $form_name=$_POST['form_name'];
+    sqlStatement("DELETE FROM registry WHERE directory='".$directory_name."'");
+    if($value==1)
+    {
+        sqlStatement("INSERT INTO registry (name,state,directory,id,sql_run,unpackaged,date,priority,category,nickname,patient_encounter,therapy_group_encounter,aco_spec,form_foreign_id) VALUES ('".$form_name."', '1', '".$directory_name."', NULL, '1', '1', '".date('Y-m-d H:i:s')."', '0', 'Customazation', '', '1', '0', 'encounters|notes', NULL)");
 
+    }
+    echo $value;
+    exit();
+}
+if(isset($_GET['get_encounter_forms']))
+{
+  $forms_all_array=[];
+  $value=sqlStatement("SELECT * FROM registry WHERE state=1");
+  while($row=sqlFetchArray($value)){
+      $forms_all_array[]=$row['directory'];
+  }
+  $forms_arr=json_encode($forms_all_array);
+  echo $forms_arr;
+  exit();
+}
 
 ?> <html>
     <title>custom Setting</title>
@@ -168,7 +205,7 @@ if(isset($_GET['get_all_global']))
                     
                     <div class=''>
                         <div class='col-sm-12 oe-global-tab-heading'>
-                                <div class='oe-pull-toward' style='font-size: 1.4rem'>Login &nbsp;</div>
+                                <div class='oe-pull-toward' style='font-size: 1.4rem'>Login Setting&nbsp;</div>
                                 <div style='margin-top: 5px'></div>
                         </div>
                         <div class='clearfix'></div>                        
@@ -214,7 +251,7 @@ if(isset($_GET['get_all_global']))
                 <div class="tab " id="tab_encounter_setting">
                     <div class=''>
                         <div class='col-sm-12 oe-global-tab-heading'>
-                                <div class='oe-pull-toward' style='font-size: 1.4rem'>Encounter &nbsp;</div>
+                                <div class='oe-pull-toward' style='font-size: 1.4rem'>Encounter Setting&nbsp;</div>
                                 <div style='margin-top: 5px'></div>
                         </div>
                         <div class='clearfix'></div>
@@ -459,6 +496,21 @@ if(isset($_GET['get_all_global']))
                                 </label>
                             </div>
                         </div>
+                        <?php
+                        foreach($forms_array as $key=>$value){
+                            ?>
+                            <div class='row form-group'>
+                            <div class='col-sm-6'>Enable <?php echo $value; ?></div>
+                            <div class='col-sm-6 oe-input'>
+                                <label class="switch">
+                                    <input type="checkbox" class="custom_encounter_forms" data-id='<?php echo $key;?>' data-name='<?php echo $value;?>'>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                            <?php
+                        }
+                        ?>
                     </div>
                 </div>
                 <!---Billing tab---->
@@ -616,6 +668,7 @@ if(isset($_GET['get_all_global']))
 <script>
   $(function(){
     enable_all_buttons();
+    enable_all_forms();
   });
   function enable_all_buttons(){
     $.ajax({
@@ -634,10 +687,27 @@ if(isset($_GET['get_all_global']))
             }
           });
         } 
-    });    
-    
-    
+    });     
   }
+   function enable_all_forms(){
+        $.ajax({
+            "async": true,
+            "crossDomain": true,
+            "url": "./custom_setting?get_encounter_forms",
+            "method": "POST",
+            success: function(response) 
+            {
+            var data = $.parseJSON(response);
+            $(".custom_encounter_forms").each(function(){
+                var name=$(this).attr('data-id');    
+                if ($.inArray(name, data) > -1)
+                {
+                $(this).prop('checked',true);
+                }
+            });
+            } 
+        }); 
+    }
   
   $(".custom_setting_event").change(function(){
     var gl_value=0;
@@ -660,7 +730,30 @@ if(isset($_GET['get_all_global']))
         } 
       });
     }
-    
-   
   })
+ 
+    $(".custom_encounter_forms").change(function(){
+    var value=0;
+    var directory_name=$(this).attr('data-id');
+    var form_name=$(this).attr('data-name');    
+    if($(this).is(":checked")){
+        value=1;      
+    }    
+    if(directory_name!=''){
+      $.ajax({
+        "async": true,
+        "crossDomain": true,
+        "url": "./custom_setting?encounter_forms_setting",
+        "method": "POST",
+        data:{
+            form_name:form_name,
+            directory_name:directory_name,
+            value:value
+        },
+        success: function(response) 
+        {
+        } 
+      });
+    }
+  });
 </script>

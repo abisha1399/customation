@@ -30,13 +30,13 @@ $check_res= $formid ? formFetch("form_librium_protocol_c", $formid) : array();
     <head>
         <title><?php echo xlt("Ativan Protocol B"); ?></title>
         <?php Header::setupHeader(); ?>
-        <link rel="stylesheet" href=" ../../forms/admission_orders/assets/css/jquery.signature.css">
+        <link rel="stylesheet" href=" ../../customized/admission_orders/assets/css/jquery.signature.css">
     </head> 
     <body>
        <div class="container-fliud m-4">
         <div class="row ">
             <div class="col-12">
-           <form method="post" name="my_form" action="<?php echo $rootdir; ?>/forms/librium_protocol_c/save.php?id=<?php echo attr_url($formid); ?>">
+           <form method="post" name="my_form" action="<?php echo $rootdir; ?>/customized/librium_protocol_c/save.php?id=<?php echo attr_url($formid); ?>">
                 <input type="hidden" name="csrf_token_form" value="<?php echo attr(CsrfUtils::collectCsrfToken()); ?>" />       
                 <h3>Librium Protocol C</h3>
                         <br/>
@@ -221,7 +221,7 @@ $check_res= $formid ? formFetch("form_librium_protocol_c", $formid) : array();
     <!-- modal close -->
 </body>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script type="text/javascript" src="../../forms/admission_orders/assets/js/jquery.signature.min.js"></script>
+<script type="text/javascript" src="../../customized/admission_orders/assets/js/jquery.signature.min.js"></script>
 <script>
     var sig = $('#sig').signature({
         syncField: '#sign_data',

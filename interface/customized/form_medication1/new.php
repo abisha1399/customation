@@ -30,7 +30,7 @@ if ($formid) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <?php Header::setupHeader(); ?>
-    <link rel="stylesheet" href=" ../../forms/admission_orders/assets/css/jquery.signature.css">
+    <link rel="stylesheet" href=" ../../customized/admission_orders/assets/css/jquery.signature.css">
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
@@ -48,7 +48,7 @@ if ($formid) {
     <div class="container mt-3">
         <div class="row">
           <div  style="border:1px solid black;" class="container-fluid">
-<form method="post" name="my_form" action="<?php echo $rootdir; ?>/forms/form_medication1/save.php?id=<?php echo attr_url($formid); ?>">
+<form method="post" name="my_form" action="<?php echo $rootdir; ?>/customized/form_medication1/save.php?id=<?php echo attr_url($formid); ?>">
 
 <h2>Medication Administration log</h2>
 <table style="width:100%;">
@@ -285,7 +285,7 @@ if ($formid) {
     <!-- modal close -->
 </body>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script type="text/javascript" src="../../forms/admission_orders/assets/js/jquery.signature.min.js"></script>
+<script type="text/javascript" src="../../customized/admission_orders/assets/js/jquery.signature.min.js"></script>
 <script>
     var sig = $('#sig').signature({
         syncField: '#sign_data',

@@ -32,7 +32,7 @@ $check_res = $formid ? $check_res : array();
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body style="padding:100px">
-    <form method="post" id="my_pat_form" name="my_form" action="<?php echo $rootdir; ?>/forms/form_wellmark/save.php?id=<?php echo attr_url($formid); ?>">
+    <form method="post" id="my_pat_form" name="my_form" action="<?php echo $rootdir; ?>/customized/form_wellmark/save.php?id=<?php echo attr_url($formid); ?>">
 
     <h3 style="text-align:center;">PERSONAL REPRESENTATIVE APPOINTMENT AND <br>AUTHORIZATION TO RELEASE PROTECTED HEALTH INFORMATION
     </h3><br>

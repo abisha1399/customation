@@ -31,7 +31,7 @@ $sign_data = SqlQuery("SELECT * FROM signaure Where id=".$formid."");
         <title><?php echo xlt("Patient Orientation Manual"); ?></title>
         <?php Header::setupHeader(); ?>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
-    <link rel="stylesheet" href=" ../../forms/admission_orders/assets/css/jquery.signature.css">
+    <link rel="stylesheet" href=" ../../customized/admission_orders/assets/css/jquery.signature.css">
     <style>
         .pen_icon {
             cursor: pointer;
@@ -48,7 +48,7 @@ $sign_data = SqlQuery("SELECT * FROM signaure Where id=".$formid."");
         <body>
         <div class="container mt-3">
             <div class="row">
-                <form method="post" name="my_form" action="<?php echo $rootdir; ?>/forms/patient_info_pkt/save.php?id=<?php echo attr_url($formid); ?>">
+                <form method="post" name="my_form" action="<?php echo $rootdir; ?>/customized/patient_info_pkt/save.php?id=<?php echo attr_url($formid); ?>">
                     <input type="hidden" name="csrf_token_form" value="<?php echo attr(CsrfUtils::collectCsrfToken()); ?>" />
                 <!-- <div style="border:1px solid #dee2e6;">  -->
                     <div style="display:flex;">
@@ -118,7 +118,7 @@ $sign_data = SqlQuery("SELECT * FROM signaure Where id=".$formid."");
 
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script type="text/javascript" src="../../forms/admission_orders/assets/js/jquery.signature.min.js"></script>
+<script type="text/javascript" src="../../customized/admission_orders/assets/js/jquery.signature.min.js"></script>
 <script>
     var sig = $('#sig').signature({
         syncField: '#sign_data',

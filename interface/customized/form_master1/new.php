@@ -46,7 +46,7 @@ if ($formid) {
     <div class="container mt-3">
         <div class="row">
           <div  style="border:1px solid black;" class="container-fluid">
-<form method="post" name="my_form" action="<?php echo $rootdir; ?>/forms/form_master1 /save.php?id=<?php echo attr_url($formid); ?>">
+<form method="post" name="my_form" action="<?php echo $rootdir; ?>/customized/form_master1 /save.php?id=<?php echo attr_url($formid); ?>">
 
 
 <table style="width:100%;">

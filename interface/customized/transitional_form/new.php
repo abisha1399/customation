@@ -29,7 +29,7 @@ $transitonal_data = $formid ? formFetch("form_transitional_plan", $formid) : arr
         <title><?php echo xlt("Personal Drug Use Questionnaire"); ?></title>
 
         <?php Header::setupHeader(); ?>
-        <link rel="stylesheet" href=" ../../forms/admission_orders/assets/css/jquery.signature.css">
+        <link rel="stylesheet" href=" ../../customized/admission_orders/assets/css/jquery.signature.css">
         <style>
             .outline-text{
                 color: black;
@@ -49,7 +49,7 @@ $transitonal_data = $formid ? formFetch("form_transitional_plan", $formid) : arr
             <div class="row">
                 <div class="col-12">
                     <center><h2><?php echo xlt('Transitional Plan'); ?></h2></center>
-                    <form method="post" name="my_form" action="<?php echo $rootdir; ?>/forms/transitional_form/save.php?id=<?php echo attr_url($formid); ?>">
+                    <form method="post" name="my_form" action="<?php echo $rootdir; ?>/customized/transitional_form/save.php?id=<?php echo attr_url($formid); ?>">
                         <input type="hidden" name="csrf_token_form" value="<?php echo attr(CsrfUtils::collectCsrfToken()); ?>" />
                         <div class="row">
                             <?php
@@ -498,7 +498,7 @@ $transitonal_data = $formid ? formFetch("form_transitional_plan", $formid) : arr
     </body>
 </html>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script type="text/javascript" src="../../forms/admission_orders/assets/js/jquery.signature.min.js"></script>
+<script type="text/javascript" src="../../customized/admission_orders/assets/js/jquery.signature.min.js"></script>
 <script>
         var sig = $('#sig').signature({
         syncField: '#sign_data',

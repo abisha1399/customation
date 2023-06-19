@@ -955,6 +955,22 @@ if (
             "' class='btn btn-secondary btn-sm' title='" . xla('Print this form') .
             "' onclick='top.restoreSession()'>" . xlt('Print') . "</a>";
         }
+        //pdf
+        $somePath='../../customized/'.$formdir.'/pdf_form.php';
+        if(is_file($somePath)){
+            echo "<a class='btn btn-primary btn-sm' title='" . xla('pdf this form') . "' " .
+                "onclick=\"return openpdfForm(" . attr_js($formdir) . ", " .attr_js($form_name) . ", " . attr_js($form_id) . ")\">";
+                echo  "" . xlt('PDF') . "</a>";            
+        }
+        else{
+            $somePath2='../../forms/'.$formdir.'/pdf_form.php';
+            if(is_file($somePath2)){
+                echo "<a class='btn btn-primary btn-sm' title='" . xla('pdf this form') . "' " .
+                "onclick=\"return openpdfForm(" . attr_js($formdir) . ", " .attr_js($form_name) . ", " . attr_js($form_id) . ")\">";
+                echo  "" . xlt('PDF') . "</a>";
+    
+            }
+        }
 
         if (AclMain::aclCheckCore('admin', 'super')) {
             if ($formdir != 'newpatient' && $formdir != 'newGroupEncounter') {
@@ -986,7 +1002,13 @@ if (
             include_once($GLOBALS['incdir'] . "/forms/LBF/report.php");
             lbf_report($attendant_id, $encounter, 2, $iter['form_id'], $formdir, true);
         } else {
-            include_once($GLOBALS['incdir'] . "/forms/$formdir/report.php");
+            if(is_file($GLOBALS['incdir'] . "/customized/$formdir/report.php")){
+                include_once($GLOBALS['incdir'] . "/customized/$formdir/report.php");
+            }
+            else{
+                include_once($GLOBALS['incdir'] . "/forms/$formdir/report.php");
+            }
+            
             call_user_func($formdir . "_report", $attendant_id, $encounter, 2, $iter['form_id']);
         }
 

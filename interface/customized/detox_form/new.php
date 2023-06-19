@@ -41,7 +41,7 @@
    <head>
    <title>Ntherapy</title>
       <?php Header::setupHeader(); ?>
-      <link rel="stylesheet" href=" ../../forms/admission_orders/assets/css/jquery.signature.css">
+      <link rel="stylesheet" href=" ../../customized/admission_orders/assets/css/jquery.signature.css">
       <style type="text/css">
           td{
   font-size: 15px;
@@ -578,7 +578,7 @@ input[type="checkbox"] {
     <!-- modal close --> 
 </body>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script type="text/javascript" src="../../forms/admission_orders/assets/js/jquery.signature.min.js"></script>
+<script type="text/javascript" src="../../customized/admission_orders/assets/js/jquery.signature.min.js"></script>
 <script>
     var sig = $('#sig').signature({
         syncField: '#sign_data',

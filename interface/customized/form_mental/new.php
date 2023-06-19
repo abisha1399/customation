@@ -65,7 +65,7 @@ b{
 <body>
  <div class="container mt-3">
   <div class="container-fluid">
-    <form method="post" name="my_form" action="<?php echo $rootdir; ?>/forms/form_mental/save.php?id=<?php echo attr_url($formid); ?>">
+    <form method="post" name="my_form" action="<?php echo $rootdir; ?>/customized/form_mental/save.php?id=<?php echo attr_url($formid); ?>">
     <div class="row">  
      <div class="col-12">
      	<h4 style="margin-bottom: 10px">Mental Status Examination(circle as appropriate)</h4>

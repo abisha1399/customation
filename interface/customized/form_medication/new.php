@@ -40,7 +40,7 @@ $check_res = $formid ? $check_res : array();
 	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?php Header::setupHeader(); ?>
-      <link rel="stylesheet" href=" ../../forms/admission_orders/assets/css/jquery.signature.css">
+      <link rel="stylesheet" href=" ../../customized/admission_orders/assets/css/jquery.signature.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style type="text/css">
     	input[type=text] {
@@ -73,7 +73,7 @@ $check_res = $formid ? $check_res : array();
      	<br/>
      	
      </div>
-    <form method="post" name="my_form" action="<?php echo $rootdir; ?>/forms/form_medication/save.php?id=<?php echo attr_url($formid); ?>">
+    <form method="post" name="my_form" action="<?php echo $rootdir; ?>/customized/form_medication/save.php?id=<?php echo attr_url($formid); ?>">
      <div class="col-6">
      	<h5>Patients Name:<input type="text" name="name"  value=" <?php echo text($check_res['patient_name']); ?>"></h5>
       <h5>DOB:<input type="date" name="dob" value="<?php echo text($check_res['dob']); ?>"></h5>
@@ -259,7 +259,7 @@ $check_res = $formid ? $check_res : array();
     <!-- modal close -->
 </body>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script type="text/javascript" src="../../forms/admission_orders/assets/js/jquery.signature.min.js"></script>
+<script type="text/javascript" src="../../customized/admission_orders/assets/js/jquery.signature.min.js"></script>
 <script>
     var sig = $('#sig').signature({
         syncField: '#sign_data',

@@ -48,7 +48,7 @@ $drug_data = $formid ? formFetch("form_personal_drug", $formid) : array();
             <div class="row">
                 <div class="col-12">
                     <h2><?php echo xlt('Personal Drug Use Questionnaire'); ?></h2>
-                    <form method="post" name="my_form" action="<?php echo $rootdir; ?>/forms/personal_drug/save.php?id=<?php echo attr_url($formid); ?>">
+                    <form method="post" name="my_form" action="<?php echo $rootdir; ?>/customized/personal_drug/save.php?id=<?php echo attr_url($formid); ?>">
                         <input type="hidden" name="csrf_token_form" value="<?php echo attr(CsrfUtils::collectCsrfToken()); ?>" />
                         <!-- <fieldset> -->
                             <div class="row">

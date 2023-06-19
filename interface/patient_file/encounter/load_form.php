@@ -17,7 +17,11 @@ require_once("../../../library/registry.inc.php");
 
 use OpenEMR\Common\Acl\AclMain;
 use OpenEMR\Common\Twig\TwigContainer;
-
+if (substr($_GET["formname"], 0, 15) === 'new_custom_form') {
+    $form_id = explode("-",$_GET["formname"])[1];
+    header("Location:../../customized/custom_form/new.php?form_id=".$form_id);
+    exit;
+}
 if (substr($_GET["formname"], 0, 3) === 'LBF') {
     // Use the List Based Forms engine for all LBFxxxxx forms.
     include_once("$incdir/forms/LBF/new.php");
@@ -37,8 +41,15 @@ if (substr($_GET["formname"], 0, 3) === 'LBF') {
         echo (new TwigContainer(null, $GLOBALS['kernel']))->getTwig()->render('core/unauthorized.html.twig', ['pageTitle' => $formLabel]);
         exit;
     }
+    if(is_file("$incdir/customized/" . $_GET["formname"] . "/new.php"))
+    {
+        include_once("$incdir/customized/" . $_GET["formname"] . "/new.php");
+    }
+    else{
+        include_once("$incdir/forms/" . $_GET["formname"] . "/new.php");
+    }
 
-    include_once("$incdir/forms/" . $_GET["formname"] . "/new.php");
+    
 }
 
 if (!empty($GLOBALS['text_templates_enabled'])) { ?>

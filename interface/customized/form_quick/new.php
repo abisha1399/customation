@@ -142,7 +142,7 @@ border-radius: 50%;
     <div class="container mt-3">
         <div class="row">
           <div  style="border:1px solid black;" class="container-fluid">
-<form method="post" name="my_form" action="<?php echo $rootdir; ?>/forms/form_quick/save.php?id=<?php echo attr_url($formid); ?>">
+<form method="post" name="my_form" action="<?php echo $rootdir; ?>/customized/form_quick/save.php?id=<?php echo attr_url($formid); ?>">
 
 
 <table style="width:100%;">

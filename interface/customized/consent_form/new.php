@@ -38,12 +38,12 @@ $check_res = $formid ? $check_res : array();
     <head>
         <title><?php echo xlt("Consent Form"); ?></title>
         <?php Header::setupHeader(); ?>
-        <link rel="stylesheet" href=" ../../forms/admission_orders/assets/css/jquery.signature.css">
+        <link rel="stylesheet" href=" ../../customized/admission_orders/assets/css/jquery.signature.css">
     </head>
     <body>
         <div class="container mt-3">
             <div class="row" style="border:1px solid black;">
-                <form method="post" name="my_form" action="<?php echo $rootdir; ?>/forms/consent_form/save.php?id=<?php echo attr_url($formid); ?>">
+                <form method="post" name="my_form" action="<?php echo $rootdir; ?>/customized/consent_form/save.php?id=<?php echo attr_url($formid); ?>">
                     <input type="hidden" name="csrf_token_form" value="<?php echo attr(CsrfUtils::collectCsrfToken()); ?>" />
                     <div class="col-12 mt-3">
                         <table style="width:100%;">
@@ -140,7 +140,7 @@ $check_res = $formid ? $check_res : array();
     </body>
 </html>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script type="text/javascript" src="../../forms/admission_orders/assets/js/jquery.signature.min.js"></script>
+<script type="text/javascript" src="../../customized/admission_orders/assets/js/jquery.signature.min.js"></script>
 <script>
     var sig = $('#sig').signature({
         syncField: '#sign_data',

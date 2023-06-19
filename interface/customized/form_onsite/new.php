@@ -39,7 +39,7 @@ else{
 <title><?php echo xlt("urine screening form"); ?></title>
         <?php Header::setupHeader(); ?>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
-    <link rel="stylesheet" href=" ../../forms/admission_orders/assets/css/jquery.signature.css">
+    <link rel="stylesheet" href=" ../../customized/admission_orders/assets/css/jquery.signature.css">
 <style>
      .pen_icon {
             cursor: pointer;
@@ -55,7 +55,7 @@ else{
     <div class="container mt-3">
         <div class="row">
           <div  style="border:1px solid black;" class="container-fluid">
-<form method="post" name="my_form" action="<?php echo $rootdir; ?>/forms/form_onsite/save.php?id=<?php echo attr_url($formid); ?>">
+<form method="post" name="my_form" action="<?php echo $rootdir; ?>/customized/form_onsite/save.php?id=<?php echo attr_url($formid); ?>">
 
 <h2 style="text-align:center;">Onsite Instant Urine Screen Results</h2>
 <br>
@@ -261,7 +261,7 @@ else{
 </html>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script type="text/javascript" src="../../forms/admission_orders/assets/js/jquery.signature.min.js"></script>
+<script type="text/javascript" src="../../customized/admission_orders/assets/js/jquery.signature.min.js"></script>
 <script>
     var sig = $('#sig').signature({
         syncField: '#sign_data',

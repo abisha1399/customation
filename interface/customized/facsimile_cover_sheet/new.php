@@ -45,7 +45,7 @@ $check_res = $formid ? $check_res : array();
                      <h2 class="text-center">Facsimile Transmission Cover Sheet</h2>   
                 </div>  
                 
-                <form method="post" name="my_form" action="<?php echo $rootdir; ?>/forms/facsimile_cover_sheet/save.php?id=<?php echo attr_url($formid); ?>">
+                <form method="post" name="my_form" action="<?php echo $rootdir; ?>/customized/facsimile_cover_sheet/save.php?id=<?php echo attr_url($formid); ?>">
                     <input type="hidden" name="csrf_token_form" value="<?php echo attr(CsrfUtils::collectCsrfToken()); ?>" />    
                     <hr/>    
                     <div class="col-12 mt-5">    
