@@ -45,7 +45,7 @@ echo "<script>var portalUrl='" . attr($clientApp->portalUrl) . "'</script>";
 <head>
     <title>Fax/SMS</title>
     <link rel="stylesheet" href="../../../../public/assets/bootstrap-3-3-4/dist/css/bootstrap.min.css?v=42" type="text/css">
-<link rel="stylesheet" href="../../../themes/style_ash_blue.css?v=42?v=42" type="text/css">
+<!-- <link rel="stylesheet" href="../../../themes/style_ash_blue.css?v=42?v=42" type="text/css"> -->
 <link rel="stylesheet" href="../../../../public/assets/font-awesome-4-6-3/css/font-awesome.min.css?v=42" type="text/css">
 <link rel="stylesheet" href="../../../../public/assets/jquery-datetimepicker/build/jquery.datetimepicker.min.css?v=42" type="text/css">
 
@@ -278,6 +278,12 @@ window.location.reload();
             word-wrap: break-word;
             overflow: hidden;
         }
+        .navbar-default{
+            background: #6b7cb6 !important;
+        }
+        .navbar-brand,.dropdown-toggle,.text-clr{
+            color:black !important;
+        }
     </style>
     
 </head>
@@ -334,7 +340,7 @@ window.location.reload();
                     </ul>
                 </li>
                 <li>
-                    <a href="#" onclick="docInfo(event, portalUrl)"><?php echo xlt('Visit Account Portal'); ?></a>
+                    <a href="#" class='text-clr' onclick="docInfo(event, portalUrl)"><?php echo xlt('Visit Account Portal'); ?></a>
                 </li>
             </ul>
         </div><!-- /.navbar-collapse -->

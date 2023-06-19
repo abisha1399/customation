@@ -113,7 +113,8 @@ final class Utils
      */
     public static function defaultUserAgent(): string
     {
-        return sprintf('GuzzleHttp/%d', ClientInterface::MAJOR_VERSION);
+        return 1;
+        //return sprintf('GuzzleHttp/%d', ClientInterface::MAJOR_VERSION);
     }
 
     /**

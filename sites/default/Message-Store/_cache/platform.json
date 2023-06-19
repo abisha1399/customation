@@ -1,0 +1,11 @@
+{
+    "token_type": "bearer",
+    "access_token": "SUFEMDFQMDNQQVMwMHxBQUFaWjE2TEhnX2V2YUtPMHMwclo0M0taRGNvVzBlNFBQM3ltY0NtNDEyU2pHMWpMaTh6d3E4LW1oTHh6SXpPLVBKWE5wcjVYZS1fR21lUnAtQURBVEYzYXh3VjRJTUFvZHEwQTBGajBsc2xxdzRocF8tdmVPdVFqZDRMU3BpVFlPcXRjSGRTZUE2VVJkWG9ZdEVQUExUeHR6S1dBQjdHZU1xSUhLTUxYS2lHYXk2dW5TTUFTVnQ0V3hxb1NfZ1pXbXFTMkJkWjk2VXx6c3ZEb2d8RHB4Q193OVVRb0RCVUVwVlpxM25EUXxBUXxBQXxBQUFBQUxWUlE2dw",
+    "expires_in": 3600,
+    "expire_time": 1687177885,
+    "refresh_token": "SUFEMDFQMDNQQVMwMHxBQUFibWxOcTN2WW9zRjEzcld6MFVOdGV4V0otbGEwdVQ0eUxOTkhoOWpES1piQVdNNW1NcTRmZjV1WlA0T0N1TjkwZWFkX0kzVl9CN2FDUnhmODZQbEQyNHZ1OVV1NnQzbjlrcmNWbG1JdTVwQll0R21ZRTJzR0lJVGF3LWZNQjl5dEwtUWlhQTFReXFzWmtfVFFkZTdFNWtCVG5PaGRWY1VsM2ltMlJoX2FGOGZ2ekQxLVExdGNsamxEQ1V6Y0xzVWNDWWZDYkJ6WXx6c3ZEb2d8TG1DaHMtTFE5UEQ3QXY1MHY5VXNyQXxBUXxBQXxBQUFBQUpDLVoxVQ",
+    "refresh_token_expires_in": 604800,
+    "refresh_token_expire_time": 1687779085,
+    "scope": "EditAccounts ReadMessages CallControl Faxes ReadPresence VoipCalling ReadCallRecording A2PSMS Analytics ReadContacts SubscriptionPubNub ReadAccounts Contacts EditExtensions RoleManagement Video RingOut SMS TeamMessaging InternalMessages ReadCallLog SubscriptionWebhook EditPresence EditMessages",
+    "owner_id": "722097009"
+}

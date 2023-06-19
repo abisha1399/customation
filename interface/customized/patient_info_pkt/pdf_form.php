@@ -24,7 +24,8 @@ $check_res= $formid ? formFetch("patient_info_pkt", $formid) : array();
 
     use OpenEMR\Core\Header;
 
-$mpdf = new mPDF('','','','',8, 10,10,10, 5, 10, 4, 10);
+use Mpdf\Mpdf;
+$mpdf = new mPDF();
 ?>
 
 

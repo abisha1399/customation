@@ -15,6 +15,7 @@
 require_once(__DIR__ . "/../../globals.php");
 require_once("$srcdir/forms.inc.php");
 require_once("$srcdir/encounter.inc.php");
+require_once("../../customized/form_custom.php");
 
 use OpenEMR\Common\Acl\AclMain;
 use OpenEMR\Common\Csrf\CsrfUtils;
@@ -26,7 +27,7 @@ use OpenEMR\Services\ListService;
 if (!CsrfUtils::verifyCsrfToken($_POST["csrf_token_form"])) {
     CsrfUtils::csrfNotVerified();
 }
-
+//echo '<pre>';print_r($_POST);exit();
 $facilityService = new FacilityService();
 $encounterService = new EncounterService();
 
@@ -52,7 +53,6 @@ if (
 } else {
     $date = isset($_POST['form_date']) ? DateTimeToYYYYMMDDHHMMSS($_POST['form_date']) : null;
 }
-
 $onset_date = isset($_POST['form_onset_date']) ? DateTimeToYYYYMMDDHHMMSS($_POST['form_onset_date']) : null;
 $sensitivity = $_POST['form_sensitivity'] ?? null;
 $pc_catid = $_POST['pc_catid'] ?? null;
@@ -86,6 +86,12 @@ $provider_id = $encounter_provider ? $encounter_provider : $provider_id;
 $encounter_type = $_POST['encounter_type'] ?? '';
 $encounter_type_code = null;
 $encounter_type_description = null;
+if(isset($_SESSION['clone_encounter']))
+{
+   
+    $date=DateTimeToYYYYMMDDHHMMSS(date('Y-m-d H:i'));
+    $onset_date=$date;
+}
 // we need to lookup the codetype and the description from this if we have one
 if (!empty($encounter_type)) {
     $listService = new ListService();
@@ -218,6 +224,67 @@ if ($mode == 'new') {
 } else {
     die("Unknown mode '" . text($mode) . "'");
 }
+//customazation
+if(isset($_SESSION['clone_encounter'])){
+    $old_encounter= $_SESSION['clone_encounter'];
+    $new_encounter= $encounter;
+    $forms_data=sqlstatement("SELECT * FROM forms WHERE encounter=? AND formdir!='newpatient' AND deleted=0",array($old_encounter));
+     while($form_row=sqlFetchArray($forms_data))
+     {
+         if($form_row['formdir']=='eye_mag')
+         {
+             addForm($new_encounter, $form_row['form_name'], $form_row['form_id'], $form_row['formdir'], $form_row['pid']);
+         }
+         
+         if(substr($form_row['formdir'], 0, 11)=='custom_form' || substr($form_row['formdir'], 0, 3)=='LBF')
+         {
+             
+             $custom_form=sqlstatement("SELECT * FROM lbf_data  WHERE form_id=?",array($form_row['form_id']));
+             $form_id = sqlInsert("INSERT INTO lbf_data " . "( field_id, field_value ) VALUES ( '', '' )");
+             sqlStatement("DELETE FROM lbf_data WHERE form_id = ? AND " . "field_id = ''", array($form_id));
+             addForm($new_encounter, $form_row['form_name'], $form_id, $form_row['formdir'], $form_row['pid']);
+             while($data=sqlFetchArray($custom_form))
+             {
+                 $field_id = $data['field_id'];
+                 $value = $data['field_value'];
+                 $inputfield_id = isset($data['inputfield_id'])?$data['inputfield_id']:0;
+                 sqlStatement("INSERT INTO lbf_data " . "( form_id, field_id, field_value,inputfield_id ) VALUES ( ?, ?, ?,? )", array($form_id, $field_id, $value,$inputfield_id));
+             } 
+     
+         }
+        
+         else
+         {
+             $tableName='form_'.$form_row['formdir'];
+             if($form_row['formdir']=='procedure_order')
+             {
+                 $tableName='procedure_order';
+                 $select_table=sqlQuery("SELECT * FROM $tableName WHERE procedure_order_id=?",array($form_row['form_id']));
+             }
+             else{
+                 $select_table=sqlQuery("SELECT * FROM $tableName WHERE id=?",array($form_row['form_id']));
+             }    
+             if(isset($select_table['id']))
+             {
+                 if(isset($select_table['encounter']))
+                 {
+                     $select_table['encounter']=$new_encounter;
+                 }
+                 unset($select_table['id']);
+                 $newid=encsubmit($tableName,$select_table);
+                 addForm($new_encounter, $form_row['form_name'], $newid, $form_row['formdir'],$form_row['pid']);                
+             }
+             else
+             {
+                 addForm($new_encounter, $form_row['form_name'], $form_row['form_id'], $form_row['formdir'],$form_row['pid']);
+             }
+             
+         }
+         
+     }
+     unset($_SESSION['clone_encounter']);
+     
+ }
 
 setencounter($encounter);
 

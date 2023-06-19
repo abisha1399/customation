@@ -27,7 +27,8 @@ $sql = "SELECT * FROM `discharge_summary_phy` WHERE id = ? AND pid = ?";
 
     use OpenEMR\Core\Header;
 
-$mpdf = new mPDF('','','','',8, 10,10,10, 5, 10, 4, 10);
+use Mpdf\Mpdf;
+$mpdf = new mPDF();
 
 
 ?>

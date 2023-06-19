@@ -520,6 +520,19 @@ ALTER TABLE `automatic_notification` CHANGE `sms_gateway_type` `sms_gateway_type
 ALTER TABLE `users_secure` ADD `salt` TEXT NULL AFTER `login_fail_counter`;
 
 #createnew customaztion encounter forms
+DROP TABLE IF EXISTS `form_admission_note1`;
+CREATE TABLE IF NOT EXISTS `form_admission_note1` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `pid` int(11) NOT NULL,
+  `encounter` int(11) NOT NULL,
+  `txt1` text NOT NULL,
+  `inp1` varchar(150) DEFAULT NULL,
+  `inp2` varchar(150) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+COMMIT;
 DROP TABLE IF EXISTS `form_admission_note`;
 CREATE TABLE IF NOT EXISTS `form_admission_note` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

@@ -9,6 +9,7 @@
    
    $returnurl = 'encounter_top.php';
    $formid = 0 + (isset($_GET['id']) ? $_GET['id'] : 0);
+   $mode_type=isset($_GET['clone_id'])&&$_GET['clone_id']!=''||$formid==0?'insert':'update';
    if ($formid) {
        $sql = "SELECT * FROM `form_admission_note1` WHERE id=? AND pid = ? AND encounter = ?";
        $res = sqlStatement($sql, array($formid,$_SESSION["pid"], $_SESSION["encounter"]));
@@ -77,8 +78,8 @@ input {
     <div class="container mt-3">
     <div class="row">
       <div class="container-fluid">
-      <form method="post" name="my_form1" action="<?php echo $rootdir; ?>/forms/admission_note/save.php?id=<?php echo attr_url($formid); ?>">
-      
+      <form method="post" name="my_form1" action="<?php echo $rootdir; ?>/customized/admission_note/save.php?id=<?php echo attr_url($formid); ?>">
+        <input type="hidden" value='<?php echo $mode_type;?>' name="mode">
         <table style="width: 100%;">
             <tr>
                 <td><b>Nursing Admission Assessment</b></td>

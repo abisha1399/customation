@@ -135,6 +135,16 @@ switch ($search_any_type) {
                             <span data-bind="text:date"></span>
                             <span data-bind="text:category"></span>
                         </a>
+                        <?php
+                        if(isset($GLOBALS['enable_cloneencounter'])&&$GLOBALS['enable_cloneencounter']==true){
+                            ?>
+                            <a href="#" class="dropdown-item" data-bind="click:cloneenc">
+                          &nbsp;<?php echo xlt("Clone"); ?>
+                        </a>
+                        <?php
+                        }                       
+                        ?>
+                        
                         <a href="#" class="dropdown-item" data-bind="click:reviewEncounterEvent">
                             <i class="fa fa-rotate-left"></i>&nbsp;<?php echo xlt("Review"); ?>
                         </a>

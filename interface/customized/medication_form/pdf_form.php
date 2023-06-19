@@ -33,7 +33,8 @@ $data =array();
 
 use OpenEMR\Core\Header;
 
-$mpdf = new mPDF('','','','',8, 10,10,10, 5, 10, 4, 10);
+use Mpdf\Mpdf;
+$mpdf = new mPDF();
 ?>
 <?php
 $header ="<div style='color:white;background-color:#808080;text-align:center;padding-top:8px;'>

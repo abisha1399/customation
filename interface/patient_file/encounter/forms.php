@@ -342,6 +342,37 @@ function openEncounterForm(formdir, formname, formid) {
 function refreshVisitDisplay() {
   location.href = <?php echo js_escape($rootdir); ?> + '/patient_file/encounter/forms.php';
 }
+//customized
+function CloneEncounterForm(formdir, formname, formid) {
+  var dir = formdir.split('-');
+  console.log(dir);
+  if(dir[0]=='custom_form')
+  {
+    var url = <?php echo js_escape($rootdir); ?> + '/forms/custom_form/new.php?formname=' +
+      encodeURIComponent(formdir) + '&edit_form_id=' + encodeURIComponent(formid)+'&clone_id=' + encodeURIComponent(formid)
+    parent.twAddFrameTab('enctabs', formname, url);
+  }
+  else
+    {
+        var url = <?php echo js_escape($rootdir); ?> + '/patient_file/encounter/view_form.php?formname=' +
+        encodeURIComponent(formdir) + '&id=' + encodeURIComponent(formid)+'&clone_id=' + encodeURIComponent(formid);
+        if (formdir == 'newpatient' || !parent.twAddFrameTab) {
+            top.restoreSession();
+            location.href = url;
+        }
+        else {
+            parent.twAddFrameTab('enctabs', formname, url);
+        }
+    }
+  return false;
+}
+
+function openpdfForm(formdir, formname, formid,type){
+    
+     var url = <?php echo js_escape($rootdir); ?> + '/'+type+'/'+formdir+'/pdf_form.php?formname=' +
+      encodeURIComponent(formdir) + '&id=' + encodeURIComponent(formid);
+      parent.twAddFrameTab('enctabs', formname+' pdf', url);
+}
 
 </script>
 
@@ -958,15 +989,15 @@ if (
         //pdf
         $somePath='../../customized/'.$formdir.'/pdf_form.php';
         if(is_file($somePath)){
-            echo "<a class='btn btn-primary btn-sm' title='" . xla('pdf this form') . "' " .
-                "onclick=\"return openpdfForm(" . attr_js($formdir) . ", " .attr_js($form_name) . ", " . attr_js($form_id) . ")\">";
+            echo "<a class='btn btn-secondary btn-sm form-edit-button' title='" . xla('pdf this form') . "' " .
+                "onclick=\"return openpdfForm(" . attr_js($formdir) . ", " .attr_js($form_name) . ", " . attr_js($iter['form_id']) . ",'customized')\">";
                 echo  "" . xlt('PDF') . "</a>";            
         }
         else{
             $somePath2='../../forms/'.$formdir.'/pdf_form.php';
             if(is_file($somePath2)){
-                echo "<a class='btn btn-primary btn-sm' title='" . xla('pdf this form') . "' " .
-                "onclick=\"return openpdfForm(" . attr_js($formdir) . ", " .attr_js($form_name) . ", " . attr_js($form_id) . ")\">";
+                echo "<a class='btn btn-secondary btn-sm form-edit-button' title='" . xla('pdf this form') . "' " .
+                "onclick=\"return openpdfForm(" . attr_js($formdir) . ", " .attr_js($form_name) . ", " . attr_js($iter['form_id']) . ",'forms')\">";
                 echo  "" . xlt('PDF') . "</a>";
     
             }
@@ -981,10 +1012,21 @@ if (
                     "&encounter=" . attr_url($encounter) .
                     "&pid=" . attr_url($pid) .
                     "' class='btn btn-danger btn-sm btn-delete' title='" . xla('Delete this form') . "' onclick='top.restoreSession()'>" . xlt('Delete') . "</a>";
+                if(isset($GLOBALS['enable_clone_form'])&&$GLOBALS['enable_clone_form']==true){
+                    echo "<a class='btn btn-secondary btn-sm form-edit-button' " .
+                    "id='form-edit-button-" . attr($formdir) . "-" . attr($iter['id']) . "' " .
+                    "href='#' " .
+                    "title='" . xla('Clone this form') . "' " .
+                    "onclick=\"return CloneEncounterForm(" . attr_js($formdir) . ", " .
+                    attr_js($form_name) . ", " . attr_js($iter['form_id']) . ")\">";
+                echo "" . xlt('Clone') . "</a>";
+                }    
+                
             } else {
                 // do not show delete button for main encounter here since it is displayed at top
             }
         }
+        
 
         echo "<a class='btn btn-secondary btn-sm collapse-button-form' title='" . xla('Expand/Collapse this form') . "' data-toggle='collapse' data-target='#divid_" . attr($divnos) . "'>" . xlt('Expand / Collapse') . "</a>";
         echo "</div>\n"; // Added as bug fix.

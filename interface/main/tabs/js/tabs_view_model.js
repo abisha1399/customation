@@ -241,6 +241,20 @@ function clickNewGroupEncounter(data,evt)
 {
     newTherapyGroupEncounter();
 }
+//customazation
+function cloneEncounter(encId)
+{
+    top.restoreSession();
+    var url=webroot_url+'/interface/forms/newpatient/view.php?clone_id=' + encId;
+    navigateTab(url,"rev",function () {
+        activateTabByName("rev",true);
+    });
+
+}
+function cloneenc(data,evt)
+{
+    cloneEncounter(data.id());
+}
 
 function newEncounter(data, evt) {
     var url = '';

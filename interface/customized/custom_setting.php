@@ -185,9 +185,9 @@ if(isset($_GET['get_encounter_forms']))
             <li class="nav-item">
               <a class="nav-link text-body" id="billing_setting">Billing</a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <a class="nav-link text-body" id="prescription_setting">Prescription</a>
-            </li>
+            </li> -->
             <li class="nav-item">
               <a class="nav-link text-body" id="third_party_setting">Third parties Api</a>
             </li>
@@ -257,36 +257,36 @@ if(isset($_GET['get_encounter_forms']))
                         <div class='clearfix'></div>
                         <div class='row form-group'>
                             <div class='col-sm-6'>Enable level of care</div>
-                            <div class='col-sm-6 oe-input' title='Rx Enable DEA #'>
+                            <div class='col-sm-6 oe-input'>
                                 <label class="switch">
-                                    <input type="checkbox" checked>
+                                    <input type="checkbox"  class="custom_setting_event" data-id='enable_enc_levelofcare'>
                                     <span class="slider round"></span>
                                 </label>
                             </div>
                         </div>
                         <div class='row form-group'>
                             <div class='col-sm-6'>Enable Clone Encounter</div>
-                            <div class='col-sm-6 oe-input' title='Rx Enable DEA #'>
+                            <div class='col-sm-6 oe-input'>
                                 <label class="switch">
-                                    <input type="checkbox" checked>
+                                    <input type="checkbox" class="custom_setting_event" data-id='enable_cloneencounter'>
                                     <span class="slider round"></span>
                                 </label>
                             </div>
                         </div>
                         <div class='row form-group'>
                             <div class='col-sm-6'>Enable lifetime tracker</div>
-                            <div class='col-sm-6 oe-input' title='Rx Enable DEA #'>
+                            <div class='col-sm-6 oe-input'>
                                 <label class="switch">
-                                    <input type="checkbox" checked>
+                                    <input type="checkbox" class="custom_setting_event" data-id='enable_lifetime_tracker'>
                                     <span class="slider round"></span>
                                 </label>
                             </div>
                         </div>
                         <div class='row form-group'>
                             <div class='col-sm-6'>Enable Send Email new encounter create</div>
-                            <div class='col-sm-6 oe-input' title='Rx Enable DEA #'>
+                            <div class='col-sm-6 oe-input'>
                                 <label class="switch">
-                                    <input type="checkbox" checked>
+                                    <input type="checkbox" class="custom_setting_event" data-id='enable_send_mail_enc'>
                                     <span class="slider round"></span>
                                 </label>
                             </div>
@@ -479,6 +479,15 @@ if(isset($_GET['get_encounter_forms']))
                             </div>
                         </div>
                         <div class='row form-group'>
+                            <div class='col-sm-6'>Enable Clone Forms</div>
+                            <div class='col-sm-6 oe-input'>
+                                <label class="switch">
+                                    <input type="checkbox" class="custom_setting_event" data-id='enable_clone_form'>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class='row form-group'>
                             <div class='col-sm-6'>Enable Macro Button</div>
                             <div class='col-sm-6 oe-input'>
                                 <label class="switch">
@@ -573,9 +582,9 @@ if(isset($_GET['get_encounter_forms']))
                         <div class='clearfix'></div>                        
                         <div class='row form-group'>
                             <div class='col-sm-6'>Enable Ringcentral</div>
-                            <div class='col-sm-6 oe-input' title='Rx Enable DEA #'>
+                            <div class='col-sm-6 oe-input'>
                                 <label class="switch">
-                                    <input type="checkbox" checked>
+                                    <input type="checkbox" class="custom_setting_event" data-id='enable_ringcentral_fax'>
                                     <span class="slider round"></span>
                                 </label>
                             </div>
@@ -611,7 +620,7 @@ if(isset($_GET['get_encounter_forms']))
                             <div class='col-sm-6'>Enable 1uphealth integration</div>
                             <div class='col-sm-6 oe-input' title='Rx Enable DEA #'>
                                 <label class="switch">
-                                    <input type="checkbox" checked>
+                                    <input type="checkbox" class="custom_setting_event" data-id='enable_ringcentral_fax'>
                                     <span class="slider round"></span>
                                 </label>
                             </div>
@@ -650,6 +659,15 @@ if(isset($_GET['get_encounter_forms']))
                             <div class='col-sm-6 oe-input' title='Rx Enable DEA #'>
                                 <label class="switch">
                                     <input type="checkbox" checked>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>   
+                        <div class='row form-group'>
+                            <div class='col-sm-6'>Enable TelehealthAppoitment</div>
+                            <div class='col-sm-6 oe-input'>
+                                <label class="switch">
+                                    <input type="checkbox" class="custom_setting_event" data-id='enable_telehealthappt'>
                                     <span class="slider round"></span>
                                 </label>
                             </div>

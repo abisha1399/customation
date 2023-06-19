@@ -132,6 +132,7 @@ function delete_drug_sales($patient_id, $encounter_id = 0)
 //
 function form_delete($formdir, $formid, $patient_id, $encounter_id)
 {
+    
     $formdir = ($formdir == 'newpatient') ? 'encounter' : $formdir;
     $formdir = ($formdir == 'newGroupEncounter') ? 'groups_encounter' : $formdir;
     if (substr($formdir, 0, 3) == 'LBF') {
@@ -146,7 +147,13 @@ function form_delete($formdir, $formid, $patient_id, $encounter_id)
           "lo.form_id = f.formdir AND lo.source = 'E' AND lo.uor > 0)";
         // echo "<!-- $where -->\n"; // debugging
         row_delete("shared_attributes", $where);
-    } elseif ($formdir == 'procedure_order') {
+    }
+    elseif(substr($formdir, 0, 11) == 'custom_form')
+    {
+        sqlStatement("DELETE FROM lbf_data WHERE form_id='".$formid."'");
+        
+    }
+     elseif ($formdir == 'procedure_order') {
         $tres = sqlStatement("SELECT procedure_report_id FROM procedure_report " .
         "WHERE procedure_order_id = ?", array($formid));
         while ($trow = sqlFetchArray($tres)) {

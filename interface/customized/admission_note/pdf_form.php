@@ -1,43 +1,36 @@
 <html>
   <head>
-  <link rel="stylesheet" href="./style.css">
+  <!-- <link rel="stylesheet" href="./style.css"> -->
 </head>
 
 <?php
 // ini_set("display_errors", 1);
 require_once("../../globals.php");
-require_once("$srcdir/classes/Address.class.php");
 require_once("$srcdir/classes/InsuranceCompany.class.php");
 require_once("$webserver_root/custom/code_types.inc.php");
 include_once("$srcdir/patient.inc");
 //include_once("$srcdir/tcpdf/tcpdf_min/tcpdf.php");
-include_once("$webserver_root/vendor/mpdf2/mpdf/mpdf.php");
+
 
 $formid = 0 + (isset($_GET['id']) ? $_GET['id'] : 0);
 $name = $_GET['formname'];
 $pid = $_session['pid'];
 $encounter = $_GET["encounter"];
 $data =array();
-
+$check_res=[];
 if ($formid) {
-    $sql = "SELECT * FROM form_admission_note1 WHERE id = ? AND pid = ?";
-    $res = sqlStatement($sql, array($formid,$pid));
-    // $data = sqlFetchArray($res);
-    // print_r($data);die;
-
-    for ($iter = 0; $row = sqlFetchArray($res); $iter++) {
-      $all[$iter] = $row;
-  }
-  $check_res = $all[0];
+    $sql = "SELECT * FROM form_admission_note1 WHERE id = ?";
+    $check_res = sqlQuery($sql, array($formid));
+    
 }
-    $check_res = $formid ? $check_res : array();
-    //print_r($check_res);die;
+$check_res = $formid ? $check_res : array();
+ 
     
    // $filename = $GLOBALS['OE_SITE_DIR'].'/documents/cnt/'.$pid.'_'.$encounter.'_behaviour_symptoms.pdf';
     
 use OpenEMR\Core\Header;
-
-$mpdf = new mPDF('','','','',8, 10,10,10, 5, 10, 4, 10);
+use Mpdf\Mpdf;
+$mpdf = new mPDF();
 ?>
 <?php
 $header ="<div style='color:white;background-color:#808080;text-align:center;padding-top:8px;'>

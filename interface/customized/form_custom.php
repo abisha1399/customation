@@ -60,4 +60,15 @@ function formUpdate_new($tableName, $values, $id,$pid)
     $sqlBindingArray[] = $id;
     return sqlInsert($sql, $sqlBindingArray);
 }
+function encsubmit($tableName, $values)
+{
+    $sqlBindingArray = [];
+    $sql = "insert into " . escape_table_name($tableName) . " set ";
+    foreach ($values as $key => $value) {      
+        $sql .= " " . escape_sql_column_name($key, array($tableName)) . " = ?,";
+        $sqlBindingArray[] = $value;        
+    }
+    $sql = substr($sql, 0, -1);   
+    return sqlInsert($sql, $sqlBindingArray);
+}
 ?>

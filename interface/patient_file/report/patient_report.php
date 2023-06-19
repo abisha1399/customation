@@ -269,13 +269,20 @@ $oemr_ui = new OemrUI($arrOeUiSettings);
                         <br />
                         <button type="button" class="genreport btn btn-primary btn-save btn-sm" value="<?php echo xla('Generate Report'); ?>" ><?php echo xlt('Generate Report'); ?></button>
                         <button type="button" class="genpdfrep btn btn-primary btn-download btn-sm" value="<?php echo xla('Download PDF'); ?>" ><?php echo xlt('Download PDF'); ?></button>
-
+                        <!-- //customized -->
                         <?php
+                        if(isset($GLOBALS['enable_ringcentral_fax'])&&$GLOBALS['enable_ringcentral_fax']==true)
+                        {
+                        ?>
+                        <input type="button" class="genfax btn btn-primary btn-sm" value="<?php xl('Send Fax', 'e'); ?>" /><span id="waitplace"></span>               
+                        <?php
+                        }
 
-                            $eventDispatcher->dispatch(new GenericEvent(), PatientReportEvent::ACTIONS_RENDER_POST);
+                            $eventDispatcher->dispatch(PatientReportEvent::ACTIONS_RENDER_POST, new GenericEvent());
 
                         ?>
                         <input type='hidden' name='pdf' value='0' />
+                        <input type='hidden' name='fax' value='0'>
                         <br />
 
                         <!-- old ccr button position -->
@@ -553,7 +560,7 @@ $oemr_ui = new OemrUI($arrOeUiSettings);
         </div>  <!-- close patient_reports DIV -->
     </div><!--end of container div-->
     <?php $oemr_ui->oeBelowContainerDiv();?>
-
+    <script src="../../customized/js/fax.js"></script>
 <script>
 
 // jQuery stuff to make the page a little easier to use

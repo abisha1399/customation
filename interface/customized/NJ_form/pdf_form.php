@@ -37,7 +37,8 @@ if ($formid) {
     
 use OpenEMR\Core\Header;
 
-$mpdf = new mPDF('','','','',8, 10,10,10, 5, 10, 4, 10);
+use Mpdf\Mpdf;
+$mpdf = new mPDF();
 ?>
 <?php
 ob_start();

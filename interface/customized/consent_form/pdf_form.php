@@ -1,12 +1,12 @@
 <?php
 // ini_set("display_errors", 1);
 require_once("../../globals.php");
-require_once("$srcdir/classes/Address.class.php");
+
 require_once("$srcdir/classes/InsuranceCompany.class.php");
 require_once("$webserver_root/custom/code_types.inc.php");
 include_once("$srcdir/patient.inc");
 //include_once("$srcdir/tcpdf/tcpdf_min/tcpdf.php");
-include_once("$webserver_root/vendor/mpdf2/mpdf/mpdf.php");
+
 
 $formid = 0 + (isset($_GET['id']) ? $_GET['id'] : 0);
 $name = $_GET['formname'];
@@ -27,7 +27,8 @@ $data =array();
     // print_r($filename);die;
 use OpenEMR\Core\Header;
 
-$mpdf = new mPDF('','','','',8, 10,10,10, 5, 10, 4, 10);
+use Mpdf\Mpdf;
+$mpdf = new mPDF();
 ?>
 <style>
 </style>

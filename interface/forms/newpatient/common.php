@@ -26,7 +26,6 @@ use OpenEMR\Services\ListService;
 use OpenEMR\Services\UserService;
 use OpenEMR\OeUI\OemrUI;
 use OpenEMR\OeUI\RenderFormFieldHelper;
-
 $facilityService = new FacilityService();
 
 if ($GLOBALS['enable_group_therapy']) {
@@ -42,7 +41,7 @@ $years = array($thisyear - 1, $thisyear, $thisyear + 1, $thisyear + 2);
 $mode = (!empty($_GET['mode'])) ? $_GET['mode'] : null;
 
 $viewmode = false;
-if (!empty($_GET['id'])) {
+if (!empty($_GET['id'])||isset($_GET['clone_id'])) {
     $viewmode = true;
 }
 
@@ -60,6 +59,12 @@ if ($mode === "followup") {
 if ($viewmode) {
     $id = (isset($_REQUEST['id'])) ? $_REQUEST['id'] : '';
     $result = sqlQuery("SELECT * FROM form_encounter WHERE id = ?", array($id));
+    if(isset($_GET['clone_id'])){
+        session_start();        
+        $id=$_GET['clone_id'];
+        $_SESSION['clone_encounter']=$id;
+        $result = sqlQuery("SELECT * FROM form_encounter WHERE encounter = ?", array($id));
+    }  
     $encounter = $result['encounter'];
     $encounter_followup_id = $result['parent_encounter_id'] ?? null;
     if ($encounter_followup_id) {
@@ -370,7 +375,7 @@ $ires = sqlStatement("SELECT id, type, title, begdate FROM lists WHERE " .
         <form class="mt-3" id="new-encounter-form" method='post' action="<?php echo $rootdir ?>/forms/newpatient/save.php" name='new_encounter'>
             <input type="hidden" id="facility_id" name="facility_id" value="<?php echo attr(getDefinedFacility()); ?>" />
             <?php if ($viewmode && $mode !== "followup") { ?>
-                <input type='hidden' name='mode' value='update' />
+                <input type='hidden' name='mode' value='<?php echo (isset($_GET["clone_id"])) ? 'new' : 'update' ?>' />
                 <input type='hidden' name='id' value='<?php echo (isset($_GET["id"])) ? attr($_GET["id"]) : '' ?>' />
             <?php } else { ?>
                 <input type='hidden' name='mode' value='new' />

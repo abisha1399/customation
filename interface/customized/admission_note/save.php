@@ -22,9 +22,8 @@ $id = 0 + (isset($_GET['id']) ? $_GET['id'] : '');
 $txt1=$_POST["txt1"];
 $inp1=$_POST["inp1"];
 $inp2=$_POST["inp2"];
-
-
-if ($id && $id != 0) {
+$mode=$_POST['mode'];
+if ($mode=='update') {
     // echo "test1";
     // die();
     sqlStatement("UPDATE form_admission_note1 SET `pid`= ?, `encounter`= ?, `txt1`= ?,`inp1`= ?,`inp2`= ? WHERE id = ?", array($_SESSION["pid"],$_SESSION["encounter"],$txt1,$inp1,$inp2,$id));
