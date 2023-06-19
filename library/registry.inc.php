@@ -176,7 +176,9 @@ function getFormsByCategory($state = '1', $lbfonly = false)
         $all[] = $rrow;
     }
     //custom
-    $frmb = sqlStatement("SELECT * FROM form_builder WHERE status = '0'");
+    if(isset($GLOBALS['enable_formbuilder'])&&$GLOBALS['enable_formbuilder']==true)
+    {
+        $frmb = sqlStatement("SELECT * FROM form_builder WHERE status = '0'");
         while ($lcol = sqlFetchArray($frmb)) {
             $frow=array();
             $form_id = $lcol['id'];
@@ -189,7 +191,9 @@ function getFormsByCategory($state = '1', $lbfonly = false)
             $frow['aco_spec']  = '';
             $frow['LBF']       = true;
             $all[] =$frow;
-        }
+        }   
+    }
+    
 
     // Sort by category, priority, is lbf, name.
     usort($all, function ($a, $b) {
