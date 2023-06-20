@@ -174,6 +174,10 @@ if ($_POST['mode'] == 'portal-save') {
 
 function SaveAudit($pid, $amts, $cc)
 {
+    if(isset($_POST['form_apt']))
+    {
+        $price=$_POST['payment'];
+    }
     $appsql = new ApplicationTable();
     try {
         $audit = array();
@@ -188,6 +192,10 @@ function SaveAudit($pid, $amts, $cc)
         $audit['table_args'] = $amts;
         $audit['action_user'] = "0";
         $audit['action_taken_time'] = "";
+        if(isset($_POST['form_apt']))
+        {
+            $audit['paid_price'] = $price;
+        }
         $cryptoGen = new CryptoGen();
         $audit['checksum'] = $cryptoGen->encryptStandard($cc);
 
@@ -225,6 +233,10 @@ function CloseAudit($pid, $amts, $cc, $action = 'payment posted', $paction = 'no
         $audit['checksum'] = $cryptoGen->encryptStandard($cc);
 
         $edata = $appsql->getPortalAudit($pid, 'review', 'payment');
+        if($edata['apt_id']!=0)
+        {
+            $audit['paid_price'] = $edata['paid_price'];
+        }
         $audit['date'] = $edata['date'];
         if ($edata['id'] > 0) {
             $appsql->portalAudit('update', $edata['id'], $audit);
