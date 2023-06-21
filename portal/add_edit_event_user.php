@@ -42,8 +42,10 @@ require_once("../interface/globals.php");
 require_once("$srcdir/patient.inc.php");
 require_once("$srcdir/forms.inc.php");
 require_once("$srcdir/appointments.inc.php");
-
+require_once("$srcdir/payment.inc.php");
 use OpenEMR\Services\AppointmentService;
+use OpenEMR\Common\Crypto\CryptoGen;
+$cryptoGen = new CryptoGen();
 
 // Things that might be passed by our opener.
 //
@@ -64,7 +66,7 @@ if (!empty($eid) && !$checkEidInAppt) {
     exit();
 }
 
-if (!empty($_POST['form_pid'])) {
+if (!empty($_POST['form_pid'])&&$_SESSION['pid']!='') {
     if ($_POST['form_pid'] != $_SESSION['pid']) {
         echo js_escape("error");
         exit();
@@ -417,7 +419,7 @@ if (($_POST['form_action'] ?? null) == "save") {
         // =======================================
         // multi providers case
         // =======================================
-
+       
         if (is_array($_POST['form_provider_ae'])) {
             // obtain the next available unique key to group multiple providers around some event
             $q = sqlStatement("SELECT MAX(pc_multiple) as max FROM openemr_postcalendar_events");
@@ -454,9 +456,14 @@ if (($_POST['form_action'] ?? null) == "save") {
                     "1, " . (int)$_POST['facility'] . " )"); // FF stuff
             } // foreach
         } else {
+            
             $_POST['form_apptstatus'] = '^';
+            if($_POST['form_category']==16){
+                $_POST['form_apptstatus'] = 'doc_confirmed';
+            }
+           
             $insert = true;
-            sqlStatement("INSERT INTO openemr_postcalendar_events ( " .
+            $insert_id=   sqlinsert("INSERT INTO openemr_postcalendar_events ( " .
                 "pc_catid, pc_aid, pc_pid, pc_title, pc_time, pc_hometext, " .
                 "pc_informant, pc_eventDate, pc_endDate, pc_duration, pc_recurrtype, " .
                 "pc_recurrspec, pc_startTime, pc_endTime, pc_alldayevent, " .
@@ -482,6 +489,22 @@ if (($_POST['form_action'] ?? null) == "save") {
                 "'" . add_escape_custom($locationspec) . "', " .
                 "1, " .
                 "1, " . (int)($_POST['facility'] ?? null) . ")"); // FF stuff
+                //custom
+                if($insert_id&&$_POST['form_category']==16)
+                {
+                    $uid=1;
+                    $cdate=date("Y-m-d H:i:s");
+                    sqlQuery("update onsite_portal_activity set apt_id='" . add_escape_custom($insert_id) . "' ,pending_action='notify patient',action_taken='payment posted' ,status='closed',narrative='Payment authorized.',table_action='update',action_user='" . add_escape_custom($uid) . "',action_taken_time= '" . $cdate . "'order by id desc limit 1");
+                    $payitems = sqlQuery("SELECT * FROM onsite_portal_activity WHERE apt_id = ?", array($insert_id));
+                    if(!empty($payitems))
+                    {
+                        $ccdata = json_decode($cryptoGen->decryptStandard($payitems['checksum']), true);
+                        $payitems['source'] = $ccdata['authCode'] . " : " . $ccdata['transId'];
+                        $timestamp = date('Y-m-d H:i:s');
+                        frontPayment($payitems['patient_id'], 0, 'credit_card', $payitems['source'], $payitems['paid_price'], 0, $timestamp);//insertion to 'payments' table.
+                    }              
+                    $appoitment_id=$insert_id;
+                }
         } // INSERT single
     } // else - insert
 } elseif (($_POST['form_action'] ?? null) == "delete") {
@@ -515,7 +538,8 @@ if (!empty($_POST['form_action'])) {
     $title = xl("Patient Reminders");
     $user = sqlQueryNoLog("SELECT users.username FROM users WHERE authorized = 1 And id = ?", array($_POST['form_provider_ae']));
     $rtn = addPnote($_SESSION['pid'], $note, 1, 1, $title, $user['username'], '', 'New');
-
+    //custom
+    $_SESSION['new_appoitment_id'] = $appoitment_id;
     $_SESSION['whereto'] = '#appointmentcard';
     header('Location:./home.php');
     exit();
@@ -672,6 +696,32 @@ if ($userid) {
 </script>
 <body class="skin-blue">
     <div class="container-fluid">
+        <!-- //custom -->
+    <?php if ($_GET['eid'] && $row['pc_apptstatus'] == 'doc_confirmed') { 
+        $eid=$_GET['eid'];
+        $provider_detail = sqlquery("SELECT concat(u.fname,' ',u.lname) as provider_name, u.email as provider_email,u.phone as provider_phone,concat(p.fname,' ',p.lname) as patient_name,f.phone as facility_phone,f.email as facility_email,ce.pc_eid,ce.pc_pid 
+        FROM openemr_postcalendar_events as ce left join users as u on u.id=ce.pc_aid left join facility as f on f.id=ce.pc_facility left join patient_data as p on p.pid=ce.pc_pid WHERE ce.pc_eid='".$eid."'");
+        $provider_name= $provider_detail['provider_name'];
+        $provider_email = $provider_detail['provider_email'];
+        $provider_phone = $provider_detail['provider_phone'];
+        $patient_name  = $provider_detail['patient_name'];
+        $facility_phone = $provider_detail['facility_phone'];
+        $facility_email = $provider_detail['facility_email'];
+        //echo  $provider_name.$provider_email;
+        ?>
+        <div class="container">
+            <div class="row">
+                <div class="col-12" style="font-size:20px;">
+                    <p>hi <?php  echo $patient_name;?>,</p>            
+                  <p> you want to reshedule or cancel  your appoitment please contact the clinic or provider</p>
+                  <p>the best contact number communicate with provider: <b><?php echo $provider_phone;?> </b> (or)Email:<b><?php echo $provider_email;?></b></p> 
+                  <p>clinic mobile number: <b><?php echo $facility_phone;?></b></p>
+                  <p>clinic email id: <b><?php echo $facility_email;?></b></p>
+                </div>
+            </div>
+         </div>
+    <?php
+    }else{?>
         <form method='post' name='theaddform' id='theaddform' action='add_edit_event_user.php?eid=<?php echo attr_url($eid); ?>'>
             <div class="col-12">
                 <input type="hidden" name="form_action" id="form_action" value="" />
@@ -750,11 +800,14 @@ if ($userid) {
                 <div class="row input-group my-1">
                     <?php if (($_GET['eid'] ?? null) && $row['pc_apptstatus'] !== 'x') { ?>
                         <input type='button' id='form_cancel' class='btn btn-danger' onsubmit='return false' value='<?php echo xla('Cancel Appointment'); ?>' onclick="cancel_appointment()" />
-                    <?php } ?>
+                    <?php } ?>                    
                     <input type='button' name='form_save' class='btn btn-success' onsubmit='return false' value='<?php echo xla('Save'); ?>' onclick="validate()" />
                 </div>
             </div>
         </form>
+        <?php
+    }
+    ?>
         <script>
             function change_provider() {
                 var f = document.forms.namedItem("theaddform");
@@ -857,6 +910,7 @@ if ($userid) {
 
             // Check for errors when the form is submitted.
             function validate() {
+                var catory_val=$("#form_category").val();
                 var f = document.getElementById('theaddform');
                 if (!f.form_date.value || !f.form_hour.value || !f.form_minute.value) {
                     alert(<?php echo xlj('Please click on Openings to select a time.'); ?>);
@@ -867,11 +921,21 @@ if ($userid) {
                     alert(<?php echo xlj('Your Id is missing. Cancel and try again.'); ?>);
                     return false;
                 }
+                if(catory_val==16){
+                    <?php if (!$eid) { ?>
+                payment_popup();
+                <?php } else {?>
+                    setpaystatus('ok');
+                    <?php } ?>
+                }
+                else{
+                    var form_action = document.getElementById('form_action');
+                    form_action.value = "save";
+                    f.submit();
+                    return false;
+                }
 
-                var form_action = document.getElementById('form_action');
-                form_action.value = "save";
-                f.submit();
-                return false;
+                
             }
 
             <?php if ($eid) { ?>
@@ -880,6 +944,85 @@ if ($userid) {
             $(function () {
 
             });
+            function payment_popup() {
+                // when making an appointment for a specific provider
+                var catid=$('#form_category option:selected').val();
+                if(catid==5)
+                {
+                    var amount=50;
+                }
+                else
+                {
+                    var amount=90;
+                }
+                var url = '../interface/customized/payment_popup.php?payamount='+amount;
+                var params = {
+                    buttons: [
+                        {text: <?php echo xlj('Cancel'); ?>, close: true, style: 'danger btn-sm'}
+
+                    ],
+                    allowResize: true,
+                    dialogId: 'apptDialog',
+                    type: 'iframe'
+                };
+                dlgopen(url, 'apptFind', 'modal-md', 450, '', 'Pay With Credit Card', params);
+            }
+            function setpaystatus(status) {
+                
+                if(status=="ok")
+                {
+                    var f = document.getElementById('theaddform');
+                    var form_action = document.getElementById('form_action');
+                form_action.value = "save";
+                f.submit();
+                return false;
+                }
+                else
+                {
+                    alert("payment Failed");
+                }
+               
+            }
+            function cancel_appointment(appid) {
+               
+               let f = document.forms.namedItem("theaddform");
+               let msg = <?php echo xlj("Click Okay if you are sure you want to cancel this appointment?") . "\n" .
+                   xlj("It is prudent to follow up with provider if not contacted.") ?>;
+               let msg_reason = <?php echo xlj("You must enter a reason to cancel this appointment?") . "\n" .
+                   xlj("Reason must be at least 10 characters!") ?>;
+               if (f.form_comments.value.length <= 10) {
+                   alert(msg_reason);
+                   return false;
+               }
+               let yn = confirm(msg);
+               if (!yn) {
+                   return false;
+               }
+               document.getElementById('form_apptstatus').value = "doc_cancelled";
+             
+             
+              
+               var data =
+               {
+                   "patient_ans": false,
+                   "app_id": appid,
+                   "flag": 1
+               };
+               $.ajax({
+                   url: "../interface/customized/zoom-meet/cancelmeet.php",
+                   type: "post",
+                   data: data,
+                   cache: false,
+                   async: false,
+                   success: function(response) {
+                       alert(response);
+                       return false;
+                                // You will get response from your PHP page (what you echo or print)
+                   }
+               });
+        
+               validate();
+           }
         </script>
     </div>
 </body>

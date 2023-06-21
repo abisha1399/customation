@@ -9,7 +9,27 @@
             {{ appt.appointmentDate | text }}<br>
             {{ appt.appointmentType | text }}<br>
             {{ appt.provider | text }}<br>
-            {{ appt.status | text }}
+            {{ appt.status | text }}<br>
+            
         </p>
+        {% if appt.pc_catid =="16"  %}
+            {% if appt.join_url !=""  %}
+                {% if appt.appttype =="1"  %}
+                    <a class='btn btn-xs btn-link' href=' {{ appt.join_url | text }}' target='_blank'  title='Tele Health' style='width: 35px;padding: 6px 8px;border-radius: 17px!important;color: white;background: #4992ec;'>
+                        <i class='fa fa-video' ></i>
+                    </a> 
+                {% endif %}
+                
+                {% else %}
+                    {% if appt.status_type !="doc_cancelled"  %}
+                        <p style='background: lawngreen;padding: 5px;text-align: center;'>Meeting will be Created Soon !!</p>
+                    {% else %}
+                        <p style='background: red;padding: 5px;text-align: center;'>Meeting was Cancelled !!</p>
+
+                {% endif %}
+            {% endif %}
+       
+        {% endif %}
+        
     </div>
 </div>

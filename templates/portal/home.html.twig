@@ -21,6 +21,36 @@
     {% endif %}
 
     <script>
+    $(function(){        
+        var eid = {{ appoitment_id }};        
+        if(eid!=0){
+             meetingset(eid);
+             window.location.reload(true);
+        }        
+    });
+    function meetingset(eid)
+    {   
+        alert(eid);      
+        var data =
+        {         
+            "insert_id": eid,
+            "flag": 1,
+        }
+        $.ajax({
+            url: "../interface/customized/zoom-meet/createmeet.php",
+            type: "POST",
+            data: data,
+            cache: false,
+            async: false,
+            success: function(response) {
+                if (response != 'false') {
+                   alert(response);
+                }
+                return true;
+                
+            }
+        });                
+    }
         var cpid = {{ patientID | js_escape }},
             cuser = {{ user | js_escape }},
             webRoot = {{ web_root | js_escape }},
@@ -460,7 +490,9 @@
                     <div class="row">
                         {% if appointments|length > 0 %}
                             {% for appt in appointments %}
-                                {% include 'portal/appointment-item.html.twig' with {appt: appt} %}
+                                
+                                    {% include 'portal/appointment-item.html.twig' with {appt: appt} %}
+                                
                             {% endfor %}
 
                             {% if appointmentLimit == appointmentCount %}

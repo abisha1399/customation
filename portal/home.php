@@ -27,7 +27,12 @@ use OpenEMR\Common\Twig\TwigContainer;
 use OpenEMR\Events\PatientPortal\RenderEvent;
 use OpenEMR\Events\PatientPortal\AppointmentFilterEvent;
 use OpenEMR\Services\LogoService;
-
+$appoitment_id = 0;
+if(isset($_SESSION['new_appoitment_id'])&&$_SESSION['new_appoitment_id']!='')
+{
+    $appoitment_id=$_SESSION['new_appoitment_id'];
+    unset($_SESSION['new_appoitment_id']);
+}
 if (isset($_SESSION['register']) && $_SESSION['register'] === true) {
     require_once(__DIR__ . '/../src/Common/Session/SessionUtil.php');
     OpenEMR\Common\Session\SessionUtil::portalSessionCookieDestroy();
@@ -83,8 +88,27 @@ if ($appts) {
     $stringCM = '(' . xl('Comments field entry present') . ')';
     $stringR = '(' . xl('Recurring appointment') . ')';
     $count = 0;
-    foreach ($appts as $row) {
-        $status_title = getListItemTitle('apptstat', $row['pc_apptstatus']);
+    foreach ($appts as $row) { 
+        if($row['pc_apptstatus']=="doc_confirmed")
+        {
+         $status_title ="Doctor Confirmed the Appointment";
+        }
+        elseif($row['pc_apptstatus']=="doc_cancelled")
+        {
+         $status_title ="Appointment Cancelled";
+        }
+        elseif($row['pc_apptstatus']=="doc_completed")
+        {
+         $status_title ="Appointment Completed";
+        }
+        elseif($row['pc_apptstatus']=="doc_none")
+        {
+         $status_title ="Appointment Confirmation Pending";
+        }
+        else
+        {
+         $status_title = getListItemTitle('apptstat', $row['pc_apptstatus']);
+        }
         $count++;
         $dayname = xl(date('l', strtotime($row['pc_eventDate'])));
         $dispampm = 'am';
@@ -112,6 +136,10 @@ if ($appts) {
             'icon_type' => (int)$row['pc_recurrtype'] > 0,
             'etitle' => $etitle,
             'pc_eid' => $row['pc_eid'],
+            'pc_catid'=>$row['pc_catid'],
+            'join_url' => $row['join_url'],
+            'status_type' => $row['pc_apptstatus'],
+            'appttype'=>$GLOBALS['enable_telehealthappt'],
         ];
         $filteredEvent = $GLOBALS['kernel']->getEventDispatcher()->dispatch(new AppointmentFilterEvent($row, $formattedRecord), AppointmentFilterEvent::EVENT_NAME);
         $appointments[] = $filteredEvent->getAppointment() ?? $formattedRecord;
@@ -283,8 +311,9 @@ function buildNav($newcnt, $pid, $result)
 $navMenu = buildNav($newcnt, $pid, $result);
 
 $twig = (new TwigContainer('', $GLOBALS['kernel']))->getTwig();
-echo $twig->render('portal/home.html.twig', [
+echo $twig->render('portal/home.html.twig', [    
     'user' => $user,
+    'appoitment_id'=>$appoitment_id,
     'whereto' => $_SESSION['whereto'] ?? null ?: ($whereto ?? '#documentscard'),
     'result' => $result,
     'msgs' => $msgs,

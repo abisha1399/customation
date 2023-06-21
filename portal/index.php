@@ -10,7 +10,7 @@
  * @author    Brady Miller <brady.g.miller@gmail.com>
  * @author    Tyler Wrenn <tyler@tylerwrenn.com>
  * @copyright Copyright (c) 2011 Cassian LUP <cassi.lup@gmail.com>
- * @copyright Copyright (c) 2016-2023 Jerry Padgett <sjpadgett@gmail.com>
+ * @copyright Copyright (c) 2016-2022 Jerry Padgett <sjpadgett@gmail.com>
  * @copyright Copyright (c) 2019 Brady Miller <brady.g.miller@gmail.com>
  * @copyright Copyright (c) 2020 Tyler Wrenn <tyler@tylerwrenn.com>
  * @license   https://github.com/openemr/openemr/blob/master/LICENSE GNU General Public License 3
@@ -23,7 +23,6 @@ Header("Content-Security-Policy: frame-ancestors 'none'");
 //setting the session & other config options
 
 // Will start the (patient) portal OpenEMR session/cookie.
-
 require_once __DIR__ . "/../src/Common/Session/SessionUtil.php";
 OpenEMR\Common\Session\SessionUtil::portalSessionStart();
 
