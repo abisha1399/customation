@@ -22,6 +22,9 @@ if(isset($_GET['save_setting']))
   $gl_value = $_POST['gl_value'];
   $global_value_exit=sqlStatement("DELETE FROM globals WHERE gl_name='".$gl_name."'");
   sqlStatement("INSERT INTO globals(gl_name,gl_index,gl_value)VALUES('".$gl_name."',0,'".$gl_value."')");
+  if($gl_name=='enable_telehealthappt'){
+    sqlStatement("UPDATE openemr_postcalendar_categories SET pc_active = '".$gl_value."' WHERE pc_constant_id='telehealth'");
+  }
   echo 'insert';
   exit();
 }
@@ -638,9 +641,9 @@ if(isset($_GET['get_encounter_forms']))
                         <div class='clearfix'></div>                        
                         <div class='row form-group'>
                             <div class='col-sm-6'>Enable calendar grid</div>
-                            <div class='col-sm-6 oe-input' title='Rx Enable DEA #'>
+                            <div class='col-sm-6 oe-input'>
                                 <label class="switch">
-                                    <input type="checkbox" checked>
+                                    <input type="checkbox" class="custom_setting_event" data-id='enable_calendargrid'>
                                     <span class="slider round"></span>
                                 </label>
                             </div>

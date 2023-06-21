@@ -4,15 +4,15 @@ use PHPMailer\PHPMailer\PHPMailer;
 use OpenEMR\Common\Crypto\CryptoGen;
 require_once "../vendor/autoload.php";
 $ignoreAuth_onsite_portal = true;
-    $isPortal = true;
+$isPortal = true;
 require_once "../../globals.php";
-
+require '../PHPMailerAutoload1.php';
 include_once "Zoom_Api.php";
 $auth_email=isset($GLOBALS['SMTP_USER'])?$GLOBALS['SMTP_USER']:'refreshhealthehr@gmail.com';
 $cryptoGen = new CryptoGen();
 $auth_pass=isset($GLOBALS['SMTP_PASS'])?$GLOBALS['SMTP_PASS']:'adynjudkykinmwcm';
 $zoom_meeting = new Zoom_Api();
-//echo '<pre>';print_r($_POST);exit();
+
 if (isset($_POST["appoin_id"])) {
     $appoin_id = $_POST["appoin_id"];
 } else {
@@ -111,7 +111,6 @@ else {
                 $data["password"] = "12345";
 				//echo '<pre>';print_r($data);
                 $response = $zoom_meeting->createMeeting($data);
-
                 $response = (array) $response;
 
                 //  print_r($response);
@@ -144,7 +143,7 @@ else {
     }
 }
 
-function send_mail($appointment_id, $response)
+function send_mailold($appointment_id, $response)
 {
     $user_details = sqlQuery("SELECT * FROM users where id = ?", [$appointment_id["pc_aid"],]);
     $patient_mail = sqlQuery("select * from patient_data WHERE pid = ?", [ $appointment_id["pc_pid"],]);
@@ -229,3 +228,87 @@ function send_mail($appointment_id, $response)
         }
     }
 }
+function send_mail($appointment_id, $response)
+{
+    $user_details = sqlQuery("SELECT * FROM users where id = ?", [$appointment_id["pc_aid"],]);
+    $patient_mail = sqlQuery("select * from patient_data WHERE pid = ?", [ $appointment_id["pc_pid"],]);
+    if (filter_var($patient_mail["email"], FILTER_VALIDATE_EMAIL))
+    {
+
+        $cryptoGen = new CryptoGen();
+        $email_sender='refreshhealthehr@gmail.com';
+        $auth_email=isset($GLOBALS['SMTP_USER'])?$GLOBALS['SMTP_USER']:'refreshhealthehr@gmail.com';
+        $auth_pass=isset($GLOBALS['SMTP_PASS'])?$GLOBALS['SMTP_PASS']:'adynjudkykinmwcm';
+        $site=isset($_SESSION['site_id'])?$_SESSION['site_id']:'';       
+        $host=isset($GLOBALS['SMTP_HOST'])?$GLOBALS['SMTP_HOST']:'smtp.gmail.com';
+        $port=isset($GLOBALS['SMTP_PORT'])?$GLOBALS['SMTP_PORT']:'587';
+        $secure=isset($GLOBALS['SMTP Security Protocol'])?$GLOBALS['SMTP Security Protocol']:'tls';
+        define('EMAIL',$auth_email);
+		define('PASS',$cryptoGen->decryptStandard($auth_pass));        
+        $mail = new PHPMailer;
+        $mail->isSMTP();                                      // Set mailer to use SMTP
+        $mail->Host = $host;  // Specify main and backup SMTP servers
+        $mail->SMTPAuth = true;                               // Enable SMTP authentication
+        $mail->Username = EMAIL;                 // SMTP username
+        $mail->Password = PASS;                           // SMTP password
+        $mail->SMTPSecure = $secure;                            // Enable TLS encryption, `ssl` also accepted
+        $mail->Port = $port;
+        $mail->isHTML(true);
+        $EVENTSDATE = date("l F j, Y", $dtWrk);
+        $STARTSTIME = date("g:i A", $dtWrk);
+        $mail->setFrom(EMAIL, "capminds");
+        $mail->addAddress($patient_mail["email"]);             // Name is optional
+        $mail->addReplyTo(EMAIL);
+        $pname = $patient_mail["fname"] . " " . $patient_mail["lname"];
+        $dtWrk = strtotime($appointment_id["pc_eventDate"] ." " . $appointment_id["pc_startTime"]);
+        $mail->Subject = "Telehealth Appoinment";
+        if ($appointment_id["meeting_id"] == null) {
+            $mail->Body ="<p> Dear " .$patient_mail["fname"] ." " .$patient_mail["lname"] .", </p> <p> Your Telehealth appointment with " .
+                $user_details["fname"] .
+                " " .
+                $user_details["lname"] .
+                " is successfully scheduled on " .
+                $EVENTSDATE .
+                " at " .
+                $STARTSTIME .
+                ". </p> <p> Please join the meeting on time with the given url below </p> <p>" .
+                $response["join_url"] .
+                " </p> <p> Regards,</p> <span> Oasis </span>";
+            $ss = sqlQuery(
+                "update openemr_postcalendar_events set pc_sendalertemail=? WHERE pc_eid = ?",
+                ["YES", $appointment_id["pc_eid"]]
+            );
+        } else {
+            $mail->Body =
+                "<p> Dear " .
+                $patient_mail["fname"] .
+                " " .
+                $patient_mail["lname"] .
+                ", </p> <p> Your Telehealth appointment with " .
+                $user_details["fname"] .
+                " " .
+                $user_details["lname"] .
+                " is successfully rescheduled on " .
+                $EVENTSDATE .
+                " at " .
+                $STARTSTIME .
+                ". </p> <p> Please join the meeting on time with the given url below </p> <p>" .
+                $appointment_id["join_url"] .
+                " </p> <p> Regards,</p> <span> Oasis </span>";
+        }
+
+        //$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+        
+        if (!$mail->send()) {
+            echo "mail could not be sent.";
+            echo "Mailer Error: " . $mail->ErrorInfo;
+        } else {
+            echo "Mail sent successfully to patient!";
+            echo "\n";
+        }
+
+    }
+   
+}
+
+

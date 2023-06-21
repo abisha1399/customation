@@ -50,6 +50,7 @@ require_once($GLOBALS['srcdir'] . '/encounter_events.inc.php');
 require_once($GLOBALS['srcdir'] . '/patient_tracker.inc.php');
 require_once($GLOBALS['incdir'] . "/main/holidays/Holidays_Controller.php");
 require_once($GLOBALS['srcdir'] . '/group.inc.php');
+require_once("$srcdir/payment.inc.php");
 
 use OpenEMR\Common\Acl\AclMain;
 use OpenEMR\Common\Twig\TwigContainer;
@@ -753,6 +754,58 @@ if (!empty($_POST['form_action']) && ($_POST['form_action'] == "save")) {
         $patientAppointmentSetEvent = new AppointmentSetEvent($_POST);
         $patientAppointmentSetEvent->eid = $eid;  //setting the appointment id to an object
         $eventDispatcher->dispatch($patientAppointmentSetEvent, AppointmentSetEvent::EVENT_HANDLE, 10);
+        if(isset($GLOBALS['enable_telehealthappt'])&&$GLOBALS['enable_telehealthappt']==true)
+        {
+            if($eid){
+                $uid=1;
+                $cdate=date("Y-m-d H:i:s");
+                sqlQuery("update `onsite_portal_activity` set apt_id='" . add_escape_custom($eid ) . "' ,pending_action='notify patient',action_taken='payment posted' ,status='closed',narrative='Payment authorized.',table_action='update',action_user='" . add_escape_custom($uid) . "',action_taken_time= '" . $cdate . "'order by id desc limit 1");
+                $payitems = sqlQuery("SELECT * FROM onsite_portal_activity WHERE apt_id = ?", array($eid));
+               
+              if(!empty($payitems))
+              {
+               $ccdata = json_decode($cryptoGen->decryptStandard($payitems['checksum']), true);
+               $payitems['source'] = $ccdata['authCode'] . " : " . $ccdata['transId'];
+               //$timestamp = date('Y-m-d H:i:s', $now);
+               frontPayment($payitems['patient_id'], 0, 'credit_card', $payitems['source'], $payitems['paid_price'], 0, $cdate);//insertion to 'payments' table.
+              }
+            }
+            ?>
+            <script type="text/javascript">
+            // Do something in JavaScript
+            var x = <?php echo $eid; ?>;
+            var catid = <?php echo $_POST['form_category']; ?>;
+            meetingset(x);
+            
+            function meetingset(eid)
+            {
+            
+                  
+                var data = {         
+                    "insert_id": eid,
+                    "flag": 1,
+            
+                }
+                $.ajax({
+                    url: "../../customized/zoom-meet/createmeet.php",
+                    type: "POST",
+                    data: data,
+                    cache: false,
+                    async: false,
+                    success: function(response) {
+                        if (response != 'false') {
+                            alert(response);
+                        }
+                        return true;
+                        // You will get response from your PHP page (what you echo or print)
+                    }
+                });
+                
+            }
+            </script>
+            <?php
+            
+        }
     }
 
         // done with EVENT insert/update statements
@@ -1148,6 +1201,32 @@ function set_display() {
 function set_category() {
     var f = document.forms[0];
     var s = f.form_category;
+    //custom
+    
+    if (s.options[s.selectedIndex].value == 16) {
+         
+         var content = $("#form_apptstatus").html();
+         $("#apptstat").val(content);
+         $("#form_apptstatus").html(
+             '<option value="doc_none">Request</option><option value="doc_confirmed">Confirmed</option><option value="doc_cancelled">Canceled</option><option value="doc_completed">Completed</option>'
+         );
+         var check_stat_drop = $("#open_check_apptstat").val();
+         $('#form_apptstatus option[value="' + check_stat_drop + '"]').attr("selected", "selected");
+
+
+     } else 
+     {
+         var content = $("#apptstat").val();
+     //alert(content);
+         if (content != "") {
+             $("#form_apptstatus").html(content);
+             $('#form_apptstatus option[value="doc_confirmed"]').remove();
+             $('#form_apptstatus option[value="doc_cancelled"]').remove();
+             $('#form_apptstatus option[value="doc_completed"]').remove();
+             $('#form_apptstatus option[value="doc_none"]').remove();
+         }
+          //     $("#form_apptstatus").html(content);
+     }
     if (s.selectedIndex >= 0) {
         var catid = s.options[s.selectedIndex].value;
         f.form_title.value = s.options[s.selectedIndex].text;
@@ -1406,7 +1485,15 @@ function find_available(extra) {
     </ul>
 </nav> <!-- nav-group -->
 <form role="form" method='post' name='theform' id='theform' action='add_edit_event.php?eid=<?php echo attr($eid) ?>'>
-
+<!--custom-->
+    <input type="hidden" id="payement_proceed">
+            
+    <input type='hidden' id="check_meet_time" value='' />
+    <input type='hidden' id="apptstat" value='' />
+    <input type='hidden' id="for_delete_app" value='1' />           
+    <input type='hidden' id="open_check_apptstat" value='<?php echo  $row['pc_apptstatus'];?>' />
+    <input type='hidden' id="appoint_id" value="<?php if($eid){echo $eid;}
+    else{echo '1';} ?> " />
 <!-- ViSolve : Requirement - Redirect to Create New Patient Page -->
 <input type='hidden' size='2' name='resname' value='empty' />
 <?php
@@ -1478,7 +1565,7 @@ if (empty($_GET['prov']) && empty($_GET['group'])) { ?>
         <div class="form-group">
             <label for="form_patient"><?php echo xlt('Patient'); ?>:</label>
             <input class='form-control' type='text' name='form_patient' id="form_patient" style='cursor:pointer;' placeholder='<?php echo xla('Click to select'); ?>' value='<?php echo is_null($patientname) ? '' : attr($patientname); ?>' onclick='sel_patient()' title='<?php echo xla('Click to select patient'); ?>' />
-            <input type='hidden' name='form_pid' value='<?php echo attr($patientid) ?>' />
+            <input type='hidden' name='form_pid' id='form_pid' value='<?php echo attr($patientid) ?>' />
 
             <!-- Patient phone numbers -->
             <div>
@@ -1670,8 +1757,8 @@ function isRegularRepeat($repeat)
             <input class="form-check-input" type='radio' name='form_allday' onclick='set_allday()' value='0' id='rballday2'<?php echo ($thisduration != 1440) ? " checked " : ""; ?> />
             <label class="form-check-label" for="rballday2" id='tdallday2'><?php echo xlt('Time'); ?></label>
         </div>
-        <input class='col-sm form-control' type='text' size='2' name='form_hour' value='<?php echo attr($starttimeh) ?>' title='<?php echo xla('Event start time'); ?>' />
-        <input class='col-sm form-control' type='text' size='2' name='form_minute' value='<?php echo attr($starttimem) ?>' title='<?php echo xla('Event start time'); ?>' />
+        <input class='col-sm form-control' type='text' size='2' name='form_hour' id="form_hour" value='<?php echo attr($starttimeh) ?>' title='<?php echo xla('Event start time'); ?>' />
+        <input class='col-sm form-control' type='text' size='2' name='form_minute' id="form_minute" value='<?php echo attr($starttimem) ?>' title='<?php echo xla('Event start time'); ?>' />
         <?php if ($GLOBALS['time_display_format'] == 1) : ?>
         <select class='input-sm' name='form_ampm' title='<?php echo xla("Note: 12:00 noon is PM, not AM"); ?>'>
             <option value='1'><?php echo xlt('AM'); ?></option>
@@ -1679,7 +1766,7 @@ function isRegularRepeat($repeat)
         </select>
         <?php endif ?>
         <label class='col-sm col-form-label' id='tdallday4'><?php echo xlt('duration'); ?></label>
-        <input class="col-sm form-control" id='tdallday5' type='text' size='4' name='form_duration' value='<?php echo attr($thisduration) ?>' title='<?php echo xla('Event duration in minutes'); ?>' />
+        <input class="col-sm form-control" id='tdallday5' type='text' size='4' name='form_duration' value='<?php echo attr($thisduration??'15') ?>' title='<?php echo xla('Event duration in minutes'); ?>' />
     </div>
     <div class="form-row mb-sm-2">
         <div class="col-sm form-check-inline">
@@ -1768,6 +1855,33 @@ function isRegularRepeat($repeat)
             ?>
         </div>
     </div>
+    <!--meeting-->
+    <?php
+    if(isset($GLOBALS['enable_telehealthappt'])&&$GLOBALS['enable_telehealthappt']==true)
+    {
+          $url_meet_id = sqlQuery("select meeting_id,start_url,pc_sendalertemail,pc_eventDate from openemr_postcalendar_events  WHERE pc_eid = ?  ORDER BY pc_eid desc", array($eid));
+          ?>
+        <input type='hidden' value="<?php echo $url_meet_id['meeting_id']; ?>" id="check_meet_id" />
+        <input type='hidden' value="<?php echo $url_meet_id['pc_sendalertemail']; ?>" id="sendalertemail" />
+        <input type='hidden' value="<?php echo $url_meet_id['start_url']; ?>" id="check_meet_url" />
+        <input type='hidden' value="<?php echo $url_meet_id['pc_eventDate']; ?>" id="event_start_date_new">
+        <?php $url_meet_a = '<a href="#" style="padding: 6px 8px;border-radius: 17px!important;color: white;background: #4992ec;" onclick="return checkmeettime();"><i class="fa fa-video"></i></a> ';
+          if($eid!="")
+          {
+              $url_meet_a = !empty($url_meet_id['meeting_id']) ? $url_meet_a : "Telehealth Appointment needs to be create.";
+          }
+          else{
+          $url_meet_a ="Telehealth Appointment needs to be create.";
+          }
+    ?>
+    <div class="form-row mt-2 mb-0">
+       <label><?php echo xlt("Start Session"); ?>: </label>
+       <span>&nbsp;&nbsp;&nbsp;<?php echo $url_meet_a; ?></span>
+    </div>
+    <?php
+    }
+    ?>
+    <!--end meeting-->
 </div>
 <div class="form-row mx-2">
     <div class="col-sm form-group">
@@ -1846,6 +1960,7 @@ set_repeat();
 set_days_every_week();
 /* and get it on with some javascript */
 $(function () {
+    set_category();
     $("#form_save").click(function (e) {
         validateform(e, "save");
     });
@@ -1980,11 +2095,52 @@ function validateform(event,valu){
         $('#form_save').attr('disabled', false);
         return false;
     }
-    <?php endif; ?>
+    <?php endif;
+    if (empty($_GET['prov']) && empty($_GET['group']) && empty($_GET['eid'])) { ?>
+    $("#payement_proceed").val('true');
+    <?php
+    }
+    ?>
+    var form_category=$("#form_category option:selected").val();
+    var payement_proceed = $("#payement_proceed").val();
+    if(payement_proceed=='true'&&form_category=='16')
+    {
+        payment_popup();
+    }
+    else{
+        setpaystatus('ok');
+    }
 
-    SubmitForm();
+    
 }
+function setpaystatus(status) {
+    if(status=="ok")
+    {
+        SubmitForm();
+    return false;
+    }
+    else
+    {
+        alert("payment Failed");
+    }
+}
+    function payment_popup() {
+        // when making an appointment for a specific provider
+        var catid=$('#form_category option:selected').val();
+        var pid = $("#form_pid").val();
+        var amount=90;        
+        var url = '../../customized/payment_popup.php?payamount='+amount+'&form_pid=' + pid;
+        var params = {
+                    buttons: [
+                        {text: <?php echo xlj('Cancel'); ?>, close: true, style: 'danger btn-sm'}
 
+                    ],
+                    allowResize: true,
+                    dialogId: 'apptDialog',
+                    type: 'iframe'
+        };
+        dlgopen(url, 'apptFind', 'modal-md', 450, '', 'Collect Payment', params);
+    }
 // disable all the form elements outside the recurr_popup
 function DisableForm() {
     $("#theform").children().attr("disabled", "true");
@@ -2018,23 +2174,30 @@ function deleteEvent() {
     return false;
 }
 
-function SubmitForm() {
+function SubmitForm()
+{
     var f = document.forms[0];
-    <?php if (!($GLOBALS['select_multi_providers']) && empty($_GET['prov'])) { // multi providers appt is not supported by check slot avail window, so skip. && is not provider tab. ?>
-    if (f.form_action.value != 'delete') {
-        // Check slot availability.
-        var mins = parseInt(f.form_hour.value) * 60 + parseInt(f.form_minute.value);
-        <?php if ($GLOBALS['time_display_format']  == 1) :
+    <?php if (!($GLOBALS['select_multi_providers']) && empty($_GET['prov']))
+    { // multi providers appt is not supported by check slot avail window, so skip. && is not provider tab. ?>
+        if (f.form_action.value != 'delete')
+        {
+            // Check slot availability.
+            var mins = parseInt(f.form_hour.value) * 60 + parseInt(f.form_minute.value);
+            <?php if ($GLOBALS['time_display_format']  == 1) :
             ?>if (f.form_ampm.value == '2' && mins < 720) mins += 720;<?php endif ?>
-        find_available('&cktime=' + mins);
-    }
-    else {
-        top.restoreSession();
-        f.submit();
-    }
-    <?php } else { ?>
+                 find_available('&cktime=' + mins);
+        }
+        else
+        {
+            top.restoreSession();
+            f.submit();
+        }
         <?php
-    /*Support Multi-Provider Events in features*/
+    }
+    else
+    { ?>
+        <?php
+        /*Support Multi-Provider Events in features*/
         $sdate = $date;
         $edate = new DateTime($date);
         $edate->modify('tomorrow');
@@ -2042,22 +2205,150 @@ function SubmitForm() {
         $is_holiday = false;
         $holidays_controller = new Holidays_Controller();
         $holidays = $holidays_controller->get_holidays_by_date_range($sdate, $edate);
-        if (in_array($sdate, $holidays)) {
+        if (in_array($sdate, $holidays))
+        {
             $is_holiday = true;
         }?>
-    if (f.form_action.value != 'delete') {
-        <?php if ($is_holiday) {?>
-        if (!confirm('<?php echo xls('On this date there is a holiday, use it anyway?'); ?>')) {
-            top.restoreSession();
+        if (f.form_action.value != 'delete')
+        {
+            <?php if ($is_holiday)
+            {?>
+                if (!confirm('<?php echo xls('On this date there is a holiday, use it anyway?'); ?>')) {
+                     top.restoreSession();
+                }
+            <?php }?>
         }
-        <?php }?>
-    }
-    top.restoreSession();
-    f.submit();
-    <?php } ?>
-
+        top.restoreSession();
+        f.submit();
+        <?php
+    } ?>
+    //  meeting section
+    var catid = $("#form_category").val();
+    var statusid = $("#form_apptstatus").val();
+    var meet_id_check = $("#check_meet_id").val();
+    var sendalertemail = $("#sendalertemail").val();
+    //for meeting cancelled
+   
+        if (statusid == "doc_cancelled") {
+            if (meet_id_check) {
+                if (sendalertemail == 'YES') {
+                    var check_patient_ans = confirm("Can We Send Email to the Patient?");
+                }
+                var appid = $("#appoint_id").val();
+                var startdate = $('#selected_date').val();
+                var starttime = $("#form_hour").val() + ":" + $("#form_minute").val();
+                var duration = $("#tdallday5").val();
+                var patitent_id = $("#form_pid").val();
+                var provider_id = $("#provd").val();
+                var data =
+                {
+                    "patient_ans": check_patient_ans,
+                    "app_id": appid,
+                    "start_date": startdate,
+                    "start_time": starttime,
+                    "duration": duration,
+                    "flag": 1,
+                    "pid": patitent_id,
+                     "provider_id": provider_id
+                };
+                $.ajax({
+                    url: "../../customized/zoom-meet/cancelmeet.php",
+                    type: "post",
+                    data: data,
+                    cache: false,
+                    async: false,
+                    success: function(response) {
+                        
+                        return false;
+                                 // You will get response from your PHP page (what you echo or print)
+                    }
+                });
+            }
+        }
+        //for meeting confirmed or meeting created when new appointment created AND meeting updated when app_id is available 
+        if (statusid == "doc_confirmed")
+        {
+           
+            var appoinid = $("#appoint_id").val();
+            var startdate = $('#selected_date').val();
+            var starttime = $("#form_hour").val() + ":" + $("#form_minute").val();
+            var duration = $("#tdallday5").val();
+            var patitent_id = $("#form_pid").val();
+            var provider_id = $("#provd").val();
+            if (appoinid == 1) {
+                app_check_id = "false";
+            } else {
+                app_check_id = "true";
+            }
+            if (app_check_id == 'true') {
+                var for_app_del_check = $("#for_delete_app").val();
+                if (for_app_del_check == '1') {
+                    var sendalertemail = $("#sendalertemail").val();                   
+                    if (sendalertemail == 'YES') {
+                        var check_patient_ans = confirm("Can We Send Email to the Patient?");
+                    }
+                    var data = 
+                    {
+                        "patient_ans": check_patient_ans,
+                        "appoin_id": appoinid,
+                        "start_date": startdate,
+                        "start_time": starttime,
+                        "duration": duration,
+                        "flag": 1,
+                        "pid": patitent_id,
+                        "provider_id": provider_id
+                    };
+                    $.ajax({
+                        url: "../../customized/zoom-meet/createmeet.php",
+                        type: "POST",
+                        data: data,
+                        cache: false,
+                        async: false,
+                        success: function(response)
+                        {
+                            alert(response);
+                            return false;
+                            e.preventDefault();
+                            // You will get response from your PHP page (what you echo or print)
+                        }
+                    });
+                }
+            }
+        }
+    
+    // meeting end  section
+         
     return true;
 }
+function checkmeettime()
+        {
+            var startdate = $('#selected_date').val();
+            
+            var starttime = $("#form_hour").val() + ":" + $("#form_minute").val();         
+            var data = 
+            {
+                "start_date": startdate,
+                "start_time": starttime
+            };
+            $.ajax({
+                url: "../../customized/zoom-meet/check_meet_time.php",
+                type: "post",
+                data: data,
+                success: function(response) {
+                    if (response != "true") {
+                         alert(response);
+                         return false;
+                    } else {
+                        var hosturl = $("#check_meet_url").val();
+                        window.open(hosturl, "_blank");
+                        return true;
+                    }
+         
+                    // You will get response from your PHP page (what you echo or print)
+                }
+            });
+         
+        }
 </script>
 </body>
 </html>
