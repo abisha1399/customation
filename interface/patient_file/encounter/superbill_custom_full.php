@@ -17,11 +17,14 @@
 require_once("../../globals.php");
 require_once("../../../custom/code_types.inc.php");
 require_once("$srcdir/options.inc.php");
-
+require_once("../../customized/form_custom.php");
 use OpenEMR\Common\Acl\AclMain;
 use OpenEMR\Common\Csrf\CsrfUtils;
 use OpenEMR\Common\Twig\TwigContainer;
 use OpenEMR\Core\Header;
+//custom
+$http = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=== 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'];
+$customized_folder=$http.$GLOBALS['webroot'].'/interface/customized';
 
 // gacl control
 $thisauthview = AclMain::aclCheckCore('admin', 'superbill', false, 'view');
@@ -802,14 +805,21 @@ if ($fend > ($count ?? null)) {
     ?>
 
 </table>
-
+<!-- //custom -->
+<?php
+if(isset($GLOBALS['enable_billingprofile'])&&$GLOBALS['enable_billingprofile']==true)
+{
+    echo billing_profile_main();
+}
+?>
 <script>
+    var customized_folder='<?php echo $customized_folder;?>';
     <?php
     if ($alertmsg) {
         echo "alert(" . js_escape($alertmsg) . ");\n";
     }
     ?>
 </script>
-
+<script src="../../customized/js/ajax_vitals_api.js"></script>
 </body>
 </html>

@@ -86,6 +86,7 @@ $provider_id = $encounter_provider ? $encounter_provider : $provider_id;
 $encounter_type = $_POST['encounter_type'] ?? '';
 $encounter_type_code = null;
 $encounter_type_description = null;
+$pat_profile_data=$_POST['pat_profile_data']?$_POST['pat_profile_data']:'';
 if(isset($_SESSION['clone_encounter']))
 {
    
@@ -134,7 +135,9 @@ if ($mode == 'new') {
                 referring_provider_id = ?,
                 encounter_type_code = ?,
                 encounter_type_description = ?,
-                in_collection = ?",
+                in_collection = ?,
+                pat_profile_data=?",
+                
             [
                 $date,
                 $onset_date,
@@ -156,7 +159,8 @@ if ($mode == 'new') {
                 $referring_provider_id,
                 $encounter_type_code,
                 $encounter_type_description,
-                $in_collection
+                $in_collection,
+                $pat_profile_data
             ]
         ),
         "newpatient",
@@ -164,6 +168,11 @@ if ($mode == 'new') {
         $userauthorized,
         $date
     );
+    //customazation
+    if(!empty($encounter)&&$GLOBALS['enable_send_mail_enc']==true)
+    {
+        send_mail($encounter,$pid);
+    }
 } elseif ($mode == 'update') {
     $id = $_POST["id"];
     $result = sqlQuery("SELECT encounter, sensitivity FROM form_encounter WHERE id = ?", array($id));
@@ -197,6 +206,7 @@ if ($mode == 'new') {
         $encounter_type_code,
         $encounter_type_description,
         $in_collection,
+        $pat_profile_data,
         $id
     );
     sqlStatement(
@@ -217,7 +227,8 @@ if ($mode == 'new') {
             referring_provider_id = ?,
             encounter_type_code = ?,
             encounter_type_description = ?,
-            in_collection = ?
+            in_collection = ?,
+            pat_profile_data=?
             WHERE id = ?",
         $sqlBindArray
     );
@@ -225,6 +236,11 @@ if ($mode == 'new') {
     die("Unknown mode '" . text($mode) . "'");
 }
 //customazation
+if(!empty($encounter)&&$pat_profile_data&&$GLOBALS['enable_enc_billingprofile']==true)
+{
+    $eid=0;
+    add_billing_profile($encounter,$pat_profile_data,$pid,$eid); 
+}
 if(isset($_SESSION['clone_encounter'])){
     $old_encounter= $_SESSION['clone_encounter'];
     $new_encounter= $encounter;

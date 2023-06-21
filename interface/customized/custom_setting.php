@@ -259,10 +259,10 @@ if(isset($_GET['get_encounter_forms']))
                         </div>
                         <div class='clearfix'></div>
                         <div class='row form-group'>
-                            <div class='col-sm-6'>Enable level of care</div>
+                            <div class='col-sm-6'>Enable billing profile Encounter</div>
                             <div class='col-sm-6 oe-input'>
                                 <label class="switch">
-                                    <input type="checkbox"  class="custom_setting_event" data-id='enable_enc_levelofcare'>
+                                    <input type="checkbox"  class="custom_setting_event" data-id='enable_enc_billingprofile'>
                                     <span class="slider round"></span>
                                 </label>
                             </div>
@@ -552,6 +552,15 @@ if(isset($_GET['get_encounter_forms']))
                                 </label>
                             </div>
                         </div>
+                        <div class='row form-group'>
+                            <div class='col-sm-6'>Enable Billing Profile</div>
+                            <div class='col-sm-6 oe-input'>
+                                <label class="switch">
+                                    <input type="checkbox" class="custom_setting_event" data-id='enable_billingprofile'>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <!---Prescription tab---->
@@ -601,15 +610,7 @@ if(isset($_GET['get_encounter_forms']))
                                 </label>
                             </div>
                         </div> 
-                        <div class='row form-group'>
-                            <div class='col-sm-6'>Enable Avialability</div>
-                            <div class='col-sm-6 oe-input' title='Rx Enable DEA #'>
-                                <label class="switch">
-                                    <input type="checkbox" checked>
-                                    <span class="slider round"></span>
-                                </label>
-                            </div>
-                        </div>  
+                          
                         <div class='row form-group'>
                             <div class='col-sm-6'>Enable Newcrop Erx</div>
                             <div class='col-sm-6 oe-input' title='Rx Enable DEA #'>
@@ -661,7 +662,7 @@ if(isset($_GET['get_encounter_forms']))
                             <div class='col-sm-6'>Enable billing profile in calender</div>
                             <div class='col-sm-6 oe-input' title='Rx Enable DEA #'>
                                 <label class="switch">
-                                    <input type="checkbox" checked>
+                                    <input type="checkbox" class="custom_setting_event" data-id='enable_cal_billingprofile'>
                                     <span class="slider round"></span>
                                 </label>
                             </div>
@@ -671,6 +672,15 @@ if(isset($_GET['get_encounter_forms']))
                             <div class='col-sm-6 oe-input'>
                                 <label class="switch">
                                     <input type="checkbox" class="custom_setting_event" data-id='enable_telehealthappt'>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div> 
+                        <div class='row form-group'>
+                            <div class='col-sm-6'>Enable Send Email new encounter create</div>
+                            <div class='col-sm-6 oe-input'>
+                                <label class="switch">
+                                    <input type="checkbox" class="custom_setting_event" data-id='enable_mail_appt'>
                                     <span class="slider round"></span>
                                 </label>
                             </div>

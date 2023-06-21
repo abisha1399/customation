@@ -51,6 +51,7 @@ require_once($GLOBALS['srcdir'] . '/patient_tracker.inc.php');
 require_once($GLOBALS['incdir'] . "/main/holidays/Holidays_Controller.php");
 require_once($GLOBALS['srcdir'] . '/group.inc.php');
 require_once("$srcdir/payment.inc.php");
+require_once('../../customized/form_custom.php');
 
 use OpenEMR\Common\Acl\AclMain;
 use OpenEMR\Common\Twig\TwigContainer;
@@ -237,9 +238,16 @@ function DOBandEncounter($pc_eid)
         ) {
             $encounter = todaysEncounterCheck($_POST['form_pid'], $event_date, $_POST['form_comments'], $_POST['facility'], $_POST['billing_facility'], $_POST['form_provider'], $_POST['form_category'], false);
             if ($encounter) {
+                //customazation
+                if(!empty($encounter)&&$GLOBALS['enable_mail_appt']==true)
+                {
+                    send_mail($encounter,$_POST['form_pid']);
+                }
                 $info_msg .= xl("New encounter created with id");
                 $info_msg .= " $encounter";
             }
+            
+            
 
             # Capture the appt status and room number for patient tracker. This will map the encounter to it also.
             if (isset($GLOBALS['temporary-eid-for-manage-tracker']) || !empty($_GET['eid'])) {
@@ -612,7 +620,7 @@ if (!empty($_POST['form_action']) && ($_POST['form_action'] == "save")) {
                 }
 
                 // after the two diffs above, we must update for remaining providers
-                // those who are intersected in $providers_current and $providers_new
+                // those who are intersected in $providers_current and $providers_new                
                 foreach ($_POST['form_provider'] as $provider) {
                     sqlStatement("UPDATE openemr_postcalendar_events SET " .
                     "pc_catid = '" . add_escape_custom($_POST['form_category']) . "', " .
@@ -633,9 +641,10 @@ if (!empty($_POST['form_action']) && ($_POST['form_action'] == "save")) {
                     "pc_apptstatus = '" . add_escape_custom($_POST['form_apptstatus']) . "', "  .
                     "pc_prefcatid = '" . add_escape_custom($_POST['form_prefcat']) . "' ,"  .
                     "pc_facility = '" . add_escape_custom((int)$_POST['facility']) . "' ,"  . // FF stuff
-                    "pc_billing_location = '" . add_escape_custom((int)$_POST['billing_facility']) . "' "  .
+                    "pc_billing_location = '" . add_escape_custom((int)$_POST['billing_facility']) . "' "  .                    
                     "WHERE pc_aid = '" . add_escape_custom($provider) . "' AND pc_multiple = '" . add_escape_custom($row['pc_multiple'])  . "'");
                 } // foreach
+                
             }
 
             // ====================================
@@ -709,6 +718,14 @@ if (!empty($_POST['form_action']) && ($_POST['form_action'] == "save")) {
 
                 // mod the SINGLE event or ALL EVENTS in a repeating series
                 // simple provider case
+                //custom
+                if(!empty($_POST['pat_profile_data']))
+                {
+                    $_POST['pat_profile_data']=$_POST['pat_profile_data'];
+                }
+                else{
+                    $_POST['pat_profile_data']='';
+                }
                 sqlStatement("UPDATE openemr_postcalendar_events SET " .
                 "pc_catid = '" . add_escape_custom($_POST['form_category']) . "', " .
                 "pc_aid = '" . add_escape_custom($prov) . "', " .
@@ -729,8 +746,20 @@ if (!empty($_POST['form_action']) && ($_POST['form_action'] == "save")) {
                 "pc_apptstatus = '" . add_escape_custom($_POST['form_apptstatus']) . "', "  .
                 "pc_prefcatid = '" . add_escape_custom($_POST['form_prefcat']) . "' ,"  .
                 "pc_facility = '" . add_escape_custom((int)$_POST['facility']) . "' ,"  . // FF stuff
-                "pc_billing_location = '" . add_escape_custom((int)$_POST['billing_facility']) . "' "  .
+                "pc_billing_location = '" . add_escape_custom((int)$_POST['billing_facility']) . "', "  .
+                "pat_profile_data	 = '". $_POST['pat_profile_data'] . "' "  .
                 "WHERE pc_eid = '" . add_escape_custom($eid) . "'");
+                //custom
+                $pat_id=isset($_POST['form_pid'])?$_POST['form_pid']:'';
+                if($pat_id!=''&&$_POST['pat_profile_data']!='0')
+                {
+                    $patient_encounter=sqlquery("SELECT * FROM form_encounter WHERE pid='".$pat_id."' order by id desc limit 1");
+                    if(!empty($patient_encounter)&&$GLOBALS['enable_cal_billingprofile']==true)
+                    {
+                        $encid=isset($patient_encounter['encounter'])?$patient_encounter['encounter']:'';
+                        add_billing_profile($encid,$_POST['pat_profile_data'],$pat_id,$eid); 
+                    }
+                }
             }
         }
 
@@ -750,6 +779,18 @@ if (!empty($_POST['form_action']) && ($_POST['form_action'] == "save")) {
      * ======================================================*/
 
         $eid = InsertEventFull();
+        //custom
+            $pat_id=isset($_POST['form_pid'])?$_POST['form_pid']:'';
+            
+            if($pat_id!=''&&$_POST['pat_profile_data']!='0')
+            {
+                $patient_encounter=sqlquery("SELECT * FROM form_encounter WHERE pid='".$pat_id."' order by id desc limit 1");
+                if(!empty($patient_encounter)&&$GLOBALS['enable_cal_billingprofile']==true)
+                {
+                    $encid=isset($patient_encounter['encounter'])?$patient_encounter['encounter']:'';
+                    add_billing_profile($encid,$_POST['pat_profile_data'],$pat_id,$eid); 
+                }
+            }
         //Tell subscribers that a new single appointment has been set
         $patientAppointmentSetEvent = new AppointmentSetEvent($_POST);
         $patientAppointmentSetEvent->eid = $eid;  //setting the appointment id to an object
@@ -963,6 +1004,8 @@ if ($eid) {
     $starttimem = substr($row['pc_startTime'], 3, 2);
     $repeats = $row['pc_recurrtype'];
     $multiple_value = $row['pc_multiple'];
+    //custom
+    $pat_profile_data=$row['pat_profile_data'];
 
     // parse out the repeating data, if any
     $rspecs = unserialize($row['pc_recurrspec'], ['allowed_classes' => false]); // extract recurring data
@@ -1589,6 +1632,12 @@ if (empty($_GET['prov']) && empty($_GET['group'])) { ?>
         </div>
     </div> <!-- End Jumbotron !-->
     <?php
+    //custom
+    if(isset($GLOBALS['enable_cal_billingprofile'])&&$GLOBALS['enable_cal_billingprofile']==true){
+       
+        echo billing_profile_select($pat_profile_data);
+    }
+    
     // DOB is important for the clinic, so if it's missing give them a chance
     // to enter it right here.  We must display or hide this row dynamically
     // in case the patient-select popup is used.

@@ -98,3 +98,23 @@ function refresh_patient(pid,type)
         }
     });
 }
+function view_profile(id) {
+    top.restoreSession();    
+    dlgopen('../../customized/billing_profile/codes.php?id=' + encodeURIComponent(id),'_blank', 1000, 600);
+}
+ 
+function delete_profile(id){
+    $("#profile_box_"+id+"").remove();
+    $.ajax({
+        url: ''+customized_folder+'/form_custom.php',
+        method: 'POST',
+        dataType: "json",
+        data: {'profile_id':id},
+        success: function(data){
+          if(data!='')
+          {
+            $("#profile_box_"+id+"").remove();
+          }
+        }
+    });
+}

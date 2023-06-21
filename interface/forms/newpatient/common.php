@@ -15,7 +15,7 @@
 
 require_once("$srcdir/options.inc.php");
 require_once("$srcdir/lists.inc.php");
-
+require_once('../../customized/form_custom.php');
 use OpenEMR\Billing\MiscBillingOptions;
 use OpenEMR\Common\Acl\AclExtended;
 use OpenEMR\Common\Acl\AclMain;
@@ -55,7 +55,7 @@ if ($mode === "followup") {
         $_REQUEST['id'] = $encounter;
     }
 }
-
+$pat_profile_id='';
 if ($viewmode) {
     $id = (isset($_REQUEST['id'])) ? $_REQUEST['id'] : '';
     $result = sqlQuery("SELECT * FROM form_encounter WHERE id = ?", array($id));
@@ -64,7 +64,9 @@ if ($viewmode) {
         $id=$_GET['clone_id'];
         $_SESSION['clone_encounter']=$id;
         $result = sqlQuery("SELECT * FROM form_encounter WHERE encounter = ?", array($id));
-    }  
+    } 
+     //custom
+    $pat_profile_id= $result['pat_profile_data']; 
     $encounter = $result['encounter'];
     $encounter_followup_id = $result['parent_encounter_id'] ?? null;
     if ($encounter_followup_id) {
@@ -673,7 +675,13 @@ $ires = sqlStatement("SELECT id, type, title, begdate FROM lists WHERE " .
                     </div>
                 </div>
             </fieldset>
-
+            <?php
+             //custom
+              if(isset($GLOBALS['enable_enc_billingprofile'])&&$GLOBALS['enable_enc_billingprofile']==true){
+                
+                    echo billing_profile_select($pat_profile_id);
+                }
+            ?>
             <div class="form-row">
                 <div class="col-sm">
                     <fieldset>
