@@ -69,6 +69,7 @@ if (!AclMain::aclCheckCore('patients', 'appt', '', array('write','wsome'))) {
 $eid           = $_GET['eid'] ?? null; // only for existing events
 $date          = $_GET['date'] ?? null;        // this and below only for new events
 $userid        = $_GET['userid'] ?? null;
+$prov_tab           = $_GET['prov']; // Customization code
 $default_catid = !empty($_GET['catid']) ? $_GET['catid'] : '5';
 
 // form logic fails if not set to boolean
@@ -1539,6 +1540,11 @@ function find_available(extra) {
     else{echo '1';} ?> " />
 <!-- ViSolve : Requirement - Redirect to Create New Patient Page -->
 <input type='hidden' size='2' name='resname' value='empty' />
+<!-- Customization code start -->
+<input   type='hidden' id="dummy" />
+<input   type='hidden' id="dummy1" />
+<input   type='hidden' id="idforeid" value='<?php echo $eid; ?>' />
+<!-- Customization code end -->
 <?php
 if (!empty($_POST["resname"]) && ($_POST["resname"] == "noresult")) {
     echo '
@@ -1608,7 +1614,8 @@ if (empty($_GET['prov']) && empty($_GET['group'])) { ?>
         <div class="form-group">
             <label for="form_patient"><?php echo xlt('Patient'); ?>:</label>
             <input class='form-control' type='text' name='form_patient' id="form_patient" style='cursor:pointer;' placeholder='<?php echo xla('Click to select'); ?>' value='<?php echo is_null($patientname) ? '' : attr($patientname); ?>' onclick='sel_patient()' title='<?php echo xla('Click to select patient'); ?>' />
-            <input type='hidden' name='form_pid' id='form_pid' value='<?php echo attr($patientid) ?>' />
+          <!-- Customization code  -->
+          <input type='hidden' name='form_pid'  id="form_pid" value='<?php echo attr($patientid) ?>' />
 
             <!-- Patient phone numbers -->
             <div>
@@ -1679,7 +1686,7 @@ if ($_GET['group'] === true && $have_group_global_enabled) { ?>
 <?php } ?>
 <div class="form-row mx-2">
     <div class="col-sm form-group">
-     <label for="provd">
+    <label for="form-provider"><!-- Customization code -->
         <?php if ($_GET['group'] == true) {
             echo xlt('Coordinating Counselors');
         } else {
@@ -1707,7 +1714,7 @@ if ($_GET['group'] === true && $have_group_global_enabled) { ?>
             }
         }
         // build the selection tool
-        echo "<select class='form-control' name='form_provider[]' id='provd' multiple='multiple' size='5' >";
+        echo "<select class='form-control' name='form_provider[]' id='form-provider' multiple='multiple' size='5' >";/* Customization code end */
         while ($urow = sqlFetchArray($ures)) {
             echo "    <option value='" . attr($urow['id']) . "'";
             if ($userid) {
@@ -1751,7 +1758,7 @@ if ($_GET['group'] === true && $have_group_global_enabled) { ?>
                 $defaultProvider = $userid;
             }
         }
-        echo "<select class='form-control' name='form_provider' id='provd'>";
+        echo "<select class='form-control' name='form_provider' id='form-provider'>";/*Customization code end */
         while ($urow = sqlFetchArray($ures)) {
             echo "    <option value='" . attr($urow['id']) . "'";
             if ($urow['id'] == $defaultProvider) {
@@ -2077,6 +2084,214 @@ function are_days_checked(){
 * */
 var collectvalidation = <?php echo $collectthis; ?>;
 function validateform(event,valu){
+        /*Customization start */
+
+        <?php if($prov_tab != 'true') {
+  
+  if($GLOBALS['enable_provider_available_check'] == true) {
+
+    if(!empty($eid))
+    {   
+        ?>
+    var formdate=$( "#form_date" ).val();
+    
+    var finaldate= new Date(formdate);
+    var year = finaldate.getFullYear();
+    var month = finaldate.getMonth() + 1;
+    var day = finaldate.getDate();
+    if(day < 10 )
+    {
+        day= '0' + day;  
+    }
+    if(month < 10 )
+    {
+        month= '0' + month;  
+    }
+    var datecheck = '' + year + '-' + month + '-' + day;
+    
+     var formhour=$( "#form_hour" ).val();
+     var formminute=$( "#form_minute" ).val();
+     var formampm=$( "#form_ampm" ).val();
+     if(formhour < 10 && formhour.length <2)
+     {
+         formhour = '0' + formhour;
+     }
+     if(formminute < 10 && formminute.length <2)
+     {
+        formminute = '0' + formminute;
+     }
+    
+     if((formampm == 2) && (formhour < 12))
+    {
+      var formhour=  +formhour + +12;  
+    }else{
+        var formhour= formhour;  
+    }
+    
+    if((formampm == 1) && (formhour == 12))
+    {
+      var formhour=  '00';  
+    }else{
+        var formhour= formhour;  
+    }
+    
+     var formhourminute=formhour + ':' +formminute;
+    var formhourminutes=formhourminute + ':' + '00';
+    var formprovider=[];
+    $('#form-provider :selected').each(function(i, sel){ 
+        formprovider[i]=$(sel).val();
+    
+    });
+    var app_id=$( "#idforeid" ).val();
+      var provalert=   $.ajax({
+                type: "POST",
+                url: "../../customized/calendar/check_date_time.php",
+                data: {
+                    app_id:app_id    
+                },
+                cache: false,
+                async: false,
+                success: function(result) {
+                    $("#dummy").val(result);
+                    if(result == "false")
+                    {
+                     alert('Another Patient already have an Appointment on this Date and Time OR Provider Not Available on this Time');      
+                    }
+    return false;
+     
+                }
+            });
+    var dum=  $("#dummy").val();
+    
+           if (dum=="false")
+           {
+            return dum;
+           } 
+           var pid= $( "#form_pid" ).val();
+    
+    <?php }
+    else
+    {?>
+    var formdate=$( "#form_date" ).val();
+    
+    var finaldate= new Date(formdate);
+    var year = finaldate.getFullYear();
+    var month = finaldate.getMonth() + 1;
+    var day = finaldate.getDate();
+    if(day < 10 )
+    {
+        day= '0' + day;  
+    }
+    if(month < 10 )
+    {
+        month= '0' + month;  
+    }
+    var datecheck = '' + year + '-' + month + '-' + day;
+    
+     var formhour=$( "#form_hour" ).val();
+     var formminute=$( "#form_minute" ).val();
+     var formampm=$( "#form_ampm" ).val();
+     if(formhour < 10 && formhour.length <2)
+     {
+         formhour = '0' + formhour;
+     }
+     if(formminute < 10 && formminute.length <2)
+     {
+        formminute = '0' + formminute;
+     }
+    
+     if((formampm == 2) && (formhour < 12))
+    {
+      var formhour=  +formhour + +12;  
+    }else{
+        var formhour= formhour;  
+    }
+    
+    if((formampm == 1) && (formhour == 12))
+    {
+      var formhour=  '00';  
+    }else{
+        var formhour= formhour;  
+    }
+    
+     var formhourminute=formhour + ':' +formminute;
+    var formhourminutes=formhourminute + ':' + '00';
+    var formprovider=[];
+    $('#form-provider :selected').each(function(i, sel){ 
+        formprovider[i]=$(sel).val();
+    
+    });
+    
+      var provalert=   $.ajax({
+                type: "POST",
+                url: "../../customized/calendar/check_date_time.php",
+                data: {
+                    form_date: datecheck,
+                    form_time:formhourminutes,
+                    provider:formprovider
+                    
+                },
+                cache: false,
+                async: false,
+                success: function(result) {
+                    $("#dummy").val(result);
+                    if(result == "false")
+                    {
+    
+                     alert('Another Patient already have an Appointment on this Date and Time OR Provider Not Available on this Time');
+                      
+                    }
+    return false;
+     
+                }
+            });
+    var dum=  $("#dummy").val();
+    
+           if (dum=="false")
+           {
+            return dum;
+           } 
+    
+    
+    
+    
+           var pid= $( "#form_pid" ).val();
+           var provalert1=   $.ajax({
+                type: "POST",
+                url: "../../customized/calendar/check_future_app.php",
+                data: {
+                    pid:pid
+                },
+                cache: false,
+                async: false,
+                success: function(result) {
+                   
+                    if(result == "false")
+                    {
+                     
+                    }
+                    else{
+                       
+                    var check_future= confirm(result);
+                    $("#dummy1").val(check_future);
+                    }
+    return false;
+     
+                }
+            });
+        
+            var dum1=  $("#dummy1").val();
+    
+    if (dum1=="false")
+    {
+     return dum1;
+    } 
+    
+    <?php
+    }}} ?>
+
+    /*Customization end */
+
     $('#form_save').attr('disabled', true);
     //Make sure if days_every_week is checked that at least one weekday is checked.
     if($('#days_every_week').is(':checked') && !are_days_checked()){

@@ -653,7 +653,7 @@ if(isset($_GET['get_encounter_forms']))
                             <div class='col-sm-6'>Enable Provider Available Check</div>
                             <div class='col-sm-6 oe-input' title='Rx Enable DEA #'>
                                 <label class="switch">
-                                    <input type="checkbox" checked>
+                                <input type="checkbox"  class="custom_setting_event" data-id='enable_provider_available_check'>
                                     <span class="slider round"></span>
                                 </label>
                             </div>
