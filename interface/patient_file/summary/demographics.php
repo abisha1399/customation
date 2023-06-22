@@ -49,6 +49,41 @@ use OpenEMR\Reminder\BirthdayReminder;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 $twig = new TwigContainer(null, $GLOBALS['kernel']);
+//custom
+$pdfText = ''; 
+if(isset($_POST['submit'])){ 
+    
+    // If file is selected 
+    if(!empty($_FILES["pdf_file"]["name"])){ 
+        // File upload path 
+        $fileName = basename($_FILES["pdf_file"]["name"]); 
+        $fileType = pathinfo($fileName, PATHINFO_EXTENSION); 
+         
+        // Allow certain file formats 
+        $allowTypes = array('pdf'); 
+        if(in_array($fileType, $allowTypes)){ 
+            // Include autoloader file 
+            include '../../customized/pdfextract/vendor/autoload.php'; 
+             
+            // Initialize and load PDF Parser library 
+            $parser = new \Smalot\PdfParser\Parser(); 
+            // Source PDF file to extract text 
+            $file = $_FILES["pdf_file"]["tmp_name"]; 
+             
+            // Parse pdf file using Parser library 
+            $pdf = $parser->parseFile($file); 
+             
+            // Extract text from PDF 
+            $text = $pdf->getText(); 
+             
+            // Add line break 
+            $pdfText = nl2br($text); 
+        }
+    }
+    $query= sqlInsert("insert into pdfextract(pid,file) values ($pid,'$pdfText')");
+    header('Location: demographics.php');
+    exit;
+} 
 
 // Set session for pid (via setpid). Also set session for encounter (if applicable)
 if (isset($_GET['set_pid'])) {

@@ -323,7 +323,13 @@ if (!$GLOBALS['disable_prescriptions'] && AclMain::aclCheckCore('patients', 'rx'
 
         echo $t->render('patient/card/erx.html.twig', $viewArgs);
     }
-
+    //custom
+    $pdfcontent='';
+    $select = "SELECT * FROM `pdfextract` where pid='".$_SESSION['pid']."'";
+    $result = sqlStatement($select);
+    while($row = sqlFetchArray($result)){
+        $pdfcontent.='<ul><li>'. $row['file'].'</li></ul>';
+       }
     $id = "prescriptions_ps_expand";
     $viewArgs = [
         'title' => xl("Prescriptions"),
@@ -331,6 +337,8 @@ if (!$GLOBALS['disable_prescriptions'] && AclMain::aclCheckCore('patients', 'rx'
         'initiallyCollapsed' => (getUserSetting($id) == 0) ? false : true,
         'linkMethod' => "html",
         'btnLabel' => "Edit",
+        'prescribtion_type'=>$GLOBALS['enable_scan_prescription'],
+        'pdf_extract'=>$pdf_extract,
         'auth' => AclMain::aclCheckCore('patients', 'rx', '', ['write', 'addonly']),
     ];
 
@@ -363,6 +371,14 @@ if (!$GLOBALS['disable_prescriptions'] && AclMain::aclCheckCore('patients', 'rx'
     ob_start();
     echo $c->act(['prescription' => '', 'fragment' => '', 'patient_id' => $pid]);
     $viewArgs['content'] = ob_get_contents();
+    //custom
+    if($pdfcontent!=''){
+        if($viewArgs['content']=='None'){
+            $viewArgs['content']='';
+        }
+        $viewArgs['content'] = $viewArgs['content'].$pdfcontent;
+    }
+    
     ob_end_clean();
 
     echo $t->render('patient/card/rx.html.twig', $viewArgs);

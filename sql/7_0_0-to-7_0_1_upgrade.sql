@@ -8747,3 +8747,11 @@ CREATE TABLE IF NOT EXISTS `billing_profile` (
 COMMIT;
 #alterbilling table
 ALTER TABLE `billing` ADD `appt_id` INT NULL AFTER `chargecat`;
+DROP TABLE IF EXISTS `pdfextract`;
+CREATE TABLE IF NOT EXISTS `pdfextract` (
+  `id` bigint(50) NOT NULL AUTO_INCREMENT,
+  `pid` int(50) NOT NULL,
+  `file` text,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+COMMIT;

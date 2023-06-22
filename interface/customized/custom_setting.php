@@ -188,9 +188,9 @@ if(isset($_GET['get_encounter_forms']))
             <li class="nav-item">
               <a class="nav-link text-body" id="billing_setting">Billing</a>
             </li>
-            <!-- <li class="nav-item">
+            <li class="nav-item">
               <a class="nav-link text-body" id="prescription_setting">Prescription</a>
-            </li> -->
+            </li>
             <li class="nav-item">
               <a class="nav-link text-body" id="third_party_setting">Third parties Api</a>
             </li>
@@ -480,16 +480,7 @@ if(isset($_GET['get_encounter_forms']))
                                     <span class="slider round"></span>
                                 </label>
                             </div>
-                        </div>
-                        <div class='row form-group'>
-                            <div class='col-sm-6'>Enable Clone Forms</div>
-                            <div class='col-sm-6 oe-input'>
-                                <label class="switch">
-                                    <input type="checkbox" class="custom_setting_event" data-id='enable_clone_form'>
-                                    <span class="slider round"></span>
-                                </label>
-                            </div>
-                        </div>
+                        </div>                        
                         <div class='row form-group'>
                             <div class='col-sm-6'>Enable Macro Button</div>
                             <div class='col-sm-6 oe-input'>
@@ -568,15 +559,15 @@ if(isset($_GET['get_encounter_forms']))
                     
                     <div class=''>
                         <div class='col-sm-12 oe-global-tab-heading'>
-                                <div class='oe-pull-toward' style='font-size: 1.4rem'>Prescription &nbsp;</div>
+                                <div class='oe-pull-toward' style='font-size: 1.4rem'>Prescription Setting &nbsp;</div>
                                 <div style='margin-top: 5px'></div>
                         </div>
                         <div class='clearfix'></div>                        
                         <div class='row form-group'>
                             <div class='col-sm-6'>Enable scanned prescription</div>
-                            <div class='col-sm-6 oe-input' title='Rx Enable DEA #'>
+                            <div class='col-sm-6 oe-input'>
                                 <label class="switch">
-                                    <input type="checkbox" checked>
+                                    <input type="checkbox" class="custom_setting_event" data-id="enable_scan_prescription">
                                     <span class="slider round"></span>
                                 </label>
                             </div>
