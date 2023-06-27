@@ -202,7 +202,11 @@ function chooseEncounterEvent(data,evt)
     setEncounter(data.id());
     goToEncounter(data.id());
 }
-
+//rpm
+function rpmNewEncounter(data,evt){
+    $('#rpm_form1').css('display','none');
+    $('#rpm_form').css('display','block');   
+}
 function goToEncounter(encId)
 {
     var url=webroot_url+'/interface/patient_file/encounter/encounter_top.php?set_encounter=' + encId;

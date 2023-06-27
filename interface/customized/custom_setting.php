@@ -430,7 +430,25 @@ if(isset($_GET['get_encounter_forms']))
                                     <span class="slider round"></span>
                                 </label>
                             </div>
-                        </div>                        
+                        </div>  
+                        <div class='row form-group'>
+                            <div class='col-sm-6'>Enable Marsonik</div>
+                            <div class='col-sm-6 oe-input' title='Enable Billing CCM billing'>
+                                <label class="switch">
+                                    <input type="checkbox" class="custom_setting_event" data-id='enable_marsonik'>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class='row form-group'>
+                            <div class='col-sm-6'>Enable vitals</div>
+                            <div class='col-sm-6 oe-input' title='Enable Billing CCM billing'>
+                                <label class="switch">
+                                    <input type="checkbox" class="custom_setting_event" data-id='enable_vitals'>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>                      
                         <div class='row form-group'>
                             <div class='col-sm-6'>Enable RPM code </div>
                             <div class='col-sm-6 oe-input' title='Enable RPM code'>

@@ -18,6 +18,7 @@
 $sessionAllowWrite = true;
 require_once(__DIR__ . '/../../globals.php');
 require_once $GLOBALS['srcdir'] . '/ESign/Api.php';
+require('../../customized/rpm_encounter.php');
 
 use Esign\Api;
 use OpenEMR\Common\Acl\AclMain;
@@ -29,6 +30,10 @@ use OpenEMR\Services\LogoService;
 $logoService = new LogoService();
 $menuLogo = $logoService->getLogo('core/menu/primary/');
 
+//rpm
+$pid=isset($_SESSION['pid'])?$_SESSION['pid']:'';
+$http = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=== 'on' ? "https" : "https") . "://" . $_SERVER['HTTP_HOST'];
+$customized_folder=$http.$GLOBALS['webroot'].'/interface/customized';
 // Ensure token_main matches so this script can not be run by itself
 //  If do not match, then destroy the session and go back to login screen
 if (
@@ -53,8 +58,11 @@ $esignApi = new Api();
 
 <head>
     <title><?php echo text($openemr_name); ?></title>
-
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
     <script>
+         //rpm
+         var customized_folder='<?php echo $customized_folder ?>';
         // This is to prevent users from losing data by refreshing or backing out of OpenEMR.
         //  (default behavior, however, this behavior can be turned off in the prevent_browser_refresh global)
         <?php if ($GLOBALS['prevent_browser_refresh'] > 0) { ?>
@@ -338,6 +346,9 @@ $esignApi = new Api();
 
 <body class="min-vw-100">
 <?php
+    //rpm
+    $rpm_enc=rpm_encounter_div();
+    echo $rpm_enc;
     // fire off an event here
 if (!empty($GLOBALS['kernel']->getEventDispatcher())) {
     /**
@@ -431,7 +442,24 @@ if (!empty($GLOBALS['kernel']->getEventDispatcher())) {
         $(function() {
             goRepeaterServices();
         });
+        setInterval(function(){
+    loadlink(); // this will run after every 5 seconds
+}, 1000);
     </script>
+    <!-- //rpm -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" ></script>   
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+<script>
+      $('#summernote').summernote({
+        placeholder: 'Type your Notes here!',
+        tabsize: 1,
+        height: 155
+      });
+      var rpm_encounter_true='false';
+      </script>
+    <script src="../../customized/js/rpm_enc.js"></script>
+   
     <?php
     // fire off an event here
     if (!empty($GLOBALS['kernel']->getEventDispatcher())) {
