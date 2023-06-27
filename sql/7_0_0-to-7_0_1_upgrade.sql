@@ -477,7 +477,7 @@ CREATE TABLE IF NOT EXISTS `tenovi_data` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 COMMIT;
 #patientdata table 
-ALTER TABLE `patient_data` ADD `ambrosiasys_email` TEXT NULL AFTER `updated_by`, ADD `ambrosiasys_password` TEXT NULL AFTER `ambrosiasys_email`, ADD `googlefit_email` TEXT NULL AFTER `ambrosiasys_password`, ADD `tidepull_email` TEXT NULL AFTER `googlefit_email`, ADD `tidepull_password` TEXT NULL AFTER `tidepull_email`, ADD `marsonik_status` VARCHAR(20) NULL AFTER `tidepull_password`, ADD `imedrix_status` VARCHAR(20) NULL AFTER `marsonik_status`, ADD `imed_mrn_id` TEXT NULL AFTER `imedrix_status`, ADD `imed_patient_name` TEXT NULL AFTER `imed_mrn_id`, ADD `imed_age` VARCHAR(20) NULL AFTER `imed_patient_name`, ADD `imed_gender` VARCHAR(20) NULL AFTER `imed_age`;
+ALTER TABLE `patient_data` ADD `ambrosiasys_email` TEXT NULL AFTER `updated_by`, ADD `ambrosiasys_password` TEXT NULL AFTER `ambrosiasys_email`, ADD `googlefit_email` TEXT NULL AFTER `ambrosiasys_password`, ADD `tidepull_email` TEXT NULL AFTER `googlefit_email`, ADD `tidepull_password` TEXT NULL AFTER `tidepull_email`, ADD `marsonik_status` VARCHAR(20) NULL AFTER `tidepull_password`, ADD `imedrix_status` VARCHAR(20) NULL AFTER `marsonik_status`, ADD `imed_mrn_id` TEXT NULL AFTER `imedrix_status`, ADD `imed_patient_name` TEXT NULL AFTER `imed_mrn_id`, ADD `imed_age` VARCHAR(20) NULL AFTER `imed_patient_name`, ADD `imed_gender` VARCHAR(20) NULL AFTER `imed_age`,ADD `oneup_id` VARCHAR(250) NOT NULL AFTER `imed_age`,ADD `dupscore` VARCHAR(250) NOT NULL AFTER `oneup_id`;
  
  #alter form encounter table
 ALTER TABLE `form_encounter`  ADD `encounter_status` VARCHAR(255) NULL  AFTER `date_end`;
@@ -8791,4 +8791,7 @@ CREATE TABLE IF NOT EXISTS `task_manager` (
   `uid` varchar(250) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+#endif
+#userschanges
+ALTER TABLE `users` ADD `code` VARCHAR(250) NOT NULL AFTER `billing_facility_id`,ADD `refresh_token`VARCHAR(250) NOT NULL AFTER `code`,ADD `access_yoken` VARCHAR(250) NOT NULL AFTER `refresh_token`;
 #endif
