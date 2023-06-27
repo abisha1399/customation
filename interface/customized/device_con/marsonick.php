@@ -5,11 +5,15 @@ require_once("../../globals.php");
 require_once("$srcdir/api.inc");
 require_once("$srcdir/forms.inc");
 ini_set('display_errors',true);
+if(isset($GLOBALS['enable_marsonik'])&&$GLOBALS['enable_marsonik']==true)
+{
+
 if(isset($_GET['marsonic_authentication']))
 {
     $pid=$_POST['pid'];
     sqlQuery("UPDATE patient_data SET marsonik_status=1 WHERE pid=?",array($pid));
     exit();
+}
 }
 $pid=isset($_GET['pid'])?$_GET['pid']:'';
 $orgname=isset($_SESSION['site_id'])?$_SESSION['site_id']:'';

@@ -6,6 +6,9 @@
     require_once($GLOBALS['srcdir'] . '/encounter_events.inc.php');
     require_once($GLOBALS["srcdir"] . "/forms.inc");
      /*encounter new encounter create */
+    if(isset($GLOBALS['enable_rpm_code'])&&$GLOBALS['enable_rpm_code']==true)
+    {
+     
      $rpm_enc_array=[];
     //$rpm_encounter_data=sqlStatement("SELECT id,pid,date_end,encounter,date,encounter_status FROM form_encounter WHERE date_end!='NULL' AND encounter_status='open'");
     $rpm_encounter_data=sqlStatement("SELECT fe.id as id,fe.pid as pid,fe.date as date,fe.encounter as encounter,fe.date_end as date_end,fe.encounter_status as encounter_status,CONCAT(pd.fname, ' ', pd.lname) as patient_name FROM form_encounter as fe left join patient_data as pd ON fe.pid=pd.pid WHERE fe.date_end!='NULL' AND fe.encounter_status='open'");
@@ -108,7 +111,7 @@
     else{
         echo "No Patient Have Rpm Encounter";
     }
-     
+
 
     function insert_billing($code,$encounter,$pid){
         
@@ -130,4 +133,5 @@
                     "NOW(), ?, ?, ?, ?, ?, ?, ?, ?,  1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
                 $insert_id=sqlInsert($sql, array($encounter, $code_type, $code,$code_text, $pid, 1,1, 'Default', 0, 1, $modifier, $units, $fee,$ndc_info, $justify, $notecodes, $pricelevel, $revenue_code));
     }
+}
     ?>

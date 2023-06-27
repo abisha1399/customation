@@ -2,7 +2,7 @@ if(rpm_encounter_true=='true'){
     $.ajax
        ({
            type        : 'POST',
-           url:''+customized_folder+'/rpm_encounter.php?rpm_bill_generate=true',          
+           url:'../../customized/rpm_encounter.php?rpm_bill_generate=true',          
            data        : {
             pid:pid,
             encounter:encounter
@@ -166,7 +166,7 @@ $('#confirm').click(function(){
     $("#pid").val('');
     $.ajax({
         type: 'POST',
-        url:''+customized_folder+'/rpm_encounter.php?rpm_encounter',
+        url:'../../customized/rpm_encounter.php?rpm_encounter',
         data:{
             rpm:'true',
             pid:pid,
@@ -215,7 +215,7 @@ function edit_enc(id){
     $("#rpm_enc_id").val(id);        
     $.ajax({
             type: 'POST',
-            url:''+customized_folder+'/rpm_encounter.php?get_rpmenc',
+            url:'../../customized/rpm_encounter.php?get_rpmenc',
             data:{
                 id:id
             },

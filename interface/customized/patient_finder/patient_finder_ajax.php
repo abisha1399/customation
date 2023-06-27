@@ -1744,7 +1744,11 @@ if(isset($_GET['patient_detail'])&&$_GET['patient_detail']=='true')
                     $flag=0;
                     if(!empty($enc_data))
                     {
+                        if(isset($GLOBALS['enable_rpm'])&&$GLOBALS['enable_rpm']==true){
                         $flag=1;
+                        }else{
+                        $flag=0;   
+                        }
                         //days
                         $end_data=strtotime($enc_data['date_end']);
                         $today_date=strtotime(date('Y-m-d h:i:s'));
@@ -1837,8 +1841,10 @@ if(isset($_GET['patient_detail'])&&$_GET['patient_detail']=='true')
                                     $result .='<button class="btn  btn-sm start-encounter-btn"  onclick="start_encounter('.$pid.')">Start Encounter</button>';
                                 }
                                 else{
+                                    
                                     $result .='<button class="btn  btn-sm start-encounter-btn"  onclick="rpm_encounter('.$pid.')">Start Encounter</button>';
-                                }
+                                    
+                                     }
                                 $result .='</div>'; 
                                 $end_date=date('Y-m-d');
                                 $start_date=date('Y-m-d', strtotime($end_date .'- 7 days'));

@@ -7,6 +7,7 @@ $pid=$_SESSION['pid'];
 if(isset($_GET['pid'])){
     $pid=isset($_GET['pid'])?$_GET['pid']:'';
 }
+if(isset($GLOBALS['enable_omron_api'])&&$GLOBALS['enable_omron_api']==true){
 $result = sqlQuery("SELECT * FROM  omron_token  WHERE  pid=? AND status=? ORDER BY id DESC LIMIT 1", array($pid,1));
 $user_id=isset($result['user_id'])?$result['user_id']:'';
 $terra_dev_id=isset($GLOBALS['terra_devid'])?$GLOBALS['terra_devid']:'refresh-health-dev-4kHfmQNvOw';
@@ -136,7 +137,8 @@ if(!empty($user_id)){
     
     $pid=$pid;
     $adss=1;
-
+    if(isset($GLOBALS['enable_rpm'])&&$GLOBALS['enable_rpm']==true)
+    {
     $rm_encounter_exit=sqlQuery("SELECT * FROM form_encounter WHERE pid=? AND date_end!='NULL' AND encounter_status='open'",array($pid));
     if(empty($rm_encounter_exit))
     {
@@ -155,7 +157,7 @@ if(!empty($user_id)){
                 $visit_cat=10;
                 $pos_code='AMB';
                 $username='admin';
-                $end_date=date('Y-m-d h:i:s', strtotime($today_date. ' + 30 days'));
+                $end_date=date('Y-m-d h:i:s', strtotime($today_date. ' + 15 days'));
                 $enc_date=$dos.'-'. $end_date;
                 $adss=sqlInsert(
                     "INSERT INTO form_encounter SET " .
@@ -178,9 +180,16 @@ if(!empty($user_id)){
         echo $adss;
         
     }
+    }else{
+        echo "RPM not enable please contact your facility";
+    }
 }
 else{
     echo "not connected";
 }
+}else{
+    echo "Omron is disable for you please contact with your clinic";
+}
+
   
 ?>

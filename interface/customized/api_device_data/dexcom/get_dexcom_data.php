@@ -7,7 +7,8 @@ $pid=isset($_SESSION['pid'])?$_SESSION['pid']:'';
 if(isset($_GET['pid'])){
     $pid=isset($_GET['pid'])?$_GET['pid']:'';
 }
-
+if(isset($GLOBALS['enable_dexcom_api'])&&$GLOBALS['enable_dexcom_api']==true)
+{
 //$url='https://sandbox-api.dexcom.com';
 $client_id='uNcrPYu45wWHbEqKeBw5rLHiZbA0BO6T';
 $client_secret='IARVhFEcEeqFNbWo';
@@ -100,6 +101,9 @@ if($token!='')
 } 
 else{
     echo "dexcom its not conneceted";
+}
+}else{
+    echo "Dexcom is disable for you please contact with your clinic";
 }
   
 ?>

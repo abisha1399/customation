@@ -13,12 +13,13 @@
  */
 
 require_once(__DIR__ . "/../../globals.php");
-require_once("$srcdir/encounter.inc.php");
-require_once("$srcdir/group.inc.php");
-require_once("$srcdir/patient.inc.php");
+require_once("$srcdir/encounter.inc");
+require_once("$srcdir/group.inc");
+require_once("$srcdir/patient.inc");
 require_once("$srcdir/amc.php");
 require_once($GLOBALS['srcdir'] . '/ESign/Api.php');
 require_once("$srcdir/../controllers/C_Document.class.php");
+require('../../customized/rpm_encounter.php');
 
 use ESign\Api;
 use OpenEMR\Common\Acl\AclMain;
@@ -29,6 +30,12 @@ use OpenEMR\Events\Encounter\EncounterMenuEvent;
 use OpenEMR\Services\EncounterService;
 use OpenEMR\Services\UserService;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+//rpm
+$http = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=== 'on' ? "https" : "https") . "://" . $_SERVER['HTTP_HOST'];
+$customized_folder=$http.$GLOBALS['webroot'].'/interface/customized';
+$rpm_encounter_query=sqlQuery("SELECT * FROM form_encounter WHERE encounter=?", array($encounter));
+$rpm_Status=isset($rpm_encounter_query['date_end']) && $rpm_encounter_query['date_end']!='NULL'?'true':'false';
+$rpm_editable=isset($rpm_encounter_query['encounter_status'])&&$rpm_encounter_query['encounter_status']=='open'?'true':'false';
 
 $expand_default = (int)$GLOBALS['expand_form'] ? 'show' : 'hide';
 $reviewMode = false;
@@ -540,6 +547,11 @@ function findPosY(obj) {
 
 </head>
 <body>
+    <!-- rpm -->
+<?php
+$rpm_enc=edit_encounter_modal();
+echo $rpm_enc; 
+?>
 <nav>
 <?php //DYNAMIC FORM RETREIVAL
 require_once("$srcdir/registry.inc.php");
@@ -658,6 +670,8 @@ echo $t->render('encounter/forms/navbar.html.twig', [
 ?>
 
 <div id="encounter_forms" class="mx-1">
+    <!-- //rpm -->
+    <input type="hidden" id="rpm_encounter_exit" value="<?php echo $rpm_editable;?>">
 <div class='encounter-summary-container'>
     <div class='encounter-summary-column'>
         <div>
@@ -851,142 +865,144 @@ if (!empty($docs_list) && count($docs_list) > 0) {
 <br/>
 
 <?php
-if (
-    $pass_sens_squad &&
-    ($result = getFormByEncounter(
-        $attendant_id,
-        $encounter,
-        "id, date, form_id, form_name, formdir, user, deleted",
-        "",
-        "FIND_IN_SET(formdir,'newpatient') DESC, form_name, date DESC"
-    ))
-) {
-    echo "<table class='w-100' id='partable'>";
-    $divnos = 1;
-    foreach ($result as $iter) {
-        $formdir = $iter['formdir'];
-
-        // skip forms whose 'deleted' flag is set to 1
-        if ($iter['deleted'] == 1) {
-            continue;
-        }
-
-        $aco_spec = false;
-
-        if (substr($formdir, 0, 3) == 'LBF') {
-            // Skip LBF forms that we are not authorized to see.
-            $lrow = sqlQuery(
-                "SELECT grp_aco_spec " .
-                "FROM layout_group_properties WHERE " .
-                "grp_form_id = ? AND grp_group_id = '' AND grp_activity = 1",
-                array($formdir)
-            );
-            if (!empty($lrow)) {
-                if (!empty($lrow['grp_aco_spec'])) {
-                    $aco_spec = explode('|', $lrow['grp_aco_spec']);
+if($rpm_Status!='true')
+{
+    if (
+        $pass_sens_squad &&
+        ($result = getFormByEncounter(
+            $attendant_id,
+            $encounter,
+            "id, date, form_id, form_name, formdir, user, deleted",
+            "",
+            "FIND_IN_SET(formdir,'newpatient') DESC, form_name, date DESC"
+        ))
+    ) {
+        echo "<table class='w-100' id='partable'>";
+        $divnos = 1;
+        foreach ($result as $iter) {
+            $formdir = $iter['formdir'];
+    
+            // skip forms whose 'deleted' flag is set to 1
+            if ($iter['deleted'] == 1) {
+                continue;
+            }
+    
+            $aco_spec = false;
+    
+            if (substr($formdir, 0, 3) == 'LBF') {
+                // Skip LBF forms that we are not authorized to see.
+                $lrow = sqlQuery(
+                    "SELECT grp_aco_spec " .
+                    "FROM layout_group_properties WHERE " .
+                    "grp_form_id = ? AND grp_group_id = '' AND grp_activity = 1",
+                    array($formdir)
+                );
+                if (!empty($lrow)) {
+                    if (!empty($lrow['grp_aco_spec'])) {
+                        $aco_spec = explode('|', $lrow['grp_aco_spec']);
+                        if (!AclMain::aclCheckCore($aco_spec[0], $aco_spec[1])) {
+                            continue;
+                        }
+                    }
+                }
+            } else {
+              // Skip non-LBF forms that we are not authorized to see.
+                $tmp = getRegistryEntryByDirectory($formdir, 'aco_spec');
+                if (!empty($tmp['aco_spec'])) {
+                    $aco_spec = explode('|', $tmp['aco_spec']);
                     if (!AclMain::aclCheckCore($aco_spec[0], $aco_spec[1])) {
                         continue;
                     }
                 }
             }
-        } else {
-          // Skip non-LBF forms that we are not authorized to see.
-            $tmp = getRegistryEntryByDirectory($formdir, 'aco_spec');
-            if (!empty($tmp['aco_spec'])) {
-                $aco_spec = explode('|', $tmp['aco_spec']);
-                if (!AclMain::aclCheckCore($aco_spec[0], $aco_spec[1])) {
-                    continue;
+    
+            // $form_info = getFormInfoById($iter['id']);
+            if (strtolower(substr($iter['form_name'], 0, 5)) == 'camos') {
+                //CAMOS generates links from report.php and these links should
+                //be clickable without causing view.php to come up unexpectedly.
+                //I feel that the JQuery code in this file leading to a click
+                //on the report.php content to bring up view.php steps on a
+                //form's autonomy to generate it's own html content in it's report
+                //but until any other form has a problem with this, I will just
+                //make an exception here for CAMOS and allow it to carry out this
+                //functionality for all other forms.  --Mark
+                echo '<tr title="' . xla('Edit form') . '" ' .
+                      'id="' . attr($formdir) . '~' . attr($iter['form_id']) . '">';
+            } else {
+                echo '<tr id="' . attr($formdir) . '~' . attr($iter['form_id']) . '" class="text onerow">';
+            }
+    
+            $acl_groups = AclMain::aclCheckCore("groups", "glog", false, 'write') ? true : false;
+            $user = (new UserService())->getUserByUsername($iter['user']);
+    
+            $form_name = ($formdir == 'newpatient') ? xl('Visit Summary') : xl_form_title($iter['form_name']);
+    
+            // Create the ESign instance for this form
+            $esign = $esignApi->createFormESign($iter['id'], $formdir, $encounter);
+    
+            // echo "<tr>"; // Removed as bug fix.
+    
+            echo "<td class='border-bottom border-dark'>";
+    
+            // Figure out the correct author (encounter authors are the '$providerNameRes', while other
+            // form authors are the '$user['fname'] . "  " . $user['lname']').
+            if ($formdir == 'newpatient') {
+                $form_author = $providerNameRes;
+            } else {
+                $form_author = ($user['fname'] ?? '') . "  " . ($user['lname'] ?? '');
+            }
+            $div_nums_attr = attr($divnos);
+            $title = xla("Expand/Collapse this form");
+            $display = text($form_name) . " " . xlt("by") . " " . text($form_author);
+            $author_text = text($form_author);
+            $by_text = xlt("by");
+            $form_text = text($form_name);
+            echo <<<HTML
+            <div class="form_header">
+                <a href="#" data-toggle="collapse" data-target="#divid_{$div_nums_attr}" class="" id="aid_{$div_nums_attr}">
+                    <h5>{$form_text}</h5>
+                    {$by_text} {$author_text}
+                </a>
+            </div>
+            <div class='form_header_controls btn-group' role='group'>
+            HTML;
+    
+            // If the form is locked, it is no longer editable
+            if ($esign->isLocked()) {
+                     echo "<a href='#' class='btn btn-secondary btn-sm form-edit-button-locked' id='form-edit-button-" . attr($formdir) . "-" . attr($iter['id']) . "'><i class='fa fa-lock fa-fw'></i>&nbsp;" . xlt('Locked') . "</a>";
+            } else {
+                if (
+                    (!$aco_spec || AclMain::aclCheckCore($aco_spec[0], $aco_spec[1], '', 'write') and $is_group == 0 and $authPostCalendarCategoryWrite)
+                    or (((!$aco_spec || AclMain::aclCheckCore($aco_spec[0], $aco_spec[1], '', 'write')) and $is_group and AclMain::aclCheckCore("groups", "glog", false, 'write')) and $authPostCalendarCategoryWrite)
+                ) {
+                    echo "<a class='btn btn-secondary btn-sm form-edit-button btn-edit' " .
+                        "id='form-edit-button-" . attr($formdir) . "-" . attr($iter['id']) . "' " .
+                        "href='#' " .
+                        "title='" . xla('Edit this form') . "' " .
+                        "onclick=\"return openEncounterForm(" . attr_js($formdir) . ", " .
+                        attr_js($form_name) . ", " . attr_js($iter['form_id']) . ")\">";
+                    echo "" . xlt('Edit') . "</a>";
                 }
             }
-        }
-
-        // $form_info = getFormInfoById($iter['id']);
-        if (strtolower(substr($iter['form_name'], 0, 5)) == 'camos') {
-            //CAMOS generates links from report.php and these links should
-            //be clickable without causing view.php to come up unexpectedly.
-            //I feel that the JQuery code in this file leading to a click
-            //on the report.php content to bring up view.php steps on a
-            //form's autonomy to generate it's own html content in it's report
-            //but until any other form has a problem with this, I will just
-            //make an exception here for CAMOS and allow it to carry out this
-            //functionality for all other forms.  --Mark
-            echo '<tr title="' . xla('Edit form') . '" ' .
-                  'id="' . attr($formdir) . '~' . attr($iter['form_id']) . '">';
-        } else {
-            echo '<tr id="' . attr($formdir) . '~' . attr($iter['form_id']) . '" class="text onerow">';
-        }
-
-        $acl_groups = AclMain::aclCheckCore("groups", "glog", false, 'write') ? true : false;
-        $user = (new UserService())->getUserByUsername($iter['user']);
-
-        $form_name = ($formdir == 'newpatient') ? xl('Visit Summary') : xl_form_title($iter['form_name']);
-
-        // Create the ESign instance for this form
-        $esign = $esignApi->createFormESign($iter['id'], $formdir, $encounter);
-
-        // echo "<tr>"; // Removed as bug fix.
-
-        echo "<td class='border-bottom border-dark'>";
-
-        // Figure out the correct author (encounter authors are the '$providerNameRes', while other
-        // form authors are the '$user['fname'] . "  " . $user['lname']').
-        if ($formdir == 'newpatient') {
-            $form_author = $providerNameRes;
-        } else {
-            $form_author = ($user['fname'] ?? '') . "  " . ($user['lname'] ?? '');
-        }
-        $div_nums_attr = attr($divnos);
-        $title = xla("Expand/Collapse this form");
-        $display = text($form_name) . " " . xlt("by") . " " . text($form_author);
-        $author_text = text($form_author);
-        $by_text = xlt("by");
-        $form_text = text($form_name);
-        echo <<<HTML
-        <div class="form_header">
-            <a href="#" data-toggle="collapse" data-target="#divid_{$div_nums_attr}" class="" id="aid_{$div_nums_attr}">
-                <h5>{$form_text}</h5>
-                {$by_text} {$author_text}
-            </a>
-        </div>
-        <div class='form_header_controls btn-group' role='group'>
-        HTML;
-
-        // If the form is locked, it is no longer editable
-        if ($esign->isLocked()) {
-                 echo "<a href='#' class='btn btn-secondary btn-sm form-edit-button-locked' id='form-edit-button-" . attr($formdir) . "-" . attr($iter['id']) . "'><i class='fa fa-lock fa-fw'></i>&nbsp;" . xlt('Locked') . "</a>";
-        } else {
-            if (
-                (!$aco_spec || AclMain::aclCheckCore($aco_spec[0], $aco_spec[1], '', 'write') and $is_group == 0 and $authPostCalendarCategoryWrite)
-                or (((!$aco_spec || AclMain::aclCheckCore($aco_spec[0], $aco_spec[1], '', 'write')) and $is_group and AclMain::aclCheckCore("groups", "glog", false, 'write')) and $authPostCalendarCategoryWrite)
-            ) {
-                echo "<a class='btn btn-secondary btn-sm form-edit-button btn-edit' " .
-                    "id='form-edit-button-" . attr($formdir) . "-" . attr($iter['id']) . "' " .
-                    "href='#' " .
-                    "title='" . xla('Edit this form') . "' " .
-                    "onclick=\"return openEncounterForm(" . attr_js($formdir) . ", " .
-                    attr_js($form_name) . ", " . attr_js($iter['form_id']) . ")\">";
-                echo "" . xlt('Edit') . "</a>";
+    
+            if (($esign->isButtonViewable() and $is_group == 0 and $authPostCalendarCategoryWrite) or ($esign->isButtonViewable() and $is_group and AclMain::aclCheckCore("groups", "glog", false, 'write') and $authPostCalendarCategoryWrite)) {
+                if (!$aco_spec || AclMain::aclCheckCore($aco_spec[0], $aco_spec[1], '', 'write')) {
+                    echo $esign->buttonHtml();
+                }
             }
-        }
-
-        if (($esign->isButtonViewable() and $is_group == 0 and $authPostCalendarCategoryWrite) or ($esign->isButtonViewable() and $is_group and AclMain::aclCheckCore("groups", "glog", false, 'write') and $authPostCalendarCategoryWrite)) {
-            if (!$aco_spec || AclMain::aclCheckCore($aco_spec[0], $aco_spec[1], '', 'write')) {
-                echo $esign->buttonHtml();
+    
+            if (substr($formdir, 0, 3) == 'LBF') {
+              // A link for a nice printout of the LBF
+                echo "<a target='_blank' " .
+                "href='$rootdir/forms/LBF/printable.php?"   .
+                "formname="   . attr_url($formdir)         .
+                "&formid="    . attr_url($iter['form_id']) .
+                "&visitid="   . attr_url($encounter)       .
+                "&patientid=" . attr_url($pid)             .
+                "' class='btn btn-secondary btn-sm' title='" . xla('Print this form') .
+                "' onclick='top.restoreSession()'>" . xlt('Print') . "</a>";
             }
-        }
-
-        if (substr($formdir, 0, 3) == 'LBF') {
-          // A link for a nice printout of the LBF
-            echo "<a target='_blank' " .
-            "href='$rootdir/forms/LBF/printable.php?"   .
-            "formname="   . attr_url($formdir)         .
-            "&formid="    . attr_url($iter['form_id']) .
-            "&visitid="   . attr_url($encounter)       .
-            "&patientid=" . attr_url($pid)             .
-            "' class='btn btn-secondary btn-sm' title='" . xla('Print this form') .
-            "' onclick='top.restoreSession()'>" . xlt('Print') . "</a>";
-        }
-        //pdf
+              //pdf
         $somePath='../../customized/'.$formdir.'/pdf_form.php';
         if(is_file($somePath)){
             echo "<a class='btn btn-secondary btn-sm form-edit-button' title='" . xla('pdf this form') . "' " .
@@ -1002,72 +1018,94 @@ if (
     
             }
         }
-
-        if (AclMain::aclCheckCore('admin', 'super')) {
-            if ($formdir != 'newpatient' && $formdir != 'newGroupEncounter') {
-                // a link to delete the form from the encounter
-                echo "<a href='$rootdir/patient_file/encounter/delete_form.php?" .
-                    "formname=" . attr_url($formdir) .
-                    "&id=" . attr_url($iter['id']) .
-                    "&encounter=" . attr_url($encounter) .
-                    "&pid=" . attr_url($pid) .
-                    "' class='btn btn-danger btn-sm btn-delete' title='" . xla('Delete this form') . "' onclick='top.restoreSession()'>" . xlt('Delete') . "</a>";
-                if(isset($GLOBALS['enable_clone_form'])&&$GLOBALS['enable_clone_form']==true){
-                    echo "<a class='btn btn-secondary btn-sm form-edit-button' " .
-                    "id='form-edit-button-" . attr($formdir) . "-" . attr($iter['id']) . "' " .
-                    "href='#' " .
-                    "title='" . xla('Clone this form') . "' " .
-                    "onclick=\"return CloneEncounterForm(" . attr_js($formdir) . ", " .
-                    attr_js($form_name) . ", " . attr_js($iter['form_id']) . ")\">";
-                echo "" . xlt('Clone') . "</a>";
-                }    
-                
+    
+            if (AclMain::aclCheckCore('admin', 'super')) {
+                if ($formdir != 'newpatient' && $formdir != 'newGroupEncounter') {
+                    // a link to delete the form from the encounter
+                    echo "<a href='$rootdir/patient_file/encounter/delete_form.php?" .
+                        "formname=" . attr_url($formdir) .
+                        "&id=" . attr_url($iter['id']) .
+                        "&encounter=" . attr_url($encounter) .
+                        "&pid=" . attr_url($pid) .
+                        "' class='btn btn-danger btn-sm btn-delete' title='" . xla('Delete this form') . "' onclick='top.restoreSession()'>" . xlt('Delete') . "</a>";
+                        if(isset($GLOBALS['enable_clone_form'])&&$GLOBALS['enable_clone_form']==true){
+                            echo "<a class='btn btn-secondary btn-sm form-edit-button' " .
+                            "id='form-edit-button-" . attr($formdir) . "-" . attr($iter['id']) . "' " .
+                            "href='#' " .
+                            "title='" . xla('Clone this form') . "' " .
+                            "onclick=\"return CloneEncounterForm(" . attr_js($formdir) . ", " .
+                            attr_js($form_name) . ", " . attr_js($iter['form_id']) . ")\">";
+                        echo "" . xlt('Clone') . "</a>";
+                        } 
+                        } else {
+                    // do not show delete button for main encounter here since it is displayed at top
+                }
+            }
+    
+            echo "<a class='btn btn-secondary btn-sm collapse-button-form' title='" . xla('Expand/Collapse this form') . "' data-toggle='collapse' data-target='#divid_" . attr($divnos) . "'>" . xlt('Expand / Collapse') . "</a>";
+            echo "</div>\n"; // Added as bug fix.
+    
+            echo "</td>\n";
+            echo "</tr>";
+            echo "<tr>";
+            echo "<td class='formrow'><div id='divid_" . attr($divnos) . "' class='mb-5 collapse " . attr($expand_default) . "' ";
+            echo "class='tab " . ($divnos == 1 ? 'd-block' : 'd-none') . "'>";
+    
+            // Use the form's report.php for display.  Forms with names starting with LBF
+            // are list-based forms sharing a single collection of code.
+            //
+            if (substr($formdir, 0, 3) == 'LBF') {
+                include_once($GLOBALS['incdir'] . "/forms/LBF/report.php");
+                lbf_report($attendant_id, $encounter, 2, $iter['form_id'], $formdir, true);
             } else {
-                // do not show delete button for main encounter here since it is displayed at top
-            }
-        }
-        
-
-        echo "<a class='btn btn-secondary btn-sm collapse-button-form' title='" . xla('Expand/Collapse this form') . "' data-toggle='collapse' data-target='#divid_" . attr($divnos) . "'>" . xlt('Expand / Collapse') . "</a>";
-        echo "</div>\n"; // Added as bug fix.
-
-        echo "</td>\n";
-        echo "</tr>";
-        echo "<tr>";
-        echo "<td class='formrow'><div id='divid_" . attr($divnos) . "' class='mb-5 collapse " . attr($expand_default) . "' ";
-        echo "class='tab " . ($divnos == 1 ? 'd-block' : 'd-none') . "'>";
-
-        // Use the form's report.php for display.  Forms with names starting with LBF
-        // are list-based forms sharing a single collection of code.
-        //
-        if (substr($formdir, 0, 3) == 'LBF') {
-            include_once($GLOBALS['incdir'] . "/forms/LBF/report.php");
-            lbf_report($attendant_id, $encounter, 2, $iter['form_id'], $formdir, true);
-        } else {
-            if(is_file($GLOBALS['incdir'] . "/customized/$formdir/report.php")){
-                include_once($GLOBALS['incdir'] . "/customized/$formdir/report.php");
-            }
-            else{
+                if(is_file($GLOBALS['incdir'] . "/customized/$formdir/report.php")){
+                    include_once($GLOBALS['incdir'] . "/customized/$formdir/report.php");
+                }
+                else{
+                    include_once($GLOBALS['incdir'] . "/forms/$formdir/report.php");
+                }
+                
                 include_once($GLOBALS['incdir'] . "/forms/$formdir/report.php");
+                call_user_func($formdir . "_report", $attendant_id, $encounter, 2, $iter['form_id']);
             }
-            
-            call_user_func($formdir . "_report", $attendant_id, $encounter, 2, $iter['form_id']);
+    
+            if ($esign->isLogViewable()) {
+                $esign->renderLog();
+            }
+    
+            echo "</div></td></tr>";
+            ++$divnos;
         }
-
-        if ($esign->isLogViewable()) {
-            $esign->renderLog();
-        }
-
-        echo "</div></td></tr>";
-        ++$divnos;
+        echo "</table>";
     }
-    echo "</table>";
+    if (!$pass_sens_squad) {
+        echo xlt("Not authorized to view this encounter");
+    }
 }
-if (!$pass_sens_squad) {
-    echo xlt("Not authorized to view this encounter");
+//rpm
+else{
+    $table=rpm_encounter_list($encounter);
+    echo $table;
 }
+
 ?>
 
 </div> <!-- end large encounter_forms DIV -->
+<!-- rpm modal -->
+<?php
+echo notes_modal($encounter,$pid);
+echo delete_modal_popup();
+?>
 </body>
 </html>
+<!-- rpm  script-->
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+<script>
+var customized_folder='<?php echo $customized_folder; ?>';
+var rpm_encounter_true=$("#rpm_encounter_exit").val();
+var pid = <?php echo $pid; ?>;
+var encounter = <?php echo $encounter; ?>;
+</script> 
+<script src="../../customized/js/rpm_enc.js"></script>

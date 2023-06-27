@@ -37,12 +37,15 @@ if(isset($_GET['genreate_report']))
     $esign=$_POST['esign'];
    
     $html='';
+
+        
     if($libre_report_id!='')
     {
         
         $libre_data=sqlQuery("SELECT CONCAT(u.fname, ' ', u.lname) as user_name,CONCAT(pd.fname, ' ', pd.lname)
         as patient_name,pd.DOB as pat_dob,pd.phone_home as pat_phone,tr.* FROM terra_user as tr left join patient_data as pd on pd.pid=tr.pid left join users
          as u on u.id=tr.auth_user_id WHERE tr.id=".$libre_report_id."");
+        
         if(!empty($libre_data))
         {
             $patient_name=$libre_data['patient_name'];
@@ -115,6 +118,7 @@ if(isset($_GET['genreate_report']))
     }
     echo json_encode($response);
     die();
+
 }
 $report_table_value='';
 if($report_id)

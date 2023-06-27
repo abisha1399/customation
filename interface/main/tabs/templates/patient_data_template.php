@@ -157,6 +157,14 @@ switch ($search_any_type) {
                     <i class="fa fa-plus"></i>
                 </a>
             </div>
+            <?php if(isset($GLOBALS['enable_rpm'])&&$GLOBALS['enable_rpm']==true) {?>
+            <div class="btn-group btn-group-sm" data-bind="visible:rpmstatus()==1">
+                <div style="background: #6b7cb6;padding: 4px;"><img src="../../customized/image/encounter.png"></div>
+                <button class="btn btn-secondary btn-sm" type="button" data-bind="click: rpmNewEncounter" >
+                 <span><?php echo xlt("RPM Encounter");?></span>
+                </button>
+            </div>
+           <?php }?>
 
             <!-- ko if: encounterArray().length > 0 -->
             <div class="patientCurrentEncounter mt-2 d-block">

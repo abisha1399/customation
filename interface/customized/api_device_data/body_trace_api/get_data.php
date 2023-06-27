@@ -9,6 +9,8 @@ $pid=$_SESSION['pid'];
 if(isset($_GET['pid'])){
     $pid=isset($_GET['pid'])?$_GET['pid']:'';
 }
+if(isset($GLOBALS['enable_bodytrace_api'])&&$GLOBALS['enable_bodytrace_api']==true)
+{
 $ime_device=[];
 $device_data=sqlStatement("SELECT * FROM body_trace_number WHERE pid='".$pid."' AND device_number IS NOT NULL AND device_number!=''");
 $from_date=date('Y-m-d H:i:s', strtotime(' -1 hours'));
@@ -120,6 +122,16 @@ if(!empty($ime_device))
             echo "device number empty.<br>";
         }
     }
+}
+}
+ else{
+    echo "Body trace api is disable for you please contact with your clinic"; 
+  }
+   
+    
+if(isset($GLOBALS['enable_rpm'])&&$GLOBALS['enable_rpm']==true)
+ {
+
     $rm_encounter_exit=sqlQuery("SELECT * FROM form_encounter WHERE pid=? AND date_end!='NULL' AND encounter_status='open'",array($pid));
     if(empty($rm_encounter_exit))
     {
@@ -160,11 +172,15 @@ if(!empty($ime_device))
                 addForm($new_encounter,"RPM Patient Encounter",$adss,"newpatient",$pid,"1","NOW()",$username);
         }
     } 
+    else{
+        echo "No device data";
+    }
+}else{
+    echo "RPM not enable please contact your facility";
+}
 
-}
-else{
-    echo "No device data";
-}
+
+
 
 
 ?>

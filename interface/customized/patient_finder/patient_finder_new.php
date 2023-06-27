@@ -28,7 +28,7 @@ use OpenEMR\OeUI\OemrUI;
 use OpenEMR\Common\Crypto\CryptoGen;
 require '../../customized/PHPMailerAutoload1.php';
 
-$http = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=== 'on' ? "https" : "https") . "://" . $_SERVER['HTTP_HOST'];
+$http = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=== 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'];
 $customized_folder=$http.$GLOBALS['webroot'].'/interface/customized';
 
 ?>
@@ -1703,88 +1703,88 @@ function refresh(){
     
 }
 
-// function refresh_patient(pid)
-// {
-//     $("#vitalsdiv_"+pid+"").html('<div class="spinner-border spinner-border-sm" role="status"></div>');
-//     $.ajax
-//     ({
-//         "async": true,
-//         "crossDomain": true,
-//         "url": "../../smart_meter_device/iglucose_data.php?pid="+pid+"",
-//         "method": "GET",
-//         success: function(response) 
-//         {         
+function refresh_patient(pid)
+{
+    $("#vitalsdiv_"+pid+"").html('<div class="spinner-border spinner-border-sm" role="status"></div>');
+    $.ajax
+    ({
+        "async": true,
+        "crossDomain": true,
+        "url": "../../smart_meter_device/iglucose_data.php?pid="+pid+"",
+        "method": "GET",
+        success: function(response) 
+        {         
         
-//         }
-//     });
-//     $.ajax
-//     ({
-//         "async": true,
-//         "crossDomain": true,
-//         "url": "../../body_trace_api/get_data.php?pid="+pid+"",
-//         "method": "GET",
-//         success: function(response) 
-//         {            
+        }
+    });
+    $.ajax
+    ({
+        "async": true,
+        "crossDomain": true,
+        "url": "../../body_trace_api/get_data.php?pid="+pid+"",
+        "method": "GET",
+        success: function(response) 
+        {            
                
-//         }
-//     });
+        }
+    });
     
-//     $.ajax
-//     ({
-//         "async": true,
-//         "crossDomain": true,
-//         "url": "../../get_dexcom_data.php?pid="+pid+"",
-//         "method": "GET",
-//         success: function(response) 
-//         {            
+    $.ajax
+    ({
+        "async": true,
+        "crossDomain": true,
+        "url": "../../get_dexcom_data.php?pid="+pid+"",
+        "method": "GET",
+        success: function(response) 
+        {            
                
-//         }
-//     }); 
-//     $.ajax
-//     ({
-//         "async": true,
-//         "crossDomain": true,
-//         "url": "../../omron/get_omron_data.php?pid="+pid+"",
-//         "method": "GET",
-//         success: function(response) 
-//         {            
+        }
+    }); 
+    $.ajax
+    ({
+        "async": true,
+        "crossDomain": true,
+        "url": "../../omron/get_omron_data.php?pid="+pid+"",
+        "method": "GET",
+        success: function(response) 
+        {            
                
-//         }
-//     });
-//     $.ajax
-//     ({
-//         "async": true,
-//         "crossDomain": true,
-//         "url": "../../forms/vitals/tryterra/getdata.php?pid="+pid+"",
-//         "method": "GET",
-//         success: function(response) 
-//         { 
+        }
+    });
+    $.ajax
+    ({
+        "async": true,
+        "crossDomain": true,
+        "url": "../../forms/vitals/tryterra/getdata.php?pid="+pid+"",
+        "method": "GET",
+        success: function(response) 
+        { 
             
-//         }
-//     });
-//     $.ajax
-//     ({
-//         "async": true,
-//         "crossDomain": true,
-//         "url": "../../tide_pool/tide_pool.php?pid="+pid+"",
-//         "method": "GET",
-//         success: function(response) 
-//         {            
+        }
+    });
+    $.ajax
+    ({
+        "async": true,
+        "crossDomain": true,
+        "url": "../../tide_pool/tide_pool.php?pid="+pid+"",
+        "method": "GET",
+        success: function(response) 
+        {            
                
-//         }
-//     });   
-//     $.ajax
-//     ({
-//         "async": true,
-//         "crossDomain": true,
-//         "url": "../../forms/vitals/blood_glucose/getdata.php?pid="+pid+"",
-//         "method": "GET",
-//         success: function(response) 
-//         {   
-//             show_single_patient(pid);
-//         }
-//     });
-// }
+        }
+    });   
+    $.ajax
+    ({
+        "async": true,
+        "crossDomain": true,
+        "url": "../../forms/vitals/blood_glucose/getdata.php?pid="+pid+"",
+        "method": "GET",
+        success: function(response) 
+        {   
+            show_single_patient(pid);
+        }
+    });
+}
 
 function check_vitals(pid){
     

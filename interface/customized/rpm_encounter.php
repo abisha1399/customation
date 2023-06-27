@@ -43,6 +43,7 @@ if(isset($_GET['rpm_encounter'])){
     $sql = sqlInsert("INSERT INTO rpm_encounter(pid,eid,encounter_type,performed_by,activity,timespent,notes,date) VALUES (?,?,?,?,?,?,?,?)",array($pid,$eid,$encounter_type,$performed_by,$activity,$timespent,$note,$date));
     echo $sql;exit;
 }
+
 if(isset($_GET['edit_rpm'])){
     $id=$_POST['id'];
     $encounter_type=$_POST['encounter_type'];
@@ -93,8 +94,8 @@ if(isset($_GET['get_rpmenc'])){
     
     exit();
 }
-
-
+if(isset($GLOBALS['enable_rpm_code'])&&$GLOBALS['enable_rpm_code']==true)
+{
 if(isset($_GET['rpm_bill_generate'])){
     $result='no code create';
     $pid=isset($_POST['pid'])?$_POST['pid']:'';
@@ -121,6 +122,7 @@ if(isset($_GET['rpm_bill_generate'])){
     }
     echo $result;  
     exit();  
+}
 }
 function rpm_encounter_div(){
     $result='<button class="btn btn-secondary btn-sm" id="click_new" type="button" style="display:none;" data-bind="click: rpmNewEncounter" >
@@ -602,7 +604,7 @@ return $result;
     background-position: center;
 }
 .white-heading:after {
-    background: url(https://i.ibb.co/d7tSD1R/heading-line-white.png);
+    background: url(http://i.ibb.co/d7tSD1R/heading-line-white.png);
     background-repeat: no-repeat;
     background-position: center;
 }

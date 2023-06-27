@@ -24,6 +24,8 @@ $host=isset($GLOBALS['SMTP_HOST'])?$GLOBALS['SMTP_HOST']:'smtp.gmail.com';
 	}
     $regards=$orgfrom;
 //echo $_SESSION['site_id'];
+if(isset($GLOBALS['enable_ccm_code'])&&$GLOBALS['enable_ccm_code']==true)
+{
 $terra_connected_user=sqlStatement("SELECT CONCAT(u.fname, ' ', u.lname) as user_name,u.email as useremail,
 pd.email as patemail,CONCAT(pd.fname, ' ', pd.lname) as patient_name,tr.* FROM terra_user as tr left join patient_data as pd on pd.pid=tr.pid left join 
 users as u on u.id=tr.auth_user_id WHERE tr.status=1");
@@ -41,10 +43,11 @@ if(!empty($total_con_count))
         foreach($libre_user as $value)
         {
             $report_flag=isset($value['report_sent'])?$value['report_sent']:0;
-            $sensor_start_date=$value['assign_date'];  
+           // $sensor_start_date=$value['assign_date'];  
             $pid=isset($value['pid'])?$value['pid']:'';
             $receipt_id=isset($value['auth_user_id'])?$value['auth_user_id']:'';
-            $today_date=date('Y-m-d');         
+            $today_date=date('Y-m-d');  
+            $sensor_start_date='2023-05-27';       
             $sensor_end_date=date('Y-m-d', strtotime($sensor_start_date. ' + 30 days'));
             $patient_name=$value['patient_name'];
             $user_name =isset($value['user_name'])?$value['user_name']:'';  
@@ -115,4 +118,8 @@ if(!empty($total_con_count))
 else{
     echo "No Patient with terra connected";
 }
+}else{
+    echo "Billing CCM billing code for libreefreestyle is disable for you please contact with your clinic";
+  
+  }
 ?>

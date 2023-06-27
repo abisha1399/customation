@@ -49,41 +49,11 @@ use OpenEMR\Reminder\BirthdayReminder;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 $twig = new TwigContainer(null, $GLOBALS['kernel']);
-//custom
-$pdfText = ''; 
-if(isset($_POST['submit'])){ 
-    
-    // If file is selected 
-    if(!empty($_FILES["pdf_file"]["name"])){ 
-        // File upload path 
-        $fileName = basename($_FILES["pdf_file"]["name"]); 
-        $fileType = pathinfo($fileName, PATHINFO_EXTENSION); 
-         
-        // Allow certain file formats 
-        $allowTypes = array('pdf'); 
-        if(in_array($fileType, $allowTypes)){ 
-            // Include autoloader file 
-            include '../../customized/pdfextract/vendor/autoload.php'; 
-             
-            // Initialize and load PDF Parser library 
-            $parser = new \Smalot\PdfParser\Parser(); 
-            // Source PDF file to extract text 
-            $file = $_FILES["pdf_file"]["tmp_name"]; 
-             
-            // Parse pdf file using Parser library 
-            $pdf = $parser->parseFile($file); 
-             
-            // Extract text from PDF 
-            $text = $pdf->getText(); 
-             
-            // Add line break 
-            $pdfText = nl2br($text); 
-        }
-    }
-    $query= sqlInsert("insert into pdfextract(pid,file) values ($pid,'$pdfText')");
-    header('Location: demographics.php');
-    exit;
-} 
+//menstion customized folder;
+$http = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=== 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'];
+
+$customized_folder=$http.$GLOBALS['webroot'].'/interface/customized';
+
 
 // Set session for pid (via setpid). Also set session for encounter (if applicable)
 if (isset($_GET['set_pid'])) {
@@ -379,6 +349,7 @@ $oemr_ui = new OemrUI($arrOeUiSettings);
     require_once("$srcdir/options.js.php");
     ?>
     <script>
+          var customized_folder='<?php echo $customized_folder;?>';
         // Process click on diagnosis for referential cds popup.
         function referentialCdsClick(codetype, codevalue) {
             top.restoreSession();
@@ -415,6 +386,13 @@ $oemr_ui = new OemrUI($arrOeUiSettings);
         function imdeleted() {
             top.clearPatient();
         }
+        function test(){
+           
+            $("#vitals_ps_expand").html('<div class="spinner-border spinner-border-sm" role="status"></div>');
+            get_vitals_data('view');
+            //alert('hi');
+        }
+        
 
         function newEvt() {
             let title = <?php echo xlj('Appointments'); ?>;
@@ -646,7 +624,7 @@ $oemr_ui = new OemrUI($arrOeUiSettings);
             placeHtml("track_anything_fragment.php", "track_anything_ps_expand");
             <?php if ($vitals_is_registered && AclMain::aclCheckCore('patients', 'med')) { ?>
                 // Initialize the Vitals form if it is registered and user is authorized.
-                placeHtml("vitals_fragment.php", "vitals_ps_expand");
+                placeHtml(""+customized_folder+"/vitals_fragment.php", "vitals_ps_expand");
             <?php } ?>
 
             <?php if ($GLOBALS['enable_cdr'] && $GLOBALS['enable_cdr_crw']) { ?>
@@ -881,6 +859,13 @@ $oemr_ui = new OemrUI($arrOeUiSettings);
         function setMyPatient() {
             <?php
             if (isset($_GET['set_pid'])) {
+                $rpm_encounter=sqlQuery("SELECT * FROM form_encounter WHERE pid=? AND date_end!='NULL'",array($pid));
+                if(empty($rpm_encounter)){
+                    $status=0;
+                }
+                else{
+                    $status=1;
+                }                
                 $date_of_death = is_patient_deceased($pid);
                 if (!empty($date_of_death)) {
                     $date_of_death = $date_of_death['date_deceased'];
@@ -892,27 +877,35 @@ $oemr_ui = new OemrUI($arrOeUiSettings);
                     echo js_escape(" " . xl('DOB') . ": " . oeFormatShortDate($result['DOB_YMD']) . " " . xl('Age') . ": " . getPatientAgeDisplay($result['DOB_YMD']));
                 } else {
                     echo js_escape(" " . xl('DOB') . ": " . oeFormatShortDate($result['DOB_YMD']) . " " . xl('Age at death') . ": " . oeFormatAge($result['DOB_YMD'], $date_of_death));
-                } ?>);
+                } ?>,<?php echo js_escape($status)?>);
                 var EncounterDateArray = new Array;
                 var CalendarCategoryArray = new Array;
                 var EncounterIdArray = new Array;
                 var Count = 0;
                 <?php
                 //Encounter details are stored to javacript as array.
-                $result4 = sqlStatement("SELECT fe.encounter,fe.date,openemr_postcalendar_categories.pc_catname FROM form_encounter AS fe " .
+                $result4 = sqlStatement("SELECT fe.encounter,fe.date_end,fe.date,openemr_postcalendar_categories.pc_catname FROM form_encounter AS fe " .
                     " left join openemr_postcalendar_categories on fe.pc_catid=openemr_postcalendar_categories.pc_catid  WHERE fe.pid = ? order by fe.date desc", array($pid));
                 if (sqlNumRows($result4) > 0) {
                     while ($rowresult4 = sqlFetchArray($result4)) { ?>
                         EncounterIdArray[Count] = <?php echo js_escape($rowresult4['encounter']); ?>;
-                        EncounterDateArray[Count] = <?php echo js_escape(oeFormatShortDate(date("Y-m-d", strtotime($rowresult4['date'])))); ?>;
-                        CalendarCategoryArray[Count] = <?php echo js_escape(xl_appt_category($rowresult4['pc_catname'])); ?>;
+                        EncounterDateArray[Count] = <?php 
+                        $enc_date1=date("Y-m-d", strtotime($rowresult4['date']));
+                        $enc_enddate='';
+                        if(isset($rowresult4['date_end'])&&$rowresult4['date_end']!='')
+                        {
+                            $enc_enddate=' to '.date("Y-m-d", strtotime($rowresult4['date_end']));
+                        }
+                        $enc_date=$enc_date1.$enc_enddate;
+                        echo js_escape($enc_date); ?>;
+                        CalendarCategoryArray[Count] = <?php echo js_escape(xl_appt_category('-'. $rowresult4['pc_catname'])); ?>;
                         Count++;
                         <?php
                     }
                 }
                 ?>
                 parent.left_nav.setPatientEncounter(EncounterIdArray, EncounterDateArray, CalendarCategoryArray);
-                <?php
+            <?php
             } // end setting new pid
             ?>
             parent.left_nav.syncRadios();
@@ -926,6 +919,7 @@ $oemr_ui = new OemrUI($arrOeUiSettings);
             ?>
         }
 
+
         $(window).on('load', function() {
             setMyPatient();
         });
@@ -933,6 +927,110 @@ $oemr_ui = new OemrUI($arrOeUiSettings);
         document.addEventListener("DOMContentLoaded", () => {
             cardTitleButtonClickListener();
         });
+
+function get_vitals_data(type)
+{
+   // alert('hello');
+    $.ajax
+    ({
+        "async": true,
+        "crossDomain": true,
+        "url": "../../customized/api_device_data/smart_meter_device/iglucose_data.php",
+        "method": "GET",
+        success: function(response) 
+        {         
+        
+        }
+    });
+        $.ajax
+    ({
+        "async": true,
+        "crossDomain": true,
+        "url": "../../customized/api_device_data/dexcom/get_dexcom_data.php",
+        "method": "GET",
+        success: function(response) 
+        {            
+               
+        }
+    }); 
+
+   
+    $.ajax
+    ({
+        "async": true,
+        "crossDomain": true,
+        "url": "../../customized/api_device_data/body_trace_api/get_data.php",
+        "method": "GET",
+        success: function(response) 
+        {            
+               
+        }
+    });
+
+    $.ajax
+    ({
+        "async": true,
+        "crossDomain": true,
+        "url": "../../customized/api_device_data/fitbit/fitbit_data.php",
+        "method": "GET",
+        success: function(response) 
+        {            
+               
+        }
+    });
+    
+   
+    $.ajax
+    ({
+        "async": true,
+        "crossDomain": true,
+        "url": "../../customized/api_device_data/omron/get_omron_data.php",
+        "method": "GET",
+        success: function(response) 
+        {            
+               
+        }
+    });
+   
+    $.ajax
+    ({
+        "async": true,
+        "crossDomain": true,
+     
+        "url": "../../customized/api_device_data/tryterra/getdata.php",
+        "method": "GET",
+        success: function(response) 
+        { 
+            
+        }
+    });
+  
+    $.ajax
+    ({
+        "async": true,
+        "crossDomain": true,
+        "url": "../../customized/api_device_data/tide_pool/tide_pool.php",
+        "method": "GET",
+        success: function(response) 
+        {            
+               
+        }
+    }); 
+      
+    $.ajax
+    ({
+        "async": true,
+        "crossDomain": true,
+        "url": "../../forms/vitals/blood_glucose/getdata.php",
+        "method": "GET",
+        success: function(response) 
+        {    if(type=='view')
+            {
+                placeHtml("vitals_fragment.php", "vitals_ps_expand");
+            } 
+        }
+    });
+}
     </script>
 
     <style>
@@ -1086,7 +1184,35 @@ $oemr_ui = new OemrUI($arrOeUiSettings);
                         echo $t->render($card->getTemplateFile(), array_merge($card->getTemplateVariables(), $viewArgs));
                     }
 
-                    if (!$GLOBALS['hide_billing_widget']) :
+                    
+                    if(isset($GLOBALS['enable_vitals'])&&$GLOBALS['enable_vitals']==true) :
+                    if ($vitals_is_registered && AclMain::aclCheckCore('patients', 'med')) :
+                        $dispatchResult = $ed->dispatch(new CardRenderEvent('vital_sign'), CardRenderEvent::EVENT_HANDLE);
+                        // vitals expand collapse widget
+                        // check to see if any vitals exist
+                        $existVitals = sqlQuery("SELECT * FROM form_vitals WHERE pid=?", array($pid));
+                       // $widgetAuth = ($existVitals) ? true : false;
+                       $widgetAuth=true;
+                        $id = "vitals_ps_expand";
+                        $viewArgs = [
+                            'title' => xl('Vitals'),
+                            'id' => $id,
+                            'initiallyCollapsed' => (getUserSetting($id) == 0) ? false : true,
+                            'btnLabel' => 'Trend',
+                            'btnLabel' => 'refresh',
+                            'btnLink' => "../encounter/trend_form.php?formname=vitals&context=dashboard",
+                            'linkMethod' => 'html',
+                            'btnLink' => 'test',
+                            'bodyClass' => 'collapse show',
+                            'auth' => $widgetAuth,
+                            'prependedInjection' => $dispatchResult->getPrependedInjection(),
+                            'appendedInjection' => $dispatchResult->getAppendedInjection(),
+                        ];
+                        echo $twig->getTwig()->render('patient/card/loader.html.twig', $viewArgs);
+                    endif; // end vitals
+                endif;
+
+                if (!$GLOBALS['hide_billing_widget']) :
                         $forceBillingExpandAlways = ($GLOBALS['force_billing_widget_open']) ? true : false;
                         $patientbalance = get_patient_balance($pid, false);
                         $insurancebalance = get_patient_balance($pid, true) - $patientbalance;
@@ -1374,28 +1500,7 @@ $oemr_ui = new OemrUI($arrOeUiSettings);
                         echo $twig->getTwig()->render('patient/card/loader.html.twig', $viewArgs);
                     endif; // end labs authorized
 
-                    if ($vitals_is_registered && AclMain::aclCheckCore('patients', 'med')) :
-                        $dispatchResult = $ed->dispatch(new CardRenderEvent('vital_sign'), CardRenderEvent::EVENT_HANDLE);
-                        // vitals expand collapse widget
-                        // check to see if any vitals exist
-                        $existVitals = sqlQuery("SELECT * FROM form_vitals WHERE pid=?", array($pid));
-                        $widgetAuth = ($existVitals) ? true : false;
 
-                        $id = "vitals_ps_expand";
-                        $viewArgs = [
-                            'title' => xl('Vitals'),
-                            'id' => $id,
-                            'initiallyCollapsed' => (getUserSetting($id) == 0) ? false : true,
-                            'btnLabel' => 'Trend',
-                            'btnLink' => "../encounter/trend_form.php?formname=vitals&context=dashboard",
-                            'linkMethod' => 'html',
-                            'bodyClass' => 'collapse show',
-                            'auth' => $widgetAuth,
-                            'prependedInjection' => $dispatchResult->getPrependedInjection(),
-                            'appendedInjection' => $dispatchResult->getAppendedInjection(),
-                        ];
-                        echo $twig->getTwig()->render('patient/card/loader.html.twig', $viewArgs);
-                    endif; // end vitals
 
                     // if anyone wants to render anything after the patient demographic list
                     $GLOBALS["kernel"]->getEventDispatcher()->dispatch(new RenderEvent($pid), RenderEvent::EVENT_SECTION_LIST_RENDER_AFTER, 10);
@@ -1477,8 +1582,9 @@ $oemr_ui = new OemrUI($arrOeUiSettings);
                             'card_bg_color' => $card->getBackgroundColorClass(),
                             'card_text_color' => $card->getTextColorClass(),
                             'forceAlwaysOpen' => !$card->canCollapse(),
-                            'btnLabel' => $btnLabel,
                             'btnLink' => "javascript:$('#patient_portal').collapse('toggle')",
+                            'btnLabel' => $btnLabel,
+                            'btnLink' => 'test',
                         ];
 
                         echo $t->render($card->getTemplateFile(), array_merge($card->getTemplateVariables(), $viewArgs));
@@ -1909,6 +2015,7 @@ $oemr_ui = new OemrUI($arrOeUiSettings);
         </div><!-- end container div -->
         <?php $oemr_ui->oeBelowContainerDiv(); ?>
         <script>
+
             // Array of skip conditions for the checkSkipConditions() function.
             var skipArray = [
                 <?php echo ($condition_str ?? ''); ?>
@@ -1925,7 +2032,13 @@ $oemr_ui = new OemrUI($arrOeUiSettings);
                     $("#eligibility").click();
                     $("#eligibility").get(0).scrollIntoView();
                 }
+                setMyPatient();
             });
+            
+            var success_count=0;
+            
+
+
         </script>
 </body>
 <?php $ed->dispatch(new RenderEvent($pid), RenderEvent::EVENT_RENDER_POST_PAGELOAD, 10); ?>

@@ -17,6 +17,9 @@ $result = sqlQuery("SELECT * FROM  terra_user  WHERE  pid=? AND status=? ORDER B
 $result1 = sqlQuery("SELECT * FROM  terra_googlefit  WHERE  pid=? AND status=? ORDER BY id DESC LIMIT 1", array($pid,1));
 $user_id=isset($result['user_id'])?$result['user_id']:'';
 $user_id1=isset($result1['user_id'])?$result1['user_id']:'';
+
+if(isset($GLOBALS['enable_libree_api'])&&$GLOBALS['enable_libree_api']==true)
+{
 if(!empty($user_id)){
   //echo 'terra_glucose';
   $today_date =  date('Y-m-d');
@@ -87,6 +90,9 @@ if(!empty($user_id)){
   else{
     echo $my_array_data['message'];
   }
+
+  if(isset($GLOBALS['enable_rpm'])&&$GLOBALS['enable_rpm']==true)
+  {
   $pid=$pid;
   $adss=1;
   $rm_encounter_exit=sqlQuery("SELECT * FROM form_encounter WHERE pid=? AND date_end!='NULL' AND encounter_status='open'",array($pid));
@@ -134,6 +140,13 @@ if(!empty($user_id)){
 else{
   echo "<br> libree not connected";
 }
+}else{
+  echo " RPM not connected";
+}
+}else{
+  echo "Libree is disable ";
+}
+if(isset($GLOBALS['enable_googlefit_api'])&&$GLOBALS['enable_googlefit_api']==true){
 if(!empty($user_id1)){
 
   $today_date =  date('Y-m-d');
@@ -350,6 +363,9 @@ if(!empty($user_id1)){
 }
 else{
   echo "<br> Googlefit not connected";
+}
+}else{
+  echo "Googlefit is diasable please contact your facility";
 }
 
 

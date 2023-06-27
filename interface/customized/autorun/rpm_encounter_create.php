@@ -5,6 +5,9 @@ $sessionAllowWrite = true;
 require_once("../../globals.php");
 require_once($GLOBALS['srcdir'] . '/encounter_events.inc.php');
 require_once($GLOBALS["srcdir"] . "/forms.inc");
+if(isset($GLOBALS['enable_rpm_code'])&&$GLOBALS['enable_rpm_code']==true)
+{
+ 
 $patient_array=[];
 $patient_data=sqlStatement("SELECT pid,CONCAT(fname, ' ', lname) as pat_name FROM patient_data");
 while($row=sqlFetchArray($patient_data))
@@ -66,5 +69,5 @@ foreach($patient_array as $value)
     }
     echo '<br>**********************************************************************************';
 }
-
+}
 ?>

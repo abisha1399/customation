@@ -7,6 +7,8 @@ $pid=$_SESSION['pid'];
 if(isset($_GET['pid'])){
     $pid=isset($_GET['pid'])?$_GET['pid']:'';
 }
+if(isset($GLOBALS['enable_tidepool_api'])&&$GLOBALS['enable_tidepool_api']==true)
+{
 $result='';
 $patient_data=sqlQuery("SELECT tidepull_email,pid,tidepull_password FROM patient_data WHERE pid=?",array($pid));
 $email=isset($patient_data['tidepull_email'])?$patient_data['tidepull_email']:'';
@@ -119,6 +121,10 @@ else{
     echo 'user have no emaiid or password';
 }
 
+
+if(isset($GLOBALS['enable_rpm'])&&$GLOBALS['enable_rpm']==true)
+{
+
 $rm_encounter_exit=sqlQuery("SELECT * FROM form_encounter WHERE pid=? AND date_end!='NULL' AND encounter_status='open'",array($pid));
 if(empty($rm_encounter_exit))
 {
@@ -161,5 +167,10 @@ if(empty($rm_encounter_exit))
     
 }
 exit();
-    
+}else{
+    echo "RPM not enable please contact your facility";
+}  
+}else{
+    echo 'Tide Pool Api is disable for you please contact with your clinic';
+}
 ?>

@@ -15,7 +15,18 @@ require_once("$srcdir/lists.inc.php");
 require_once("$srcdir/patient.inc.php");
 
 use OpenEMR\Common\Acl\AclMain;
-
+//customized for rpm
+if (isset($_GET['pid'])) {
+    $pid=isset($_GET['pid'])?$_GET['pid']:'';
+    $_SESSION['pid']=$pid;
+    require_once("$srcdir/pid.inc");
+    setpid($_GET['pid']);
+    if (isset($_GET['set_encounterid']) && ((int)$_GET['set_encounterid'] > 0)) {
+        $encounter = (int)$_GET['set_encounterid'];
+        SessionUtil::setSession('encounter', $encounter);
+    }
+    
+}
 // Check permission to create encounters.
 $tmp = getPatientData($pid, "squad");
 if (

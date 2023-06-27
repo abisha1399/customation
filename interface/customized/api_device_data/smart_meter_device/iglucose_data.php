@@ -16,6 +16,7 @@ $pid=isset($_SESSION['pid'])?$_SESSION['pid']:'';
 if(isset($_GET['pid'])){
     $pid=isset($_GET['pid'])?$_GET['pid']:'';
 }
+if(isset($GLOBALS['enable_smartmeter_api'])&&$GLOBALS['enable_smartmeter_api']==true){
 $datas=[];
 $patind_dat =sqlStatement("SELECT * FROM smart_device_numbers WHERE pid='".$pid."'");
 while($row=sqlFetchArray($patind_dat)){
@@ -130,8 +131,10 @@ else{
     
     echo $data['status']['status_message'];
 }
+
 $pid=isset($_SESSION['pid'])?$_SESSION['pid']:'';
 $adss=1;
+if(isset($GLOBALS['enable_rpm'])&&$GLOBALS['enable_rpm']==true){
 $rm_encounter_exit=sqlQuery("SELECT * FROM form_encounter WHERE pid=? AND date_end!='NULL' AND encounter_status='open'",array($pid));
 if(empty($rm_encounter_exit))
 {
@@ -173,5 +176,12 @@ if(empty($rm_encounter_exit))
     echo $adss;
     
 }
+}else{
+    echo "RPM  is disable for you please contact your facility";
+}
+}else{
+    echo "Smart meter is disable for you please contact your facility";
+}
+
 ?>
 

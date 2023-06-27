@@ -437,6 +437,11 @@ if(isset($_GET['disconnect'])){
         echo '1';
         exit();
     }
+    else if($action=='fitbit'){
+        sqlStatement("UPDATE terra_fitbit SET status=0 WHERE pid=?",array($pid));
+        echo '1';
+        exit();
+    }
 }
 if(isset($_GET['disconnect_email'])){
     $type=$_POST['type'];
@@ -484,7 +489,8 @@ $records2 = array();
         $sql_datag   = sqlQuery("SELECT * FROM terra_googlefit WHERE pid='".$pid."' ORDER BY `id` DESC LIMIT 1");
         $dexcom_sql   = sqlQuery("SELECT * FROM dexcom_token WHERE pid='".$pid."' ORDER BY `id` DESC LIMIT 1"); 
         $omron_sql= sqlQuery("SELECT * FROM omron_token WHERE pid='".$pid."' ORDER BY `id` DESC LIMIT 1"); 
-        ?>
+        $fitbit_sql= sqlQuery("SELECT * FROM terra_fitbit WHERE pid='".$pid."' ORDER BY `id` DESC LIMIT 1");  
+       ?>
         <style>
             .checkmark {
       display: inline-block;
@@ -775,6 +781,7 @@ $records2 = array();
                 </script>
     </head>
     <body>
+ 
         <div id="container_div" class="<?php echo $oemr_ui->oeContainer();?> mt-3">
             <div class="row">
                 <div class="col-sm-12">
@@ -796,14 +803,28 @@ $records2 = array();
                     <div id="HIS">
                         <ul class="tabNav">        
                             <li ><a href="#" class="device_list" id="terra_list">Terra App</a></li>
+                            <?php  if(isset($GLOBALS['enable_smartmeter_api'])&&$GLOBALS['enable_smartmeter_api']==true){?>
                             <li ><a href="#" class="device_list" id="smart_meter_list">Smart Meter Device</a> </li>
+                            <?php }?>
+                            <?php  if(isset($GLOBALS['enable_ambrosiya_api'])&&$GLOBALS['enable_ambrosiya_api']==true){?>
                             <li ><a href="#" class="device_list" id="Ambrosia">Ambrosia App</a> </li>
+                            <?php }?>
+                            <?php if(isset($GLOBALS['enable_tidepool_api'])&&$GLOBALS['enable_tidepool_api']==true){?>
                             <li ><a href="#" class="device_list" id="tidepull">Tidepool</a> </li>
+                            <?php }?>
+                            <?php if(isset($GLOBALS['enable_marsonik'])&&$GLOBALS['enable_marsonik']==true){?>
                             <li ><a href="#" class="device_list" id="marsonick">Marsonik</a> </li>
+                            <?php }?>
+                            <?php if(isset($GLOBALS['enable_dexcom_api'])&&$GLOBALS['enable_dexcom_api']==true){?> 
                             <li ><a href="#" class="device_list" id="dexcom">Dexcom</a> </li>
+                            <?php }?>
+                            <?php  if(isset($GLOBALS['enable_bodytrace_api'])&&$GLOBALS['enable_bodytrace_api']==true){?> 
                             <li ><a href="#" class="device_list" id="body_trace">BodyTrace</a> </li>
+                            <?php }?>
+                            <?php if(isset($GLOBALS['enable_tenovi_api'])&&$GLOBALS['enable_tenovi_api']==true){?> 
                             <li ><a href="#" class="device_list" id="tenovi">Tenovi</a> </li>
-                           
+                            <?php }?>
+
                         </ul>
                         <div class="tabContainer">
                             <div class="tab current" id="tab_terra_list">
@@ -814,10 +835,11 @@ $records2 = array();
                                     <?php }elseif(isset($sql_data['status']) && $sql_data['status']==0){?>
                                         <button type="button" class="myapp btn btn-primary btn-sm" onclick="libree_connect()" id="libree_btn_con" value="<?php echo xla('FREESTYLELIBRE'); ?>" ><?php echo xlt('FREESTYLELIBRE'); ?><span class="badge badge-danger" style="display:inline"> <i class="fa fa-close" style="font-size:15px;color:white"></i></span></button>
                                         
-                                        <?php }else{ ?>
+                                        <?php }else{
+                                            if(isset($GLOBALS['enable_libree_api'])&&$GLOBALS['enable_libree_api']==true){?>
                                         <button type="button" class="myapp btn btn-primary btn-sm" onclick="libree_connect()" id="libree_btn_con" value="<?php echo xla('FREESTYLELIBRE'); ?>" ><?php echo xlt('FREESTYLELIBRE'); ?></button>
                                         
-                                    <?php } ?> 
+                                    <?php } }?> 
                                     </div> 
                                     <div id="googlefitsuccess">
                                     <?php if(isset($sql_datag['status']) && $sql_datag['status']==1){  ?>
@@ -825,15 +847,17 @@ $records2 = array();
                                     <?php }elseif(isset($sql_datag['status']) && $sql_datag['status']==0){?>
                                         <button type="button" class="googlefit btn btn-primary btn-sm ml-2 gfitclass" value="<?php echo xla('GOOGLEFIT'); ?>" ><?php echo xlt('GOOGLEFIT'); ?><span class="badge badge-danger span1" id='span1' style="display:inline"> <i class="fa fa-close gconnected" style="font-size:15px;color:white"></i></span></button>
                                         
-                                        <?php }else{ ?>
+                                        <?php }else{  
+                                            if(isset($GLOBALS['enable_googlefit_api'])&&$GLOBALS['enable_googlefit_api']==true){ ?>
                                             <button type="button" class="googlefit btn btn-primary btn-sm ml-2 gfitclass" value="<?php echo xla('GOOGLEFIT'); ?>" ><?php echo xlt('GOOGLEFIT'); ?></button>
                                         
-                                    <?php } ?> 
+                                    <?php }} ?> 
                                     <!-- <button type="button" class="dexcom btn btn-primary btn-sm ml-2 " value="<?php echo xla('DEXCOM'); ?>" ><?php echo xlt('DEXCOM'); ?></button> -->
                                     </div>
-
+                                 
                                     <div class="omron" id='omron_span'>
                                       <?php
+                                     
                                        if(isset($omron_sql['status']) && $omron_sql['status']==1){
                                         $span_class="<span class='badge badge-success ml-1' style='display:inline' onclick='omron_disconnect_model()'> <i class='fa fa-check' style='font-size:15px;color:white'></i></span>";
                                         echo "<button type='button' class='btn btn-primary btn-sm ml-2' style='display:flex' >OMRON".$span_class."</button>";                                           
@@ -842,15 +866,38 @@ $records2 = array();
                                             $span_class="<span class='badge badge-danger ml-1' style='display:inline'> <i class='fa fa-close' style='font-size:15px;color:white'></i></span>";
                                             echo "<button type='button' onclick='omron_connect()'  class='btn btn-primary btn-sm ml-2' id='omron_connect_btn' style='display:flex' >OMRON".$span_class."</button>";                                           
                                         } 
-                                        else{                                            
+                                        else{  
+                                            if(isset($GLOBALS['enable_omron_api'])&&$GLOBALS['enable_omron_api']==true){                                          
                                             echo "<button type='button' onclick='omron_connect()' class='btn btn-primary btn-sm ml-2'id='omron_connect_btn' style='display:flex' >OMRON</button>";                                         
+                                            }
                                         }
+                                    
+                                      ?>  
+                                    
+                                    </div> 
+                                     
+                                    <!-- Fitbit -->
+                                 <div class="fitbit" id='fitbit_span'>
+                                      <?php
+                                       if(isset($fitbit_sql['status']) && $fitbit_sql['status']==1){
+                                        $span_class="<span class='badge badge-success ml-1' style='display:inline' onclick='fitbit_disconnect_model()'> <i class='fa fa-check' style='font-size:15px;color:white'></i></span>";
+                                        echo "<button type='button' class='btn btn-primary btn-sm ml-2' style='display:flex' >FITBIT".$span_class."</button>";                                           
+                                        }
+                                        elseif(isset($fitbit_sql['status']) && $fitbit_sql['status']==0){
+                                            $span_class="<span class='badge badge-danger ml-1' style='display:inline'> <i class='fa fa-close' style='font-size:15px;color:white'></i></span>";
+                                            echo "<button type='button' onclick='fitbit_connect()' class='btn btn-primary btn-sm ml-2' id='fitbit_connect_btn' style='display:flex' >FITBIT".$span_class."</button>";                                           
+                                        } 
+                                        else{ 
+                                            if(isset($GLOBALS['enable_fitbit_api'])&&$GLOBALS['enable_fitbit_api']==true){                                                                                     
+                                            echo "<button type='button' onclick='fitbit_connect()' class='btn btn-primary btn-sm ml-2'id='fitbit_connect_btn' style='display:flex' >FITBIT</button>";                                         
+                                             }
+                                         }
                                      
                                       ?>  
                                     
                                     </div> 
-                                       
                                 </div>
+
                                 <div class="mt-3">
                                 <p id="verify_done" style="display:none;">Once Authentication done<a href="#"> Click here</a></p>
                                 <p id="success_msg" style="display:none;">Authetication Code Send to Patient mail</p>
@@ -1425,6 +1472,18 @@ $records2 = array();
                                 $("#marsonik_span").html("<button type='button' class='btn btn-primary btn-sm ml-2' style='display:flex' >MARSONIK<span class='badge badge-success ml-1' style='display:inline' onclick='marsonik_disconnect_model();'> <i class='fa fa-check' style='font-size:15px;color:white'></i></span></button>"); 
                                
                                 } 
+                                if(device_type == "fitbit")
+                                {
+                              
+                                user_auth="*FITBIT* Successfully Connected";
+                                $("#msg").html(user_auth);
+                                $("#msg").css("color", "green");                                
+                               // alert("*FITBIT* Successfully Connected");
+                                signerAlertMsg('*FITBIT* Successfully Connected', 7000, 'success');
+                                $('#success_msg').html('');
+                                $("#fitbit_span").html("<button type='button' class='btn btn-primary btn-sm ml-2' style='display:flex' >FITBIT<span class='badge badge-success ml-1' style='display:inline' onclick='fitbit_disconnect_model();'> <i class='fa fa-check' style='font-size:15px;color:white'></i></span></button>"); 
+                               
+                                } 
                                
                                 $("#verify_done").hide();
                             }
@@ -1708,9 +1767,15 @@ function disconnect(action){
                     $("#marsonik_span").html("<button type='button' onclick='marsonik_connect()' class='btn btn-primary btn-sm ml-2' style='display:flex' >MARSONIK<span class='badge badge-danger ml-1' style='display:inline'> <i class='fa fa-close' style='font-size:15px;color:white'></i></span></button>");
                     
                 }
+              
                 if (action == 'omron') 
                 {
                     $("#omron_span").html("<button type='button' onclick='omron_connect()' id='omron_connect_btn' class='btn btn-primary btn-sm ml-2' style='display:flex' >OMRON<span class='badge badge-danger ml-1' style='display:inline'> <i class='fa fa-close' style='font-size:15px;color:white'></i></span></button>");
+                    
+                }
+                if (action == 'fitbit') 
+                {
+                    $("#fitbit_span").html("<button type='button' onclick='fitbit_connect()' id='fitbit_connect_btn' class='btn btn-primary btn-sm ml-2' style='display:flex' >FITBIT<span class='badge badge-danger ml-1' style='display:inline'> <i class='fa fa-close' style='font-size:15px;color:white'></i></span></button>");
                     
                 }
                 $("#verify_done").hide();

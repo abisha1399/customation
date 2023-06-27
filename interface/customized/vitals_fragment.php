@@ -11,7 +11,6 @@
  */
 
 require_once("../globals.php");
-ini_set('display_errors',true);
 require_once($GLOBALS["srcdir"] . "/api.inc");
 require_once($GLOBALS['srcdir'] . '/encounter_events.inc.php');
 use OpenEMR\Common\Csrf\CsrfUtils;
@@ -60,10 +59,17 @@ function api_type($api_name){
     $api_type='Omron';
   }
   if($api_name=='bodytrace_api')
-  {
-    $api_type='Body Trace';
-  }
-  
+    {
+      $api_type='Body Trace';
+    }
+    if($api_name=='tenovi_api')
+    {
+      $api_type='Tenovi';
+    }
+    if($api_name=='fitbit_api')
+    {
+      $api_type='Fitbit';
+    }
   return $api_type;
 }
 // if(!$pid){
@@ -394,6 +400,23 @@ div#testimonial4 {
     $steps=sqlQuery("SELECT * FROM api_vitals_data WHERE pid=".$pid." AND steps_data!='NULL' ORDER BY id DESC limit 1");
     $calories=sqlQuery("SELECT * FROM api_vitals_data WHERE pid=".$pid." AND reading_time=(SELECT Max(reading_time) FROM api_vitals_data WHERE calories_reading!='NULL' AND calories_reading!=0 AND pid=".$pid.") AND calories_reading!='NULL' AND calories_reading!=0");
     $google_api_type='GoogleFit';
+    // $height_api_type=isset($height['api_type'])?$height['api_type']:'';    
+    // $height_api=api_type($height_api_type);
+
+    // $height_api_type=isset($height['api_type'])?$height['api_type']:'';    
+    // $height_api=api_type($height_api_type);
+
+    // $distance_api_type=isset($distance['api_type'])?$distance['api_type']:'';    
+    // $distance_api=api_type($distance_api_type);
+
+    // $step_api_type=isset($steps['api_type'])?$steps['api_type']:'';    
+    // $step_api=api_type($step_api_type);
+
+    // $calory_api_type=isset($calories['api_type'])?$calories['api_type']:'';    
+    // $calory_api=api_type($calory_api_type);
+
+    // $bmr_api_type=isset($bmr['api_type'])?$bmr['api_type']:'';    
+    // $bmr_api=api_type($bmr_api_type);
 
     if(!empty($height)){
       $height_cm=isset($height['height_cm'])?$height['height_cm']:'';    
@@ -403,14 +426,14 @@ div#testimonial4 {
         $height_data=$height_inc.'/'.round($height_cm);
       }
     }
+
     $weight_lbs='';
     if(!empty($weight)){
       $weight_kg=isset($weight['weight_kg'])?$weight['weight_kg']:''; 
       if($weight_kg!=''){
         $weight_lbs=round($weight_kg*2.20462262);
       }   
-      
-      
+            
       if(!empty($weight_kg) || !empty($weight_lbs)){
         $weight_data=$weight_lbs.'/'.round($weight_kg);
       }
@@ -430,7 +453,8 @@ div#testimonial4 {
 
     if(!empty($calories)){
       $calories_r=isset($calories['calories_reading'])?$calories['calories_reading']:''; 
-    }    
+    }
+    
     if(!empty($pulse_data)||!empty($blood_pressure_data)|| !empty($glucose_data) || !empty($height_data) || !empty($weight_data) || !empty($bmr_v) || !empty($distance_r) || !empty($steps_r) || !empty($calories_r))
     {
       
@@ -486,7 +510,7 @@ div#testimonial4 {
                     
                     //echo '<pre>';print_r($array_data);exit();
                     ?>
-                    <div class="carousel-inner cls-w" role="listbox">
+  <div class="carousel-inner cls-w" role="listbox">
                         <div class="carousel-item active">
                             <div class="row">
                               <?php

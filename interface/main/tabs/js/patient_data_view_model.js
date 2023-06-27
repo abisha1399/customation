@@ -19,13 +19,14 @@ function encounter_data(id,date,category)
     return this;
 }
 
-function patient_data_view_model(pname,pid,pubpid,str_dob)
+function patient_data_view_model(pname,pid,pubpid,str_dob,rpmstatus)
 {
     var self=this;
-    self.pname=ko.observable(pname);
+    self.pname=ko.observable(pname);    
     self.pid=ko.observable(pid);
     self.pubpid=ko.observable(pubpid);
     self.str_dob=ko.observable(str_dob);
+    self.rpmstatus=ko.observable(rpmstatus);
     self.patient_picture=ko.computed(function(){
       return webroot_url + '/controller.php' +
              '?document&retrieve' +
