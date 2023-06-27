@@ -26,6 +26,11 @@ var left_nav = {
 
 left_nav.setPatient = function(pname, pid, pubpid, frname, str_dob)
 {
+    sessionStorage.setItem("pid",pid);
+    temp=sessionStorage.getItem("enable_pid");
+    if(temp=="tracker"){
+    timer_func();
+    }
     if((app_view_model.application_data.patient()!==null) && (pid===app_view_model.application_data.patient().pid()))
     {
         app_view_model.application_data.patient().pname(pname);

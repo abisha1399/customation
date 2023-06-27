@@ -482,6 +482,13 @@
                 </div>
             </div>
         </div>
+        <div class="collapse" data-parent="#cardgroup" id="document_upload">
+            <div class="card">
+                <div id="secure-msgs" class="card-body">
+                    <iframe src="{{ web_root | attr }}/interface/customized/portal_patient_doc_upload.php" class="w-100 vh-100 border-0"></iframe>
+                </div>
+            </div>
+        </div>
 
         {% if allow_portal_appointments %}
             <div class="collapse mt-2 overflow-auto" data-parent="#cardgroup" id="appointmentcard">

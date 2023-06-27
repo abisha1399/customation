@@ -197,6 +197,12 @@ if(isset($_GET['get_encounter_forms']))
             <li class="nav-item">
               <a class="nav-link text-body" id="calendar_setting">Calendar</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link text-body" id="portal_setting">Portal</a>
+            </li>
+            <a class="nav-link text-body" id="task_manager_setting">Task Manager</a>
+            </li>
+            <li class="nav-item">
           </ul>
         </div>
       </nav>
@@ -277,10 +283,10 @@ if(isset($_GET['get_encounter_forms']))
                             </div>
                         </div>
                         <div class='row form-group'>
-                            <div class='col-sm-6'>Enable lifetime tracker</div>
+                            <div class='col-sm-6'>Enable livetime tracker</div>
                             <div class='col-sm-6 oe-input'>
                                 <label class="switch">
-                                    <input type="checkbox" class="custom_setting_event" data-id='enable_lifetime_tracker'>
+                                    <input type="checkbox" class="custom_setting_event" data-id='enable_time_tracker'>
                                     <span class="slider round"></span>
                                 </label>
                             </div>
@@ -615,14 +621,23 @@ if(isset($_GET['get_encounter_forms']))
                             <div class='col-sm-6'>Enable 1uphealth integration</div>
                             <div class='col-sm-6 oe-input' title='Rx Enable DEA #'>
                                 <label class="switch">
-                                    <input type="checkbox" class="custom_setting_event" data-id='enable_ringcentral_fax'>
+                                    <input type="checkbox" class="custom_setting_event" data-id='enable_1uphealth'>
                                     <span class="slider round"></span>
                                 </label>
                             </div>
-                        </div>                       
+                        </div>   
+                        <div class='row form-group'>
+                            <div class='col-sm-6'>Enable phone integration</div>
+                            <div class='col-sm-6 oe-input' title='Rx Enable DEA #'>
+                                <label class="switch">
+                                    <input type="checkbox" class="custom_setting_event" data-id='enable_phone'>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>                      
                     </div>
                 </div>
-                <!---Prescription tab---->
+                <!---calendar tab tab---->
                 <div class="tab" id="tab_calendar_setting">                    
                     
                     <div class=''>
@@ -676,6 +691,73 @@ if(isset($_GET['get_encounter_forms']))
                                 </label>
                             </div>
                         </div>                        
+                    </div>
+                </div>
+                <!---portal tab---->
+                <div class="tab" id="tab_portal_setting">                    
+                    
+                    <div class=''>
+                        <div class='col-sm-12 oe-global-tab-heading'>
+                                <div class='oe-pull-toward' style='font-size: 1.4rem'>Portal Setting &nbsp;</div>
+                                <div style='margin-top: 5px'></div>
+                        </div>
+                        <div class='clearfix'></div>                        
+                        <div class='row form-group'>
+                            <div class='col-sm-6'>Enable Add Attachment in portal main</div>
+                            <div class='col-sm-6 oe-input'>
+                                <label class="switch">
+                                    <input type="checkbox" class="custom_setting_event" data-id='enable_attachmail_doc'>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div> 
+                        <div class='row form-group'>
+                            <div class='col-sm-6'>Change Patient name choose option in portal mail</div>
+                            <div class='col-sm-6 oe-input'>
+                                <label class="switch">
+                                <input type="checkbox"  class="custom_setting_event" data-id='enable_patname_option'>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div> 
+                        <div class='row form-group'>
+                            <div class='col-sm-6'>Enable Document upoad option in portal</div>
+                            <div class='col-sm-6 oe-input' title='Rx Enable DEA #'>
+                                <label class="switch">
+                                    <input type="checkbox" class="custom_setting_event" data-id='enable_portal_docs_upload'>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>                                                
+                    </div>
+                </div>
+
+                <!---Task Manager tab---->
+                <div class="tab" id="tab_task_manager_setting">                       
+                    <div class=''>
+                        <div class='col-sm-12 oe-global-tab-heading'>
+                                <div class='oe-pull-toward' style='font-size: 1.4rem'>Task Manager &nbsp;</div>
+                                <div style='margin-top: 5px'></div>
+                        </div>
+                        <div class='clearfix'></div>                        
+                        <div class='row form-group'>
+                            <div class='col-sm-6'>Enable Task Manager</div>
+                            <div class='col-sm-6 oe-input' title='Rx Enable DEA #'>
+                                <label class="switch">
+                                    <input type="checkbox" data-id="enable_task_manager" class="custom_setting_event">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>    
+                        <div class='row form-group'>
+                            <div class='col-sm-6'>Enable Task Report</div>
+                            <div class='col-sm-6 oe-input' title='Rx Enable DEA #'>
+                                <label class="switch">
+                                    <input type="checkbox" data-id="enable_task_report" class="custom_setting_event">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>                                            
                     </div>
                 </div>
 
@@ -735,8 +817,12 @@ if(isset($_GET['get_encounter_forms']))
     var gl_value=0;
     var gl_name=$(this).attr('data-id');
     if($(this).is(":checked")){
-      gl_value=1;      
+      gl_value=1;   
+      sessionStorage.setItem("enable_pid","tracker");    
     }    
+    else{
+        sessionStorage.setItem("enable_pid","patient");
+    }   
     if(gl_name!=''){
       $.ajax({
         "async": true,

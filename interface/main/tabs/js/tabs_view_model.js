@@ -387,6 +387,10 @@ function menuActionClick(data,evt)
 
 function clearPatient()
 {
+    temp=sessionStorage.getItem("enable_pid");
+    if(temp=="tracker"){
+    timer_func(this);
+    }
     top.restoreSession();
     app_view_model.application_data.patient(null);
     tabCloseByName('enc');

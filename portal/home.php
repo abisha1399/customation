@@ -239,6 +239,16 @@ function buildNav($newcnt, $pid, $result)
             'dataType' => 'cardgroup'
         ];
     }
+    //custom
+    if ($GLOBALS['enable_portal_docs_upload'] &&$GLOBALS['enable_portal_docs_upload']==true) {
+        $navItems[] = [
+            'url' => '#document_upload',
+            'label' => xl('Documents Uploads'),
+            'icon' => 'fas fa-gavel',
+            'dataToggle' => 'collapse',
+            'dataType' => 'cardgroup'
+        ];
+    }
 
     // Build sub nav items
 

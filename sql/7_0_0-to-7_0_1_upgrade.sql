@@ -8755,3 +8755,40 @@ CREATE TABLE IF NOT EXISTS `pdfextract` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 COMMIT;
+#onsitemail function
+ALTER TABLE `onsite_mail` ADD `attach_file_doc` TEXT NULL AFTER `is_msg_encrypted`;
+ALTER TABLE `onsite_mail` ADD `pid` INT NULL AFTER `attach_file_doc`;
+
+#timetracker
+DROP TABLE IF EXISTS `time_tracker`;
+CREATE TABLE IF NOT EXISTS `time_tracker` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `auth_user` int NOT NULL,
+  `pid` int NOT NULL,
+  `start_time` datetime NOT NULL,
+  `end_time` datetime NOT NULL,
+  `duration` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=383 DEFAULT CHARSET=latin1;
+#endif
+
+#task 
+DROP TABLE IF EXISTS `task_manager`;
+CREATE TABLE IF NOT EXISTS `task_manager` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `pid` varchar(11) NOT NULL,
+  `pname` varchar(255) NOT NULL,
+  `enc_id` varchar(11) NOT NULL,
+  `assigned_by` varchar(255) NOT NULL,
+  `assigned_to` varchar(255) NOT NULL,
+  `task` text NOT NULL,
+  `start_date` date DEFAULT NULL,
+  `end_date` date DEFAULT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `status` varchar(255) NOT NULL,
+  `archive` text NOT NULL,
+  `new_status` varchar(30) DEFAULT NULL,
+  `uid` varchar(250) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+#endif

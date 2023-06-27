@@ -15,7 +15,7 @@
  */
 
 namespace OpenEMR\Services;
-
+require_once(__DIR__ . "/../../interface/customized/custom.php"); 
 use OpenEMR\Common\Database\QueryUtils;
 use OpenEMR\Common\ORDataObject\Address;
 use OpenEMR\Common\ORDataObject\ContactAddress;
@@ -156,7 +156,25 @@ class PatientService extends BaseService
 
         $results = sqlInsert($sql, $query['bind']);
         $data['id'] = $results;
+        $resource=$query['bind'];
+    
+       $globals_query=sqlQuery("SELECT gl_value from globals where gl_name='enable_1uphealth'");
+        //   echo '<pre>';print_r($globals_query);die;
+        if($globals_query['gl_value']==true){
+   
+            $one_up=oneup_health($resource); 
+        // print_r($one_up);die;
+            $values=array_replace($query['bind'],$one_up);
+      
+            $results = sqlInsert($sql, $values);
+            $data['id'] = $results;
+            $update_query=sqlStatement("UPDATE patient_data SET oneup_id='$oneup_id' WHERE id=$data[id]");
 
+        }else{
+       
+        $results = sqlInsert($sql, $query['bind']);
+        $data['id'] = $results;
+       }
         // Tell subscribers that a new patient has been created
         $patientCreatedEvent = new PatientCreatedEvent($data);
         $GLOBALS["kernel"]->getEventDispatcher()->dispatch($patientCreatedEvent, PatientCreatedEvent::EVENT_HANDLE, 10);

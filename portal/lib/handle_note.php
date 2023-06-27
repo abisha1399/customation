@@ -34,7 +34,6 @@ if (isset($_SESSION['pid']) && isset($_SESSION['patient_portal_onsite_two'])) {
     }
     // owner is the patient portal_username
     $owner = $_SESSION['portal_username'];
-
     // ensure the owner is bootstrapped to the $_POST['sender_id'] and
     //   $_POST['sender_name'], if applicable
     if (empty($_POST['sender_id']) && !empty($_POST['sender_name'])) {
@@ -93,15 +92,12 @@ $task = $_POST['task'];
 if (! $task) {
     return 'no task';
 }
+
 $pid = isset($_POST['to_pid'])?$_POST['to_pid']:0;
 $newname='';
 if(isset($GLOBALS['enable_attachmail_doc'])&&$GLOBALS['enable_attachmail_doc']==true){
-    
     if($_SESSION['sessionUser']!="-patient-")
     {
-        $receipt_id=sqlQuery("SELECT * FROM patient_data WHERE pid='".$pid."'");
-        $_POST['recipient_id']=$receipt_id['fname'].$pid;
-        $_POST['recipient_name']=$receipt_id['fname'].' '.$receipt_id['lname'];
         $path="mail_documents/".$pid;
         if(!file_exists($path))
         {
@@ -136,8 +132,9 @@ $sid = $_POST['sender_id'] ?? null;
 $sn = $_POST['sender_name'] ?? null;
 $rid = $_POST['recipient_id'] ?? null;
 $rn = $_POST['recipient_name'] ?? null;
-$header = '';
 $attach_file=$newname;
+$header = '';
+
 switch ($task) {
     case "forward":
         $pid = isset($_POST['pid']) ? $_POST['pid'] : 0;
@@ -150,15 +147,16 @@ switch ($task) {
         break;
     case "add":
         // each user has their own copy of message
-        sendMail($attach_file,$owner, $note, $title, $header, $noteid, $sid, $sn, $rid, $rn, 'New');
-        sendMail($attach_file,$rid, $note, $title, $header, $noteid, $sid, $sn, $rid, $rn, 'New', $reply_noteid);
+        
+        sendMail($attach_file, $pid,$owner, $note, $title, $header, $noteid, $sid, $sn, $rid, $rn, 'New');
+        sendMail($attach_file, $pid,$rid, $note, $title, $header, $noteid, $sid, $sn, $rid, $rn, 'New', $reply_noteid);
         if (empty($_POST["submit"])) {
             echo 'ok';
         }
         break;
     case "reply":
-        sendMail($attach_file,$owner, $note, $title, $header, $noteid, $sid, $sn, $rid, $rn, 'Reply', '');
-        sendMail($attach_file,$rid, $note, $title, $header, $noteid, $sid, $sn, $rid, $rn, 'New', $reply_noteid);
+        sendMail($owner, $note, $title, $header, $noteid, $sid, $sn, $rid, $rn, 'Reply', '');
+        sendMail($rid, $note, $title, $header, $noteid, $sid, $sn, $rid, $rn, 'New', $reply_noteid);
         if (empty($_POST["submit"])) {
             echo 'ok';
         }

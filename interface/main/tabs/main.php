@@ -299,7 +299,16 @@ $esignApi = new Api();
     <?php require_once("templates/therapy_group_template.php"); ?>
     <?php require_once("templates/user_data_template.php"); ?>
     <?php require_once("menu/menu_json.php"); ?>
-    <?php $userQuery = sqlQuery("select * from users where username = ?", array($_SESSION['authUser'])); ?>
+    <?php require_once("../../customized/custom.php"); ?>
+    <?php
+     $userQuery = sqlQuery("select * from users where username = ?", array($_SESSION['authUser']));
+     
+      if($GLOBALS['enable_1uphealth']==true){
+        $resource="resource";
+        oneup_health($resource); 
+    }
+ 
+    ?>
 
     <script>
         <?php if (!empty($_SESSION['frame1url']) && !empty($_SESSION['frame1target'])) { ?>
@@ -378,6 +387,19 @@ if (!empty($GLOBALS['kernel']->getEventDispatcher())) {
         <div id="attendantData" class="body_title acck" data-bind="template: {name: app_view_model.attendant_template_type, data: application_data}"></div>
         <div class="body_title" id="tabs_div" data-bind="template: {name: 'tabs-controls', data: application_data}"></div>
         <div class="mainFrames d-flex flex-row" id="mainFrames_div">
+        <?php
+            
+            if($GLOBALS['enable_phone']==true){
+                 phone(); 
+             }
+             if($GLOBALS['enable_time_tracker']==true){
+                 
+                 time_tracker();
+             }
+             if($GLOBALS['enable_task_manager']==true){
+                 addtask(); 
+             }
+          ?>
             <div id="framesDisplay" data-bind="template: {name: 'tabs-frames', data: application_data}"></div>
         </div>
     </div>

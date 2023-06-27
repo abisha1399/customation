@@ -14,6 +14,7 @@ use OpenEMR\Common\Logging\EventAuditLogger;
 
 function addPortalMailboxMail(
     $attach_file,
+    $pid,
     $owner,
     $newtext,
     $authorized = '0',
@@ -28,10 +29,9 @@ function addPortalMailboxMail(
     $rid = '',
     $rn = '',
     $replyid = 0
-    
 ) {
     
-
+    
     if (empty($datetime)) {
         $datetime = date('Y-m-d H:i:s');
     }
@@ -64,8 +64,8 @@ function addPortalMailboxMail(
 
     return sqlInsert(
         "INSERT INTO onsite_mail (date, body, owner, user, groupname, " .
-            "authorized, activity, title, assigned_to, message_status, mail_chain, sender_id, sender_name, recipient_id, recipient_name, reply_mail_chain,attach_file_doc) VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)",
-        array($datetime, $body, $owner, $user, 'Default', $authorized, $activity, $title, $assigned_to, $message_status,$master_note,$sid,$sn,$rid,$rn,$replyid,$attach_file)
+            "authorized, activity, title, assigned_to, message_status, mail_chain, sender_id, sender_name, recipient_id, recipient_name, reply_mail_chain,attach_file_doc, pid) VALUES (?,?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)",
+        array($datetime, $body, $owner, $user, 'Default', $authorized, $activity, $title, $assigned_to, $message_status,$master_note,$sid,$sn,$rid,$rn,$replyid,$attach_file,$pid)
     );
 }
 
@@ -133,7 +133,9 @@ function getPortalPatientNotes($owner = '', $limit = '', $offset = 0, $search = 
 	p.recipient_id,
 	p.recipient_name,
 	p.mail_chain,
-	p.reply_mail_chain
+	p.reply_mail_chain,
+    p.attach_file_doc,
+    p.pid
 	FROM
 	onsite_mail AS p
 	WHERE p.deleted != 1 AND p.owner = ? AND p.recipient_id = ?
@@ -301,13 +303,15 @@ function getMails($owner, $dotype, $nsrch, $nfsrch)
     }
 }
 
-function sendMail($attach_file,$owner, $note, string $title = null, $to, $noteid, $sid, $sn, $rid, $rn, $status = 'New', $replyid = '')
+function sendMail($attach_file='', $pid='',$owner, $note, string $title = null, $to, $noteid, $sid, $sn, $rid, $rn, $status = 'New', $replyid = '')
 {
+    
     if (!$title) {
         $title = 'Unassigned';
     }
     if ($owner) {
-        addPortalMailboxMail($attach_file,$owner, $note, '1', '1', $title, $to, '', $status, $noteid, $sid, $sn, $rid, $rn, $replyid);
+        
+        addPortalMailboxMail($attach_file,$pid,$owner, $note, '1', '1', $title, $to, '', $status, $noteid, $sid, $sn, $rid, $rn, $replyid);
         return 1;
     } else {
         return 'failed';

@@ -112,7 +112,7 @@ function getAuthPortalUsers()
 </head>
 <body class="skin-blue">
     <script>
-         function setpatient(pid, lname, fname, dob) {
+        function setpatient(pid, lname, fname, dob) {
             $("#form_patient").val(fname+" "+lname);
             $("#form_patient_id").val(pid);
             $("#form_pid").val(pid);
@@ -689,9 +689,27 @@ function getAuthPortalUsers()
                                                     <button ng-show='!isTrash && selected.id == item.id' class="btn btn-small btn-primary" ng-click="deleteItem(items.indexOf(selected))" title="<?php echo xla('Delete this message'); ?>" data-toggle="tooltip"><i class="fa fa-trash fa-1x"></i>
                                                     </button>
                                                 </span>
-                                                <div class='col jumbotron jumbotron-fluid my-3 p-1 bg-secondary rounded border border-info' ng-show="selected.id == item.id">
+                                                <!-- //custom -->
+                                                <?php
+                                            if($_SESSION['sessionUser']!="-patient-"){
+                                                ?>
+                                                <div class='col jumbotron jumbotron-fluid my-2 p-1 bg-secondary rounded border border-info' ng-show="selected.id == item.id">
                                                     <span ng-bind-html=renderMessageBody(selected.body)></span>
                                                 </div>
+                                                <div>
+                                                <a target="_blank" style="" href="mail_documents/{{item.pid}}/{{item.attach_file_doc}}">
+                                                   {{item.attach_file_doc}}</a>
+                                                </div>
+                                                <?php
+                                            } 
+                                            else {?>
+                                            <div class='col jumbotron jumbotron-fluid my-2 p-1 bg-secondary rounded border border-info' ng-show="selected.id == item.id">
+                                            <span ng-bind-html=renderMessageBody(selected.body)></span>
+                                            </div>
+                                            <a target="_blank" style="" href="mail_documents/<?php echo $_SESSION['pid'];?>/{{item.attach_file_doc}}">
+                                                   {{item.attach_file_doc}}</a>
+                                            </td>
+                                            <?php } ?>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -726,42 +744,44 @@ function getAuthPortalUsers()
                                     <label ng-show='selected.mail_chain'><?php echo xlt('Refer to Message') . ' # '; ?>{{selected.id}}</label>
                                     <div class="jumbotron col-lg-12 m-1 p-1 bg-secondary" id="referMsg" ng-show='selected.mail_chain' ng-bind-html='renderMessageBody(selected.body)'></div>
 
-                                    <form role="form" class="form-horizontal" enctype=multipart/form-data ng-submit="submitForm(compose)" name="fcompose" id="fcompose" method="post" action="./handle_note.php">
+                                    <form role="form" class="form-horizontal" ng-submit="submitForm(compose)" enctype=multipart/form-data name="fcompose" id="fcompose" method="post" action="./handle_note.php">
                                         <fieldset class="row">
                                             <div class="col-lg-6 input-group my-2">
                                                 <label for="selSendto"><?php echo xlt('To{{Destination}}'); ?></label>
                                                 <?php
-                                                if($_SESSION['portal_username']){
-                                                    
-                                                    ?>
-                                                    <select class="form-control col-lg-5" id="selForwardto" ng-hide="compose.task != 'forward'" ng-model="compose.selrecip" ng-options="recip.userid as recip.username for recip in authrecips | filter:type = 'user' track by recip.userid"></select>
-                                                    <select class="form-control col-lg-5" id="selSendto" ng-hide="compose.task == 'forward'" ng-model="compose.selrecip" ng-options="recip.userid as recip.username for recip in authrecips track by recip.userid"></select>
-                                                    <?php
-                                                }else{
-                                                ?>
+
+                                               
+                                            if($_SESSION['portal_username']){
                                                 
-                                                    <?php
-                                                    if(isset($GLOBALS['enable_patname_option'])&&$GLOBALS['enable_patname_option']==true){
-                                                    ?>
-                                                    <input type="hidden" id="form_patient_id" >
-                                                    <input type="hidden" name="to_pid" id="form_pid" >
-                                                    <input type='text' ng-hide="compose.task == 'forward'" size='20' id = 'form_patient' name='form_patient' class='form-control' style='cursor:pointer;cursor:hand' value='<?php echo attr($form_patient) ? attr($form_patient) : xla('Click To Select'); ?>' onclick='sel_patient()' title='<?php echo xla('Click to select patient'); ?>' />
-                                                    <?php
-                                                    }
-                                                    else
-                                                    {
-                                                        $result='<select class="form-control ml-2" style="width:80% !important;" name="to_pid" id="selSendto">';
-                                                        $patient_data=sqlstatement("SELECT pid,CONCAT(fname, ' ', lname) as pat_name FROM patient_data");
-                                                        while($row=sqlFetchArray($patient_data)){
-                                                        $result.='<option value="'.$row['pid'].'">'.$row['pat_name'].'</option>';
-                                                        }
-                                                        $result.='</select>';
-                                                        echo $result;
-
-                                                    }   
-
-                                                }
                                                 ?>
+                                                <select class="form-control col-lg-5" id="selForwardto" ng-hide="compose.task != 'forward'" ng-model="compose.selrecip" ng-options="recip.userid as recip.username for recip in authrecips | filter:type = 'user' track by recip.userid"></select>
+                                                <select class="form-control col-lg-5" id="selSendto" ng-hide="compose.task == 'forward'" ng-model="compose.selrecip" ng-options="recip.userid as recip.username for recip in authrecips track by recip.userid"></select>
+                                                <?php
+                                            }else{
+                                             ?>
+                                             
+                                                <?php
+                                                if(isset($GLOBALS['enable_patname_option'])&&$GLOBALS['enable_patname_option']==true){
+                                                ?>
+                                                <input type="hidden" id="form_patient_id" >
+                                                <input type="hidden" name="to_pid" id="form_pid" >
+                                                <input type='text' ng-hide="compose.task == 'forward'" size='20' id = 'form_patient' name='form_patient' class='form-control' style='cursor:pointer;cursor:hand' value='<?php echo attr($form_patient) ? attr($form_patient) : xla('Click To Select'); ?>' onclick='sel_patient()' title='<?php echo xla('Click to select patient'); ?>' />
+                                                <?php
+                                                }
+                                                else
+                                                {
+                                                    $result='<select class="form-control ml-2" style="width:80% !important;" name="to_pid" id="selSendto">';
+                                                    $patient_data=sqlstatement("SELECT pid,CONCAT(fname, ' ', lname) as pat_name FROM patient_data");
+                                                    while($row=sqlFetchArray($patient_data)){
+                                                    $result.='<option value="'.$row['pid'].'">'.$row['pat_name'].'</option>';
+                                                    }
+                                                    $result.='</select>';
+                                                    echo $result;
+
+                                                }   
+                                            
+                                            }
+                                            ?>
                                             </div>
                                             <div class="input-group col-lg-6 my-2">
                                                 <label for="title"><?php echo xlt('Subject'); ?></label>
