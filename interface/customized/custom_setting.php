@@ -198,6 +198,9 @@ if(isset($_GET['get_encounter_forms']))
               <a class="nav-link text-body" id="calendar_setting">Calendar</a>
             </li>
             <li class="nav-item">
+              <a class="nav-link text-body" id="feesheet_setting">Fee Sheet</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link text-body" id="portal_setting">Portal</a>
             </li>
             <a class="nav-link text-body" id="task_manager_setting">Task Manager</a>
@@ -256,6 +259,52 @@ if(isset($_GET['get_encounter_forms']))
                         </div>
                     </div>
                 </div>
+
+   <!---fee sheet ---->
+   <div class="tab " id="tab_feesheet_setting">
+                    <div class=''>
+                        <div class='col-sm-12 oe-global-tab-heading'>
+                                <div class='oe-pull-toward' style='font-size: 1.4rem'>Fee Sheet Setting&nbsp;</div>
+                                <div style='margin-top: 5px'></div>
+                        </div>
+                        <div class='clearfix'></div>
+                        <div class='row form-group'>
+                            <div class='col-sm-6'>Enable Save As Draft button</div>
+                            <div class='col-sm-6 oe-input'>
+                                <label class="switch">
+                                    <input type="checkbox"  class="custom_setting_event" data-id='enable_save_as_draft'>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class='row form-group'>
+                            <div class='col-sm-6'>Enable Ready for biller button</div>
+                            <div class='col-sm-6 oe-input'>
+                                <label class="switch">
+                                    <input type="checkbox" class="custom_setting_event" data-id='enable_biller_button'>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                     
+                        <div class='row form-group'>
+                            <div class='col-sm-6'>Enable Coding Done button</div>
+                            <div class='col-sm-6 oe-input'>
+                                <label class="switch">
+                                    <input type="checkbox" class="custom_setting_event" data-id='enable_coding_done'>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+
+
+
+
+
+
                 <!---encounter tab---->
                 <div class="tab " id="tab_encounter_setting">
                     <div class=''>
